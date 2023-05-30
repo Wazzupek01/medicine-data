@@ -7,6 +7,7 @@ import {
     Validators
 } from "@angular/forms";
 import {Router} from "@angular/router";
+import {Subscription} from "rxjs";
 
 @Component({
     selector: 'app-md-register-page',
@@ -16,6 +17,8 @@ import {Router} from "@angular/router";
 export class MdRegisterPageComponent implements OnInit, OnDestroy {
 
     protected registerForm: FormGroup;
+
+    private subscriptions: Subscription[] = [];
 
     constructor(
         formBuilder: FormBuilder,
@@ -58,13 +61,15 @@ export class MdRegisterPageComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+
     }
 
     ngOnDestroy() {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
     protected registerUser() {
-
+        // this.subscriptions.push()
     }
 
     private repeatPasswordValidator = (control: AbstractControl): ValidationErrors | null => {
