@@ -1,0 +1,47 @@
+<!--TODO: Add logo to this page and data source for login and register-->
+
+<nav class="navbar my-navbar" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+            <img src="/assets/img/logo.png"
+                 alt="Medicine data" width="112" height="28">
+        </a>
+        <a role="button" #navBurger class="navbar-burger" (click)="toggleNavbar()">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+    <div class="navbar-menu" #navMenu (click)="toggleNavbar()">
+        <div class="navbar-start">
+            <a class="navbar-item" routerLink="/" routerLinkActive="active" *ngIf="logged">
+                HOME
+            </a>
+            <a class="navbar-item" routerLink="/chart" routerLinkActive="active" *ngIf="logged">
+                CHART
+            </a>
+            <a class="navbar-item" routerLink="/table" routerLinkActive="active" *ngIf="logged">
+                TABLE
+            </a>
+        </div>
+
+        <div class="navbar-end" *ngIf="logged">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a class="button is-success is-outlined" disabled>Kamil Pietrak</a>
+                    <a class="button is-danger" routerLink="/logout" routerLinkActive="active">LOGOUT</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="navbar-end" *ngIf="!logged">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a class="button is-success is-outlined" routerLink="/login" routerLinkActive="active">LOGIN</a>
+                    <a class="button is-primary is-outlined" routerLink="/register" routerLinkActive="active">REGISTER</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</nav>

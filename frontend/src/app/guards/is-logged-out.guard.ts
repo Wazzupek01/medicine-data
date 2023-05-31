@@ -2,6 +2,6 @@ import {CanActivateFn} from '@angular/router';
 import {inject} from "@angular/core";
 import {PermissionsService} from "../services/permissions.service";
 
-export const isLoggedOutGuard: CanActivateFn = (route, state) => {
+export const isLoggedOutGuard: CanActivateFn = async (route, state) => {
     return inject(PermissionsService).canActivateWhenUserLoggedOut()
 };
