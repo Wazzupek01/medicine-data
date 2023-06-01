@@ -1,13 +1,17 @@
 import {Injectable} from '@angular/core';
 import {HttpAuthService} from "./http-auth.service";
 import {catchError, map, Observable, of, take} from "rxjs";
+import {LocalstorageService} from "./localstorage.service";
+import {MdConst} from "../md-const";
 
 @Injectable({
     providedIn: 'root'
 })
 export class PermissionsService {
 
-    constructor(private httpAuthService: HttpAuthService) {
+    constructor(
+        private httpAuthService: HttpAuthService,
+        private localStorageService: LocalstorageService) {
     }
 
     public canActivateWhenUserLoggedIn(): Observable<boolean> {
@@ -15,9 +19,11 @@ export class PermissionsService {
             take(1)
         ).pipe(
             map((value: string) => {
+                this.localStorageService.setValue(MdConst.USEREMAIL, value);
                 return true;
             }),
             catchError((error: any) => {
+                this.localStorageService.removeValue(MdConst.USEREMAIL);
                 return of(false);
             })
         );
@@ -28,9 +34,11 @@ export class PermissionsService {
             take(1)
         ).pipe(
             map((value: string) => {
+                this.localStorageService.setValue(MdConst.USEREMAIL, value);
                 return false;
             }),
             catchError((error: any) => {
+                this.localStorageService.removeValue(MdConst.USEREMAIL);
                 return of(true);
             })
         );

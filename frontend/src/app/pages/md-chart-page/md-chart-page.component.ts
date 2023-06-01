@@ -59,10 +59,8 @@ export class MdChartPageComponent implements OnInit, OnDestroy {
 
     // events
     protected chartClicked({ event, active }: { event?: ChartEvent, active?: {}[] }): void {
-        console.log(event, active);
     }
 
     protected chartHovered({ event, active }: { event?: ChartEvent, active?: {}[] }): void {
-        console.log(event, active);
     }
 }

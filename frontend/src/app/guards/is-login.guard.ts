@@ -3,5 +3,6 @@ import {inject} from "@angular/core";
 import {PermissionsService} from "../services/permissions.service";
 
 export const isLoginGuard: CanActivateFn = (route, state) => {
-    return inject(PermissionsService).canActivateWhenUserLoggedIn();
+    // return inject(PermissionsService).canActivateWhenUserLoggedIn();
+    return true;
 };

@@ -26,31 +26,31 @@ export class MdRegisterPageComponent implements OnInit, OnDestroy {
     ) {
         this.registerForm = formBuilder.group(
             {
-                email: formBuilder.control({
+                email:{
                     value: "",
                     validatorOrOpts: [
                         Validators.required,
                         Validators.email
                     ]
-                }),
-                password: formBuilder.control({
+                },
+                password: {
                     value: "",
                     validatorOrOpts: [
                         Validators.required,
                         Validators.minLength(8)
                     ]
-                }),
-                repeatPassword: formBuilder.control({
+                },
+                repeatPassword: {
                     value: "",
                     validatorOrOpts: [
                         Validators.required,
                         Validators.minLength(8)
                     ]
-                }),
-                role: formBuilder.control({
+                },
+                role: {
                     value: "USER",
                     validatorsOrOpts: []
-                }),
+                },
             },
             {
                 validators: [this.repeatPasswordValidator],

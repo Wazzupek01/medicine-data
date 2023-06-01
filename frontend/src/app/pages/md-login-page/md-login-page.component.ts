@@ -20,20 +20,20 @@ export class MdLoginPageComponent implements OnInit, OnDestroy {
         private router: Router,
     ) {
         this.loginForm = formBuilder.group({
-            email: formBuilder.control({
+            email: {
                 value: "",
                 validatorOrOpts: [
                     Validators.required,
                     Validators.email
                 ]
-            }),
-            password: formBuilder.control({
+            },
+            password: {
                 value: "",
                 validatorOrOpts: [
                     Validators.required,
                     Validators.minLength(8)
                 ]
-            }),
+            },
         });
     }
 
