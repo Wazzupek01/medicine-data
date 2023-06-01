@@ -1,5 +1,6 @@
 package com.pedryczpietrak.medicinedata.model;
 
+import jakarta.persistence.*;
 import lombok.*;
 
 import javax.xml.bind.annotation.*;
@@ -9,34 +10,59 @@ import javax.xml.bind.annotation.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Entity
+@Table(name = "produkt_leczniczy")
+@XmlType(propOrder = {"nazwaProduktu", "rodzajPreparatu", "nazwaPowszechnieStosowana", "moc", "postac",
+        "podmiotOdpowiedzialny", "typProcedury", "numerPozwolenia", "waznoscPozwolenia", "kodATC", "id", "opakowania",
+        "substancjeCzynne"})
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ProduktLeczniczy {
+    @Id
+    @XmlAttribute(name ="id")
+    @Column(name = "id", length = 2048)
+    private Integer id;
 
     @XmlAttribute(name ="nazwaProduktu")
+    @Column(name = "nazwaProduktu", length = 2048)
     private String nazwaProduktu;
+
     @XmlAttribute(name ="rodzajPreparatu")
+    @Column(name = "rodzajPreparatu", length = 2048)
     private String rodzajPreparatu;
+
     @XmlAttribute(name ="nazwaPowszechnieStosowana")
+    @Column(name = "nazwaPowszechnieStosowana", length = 2048)
     private String nazwaPowszechnieStosowana;
+
     @XmlAttribute(name ="moc")
+    @Column(name = "moc", length = 2048)
     private String moc;
+
     @XmlAttribute(name ="postac")
     private String postac;
+
     @XmlAttribute(name ="podmiotOdpowiedzialny")
     private String podmiotOdpowiedzialny;
+
     @XmlAttribute(name ="typProcedury")
     private String typProcedury;
+
     @XmlAttribute(name ="numerPozwolenia")
     private String numerPozwolenia;
+
     @XmlAttribute(name ="waznoscPozwolenia")
     private String waznoscPozwolenia;
+
     @XmlAttribute(name ="kodATC")
     private String kodATC;
-    @XmlAttribute(name ="id")
-    private int id;
-    @XmlElement(name  = "opakowania")
-    private Opakowania opakowania;
-    @XmlElement(name = "substancjeCzynne")
-    private SubstancjeCzynne substancjeCzynne;
 
+    @XmlElement(name  = "opakowania")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "opakowania_id", referencedColumnName = "id")
+    private Opakowania opakowania;
+
+    @XmlElement(name = "substancjeCzynne")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "substancje_czynne_id", referencedColumnName = "id")
+    private SubstancjeCzynne substancjeCzynne;
 }

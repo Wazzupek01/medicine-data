@@ -4,26 +4,26 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import javax.xml.bind.annotation.*;
-import java.util.List;
-
 
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
+@Entity
+@Table(name = "substancja_czynna")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement
-public class ProduktyLecznicze {
+public class SubstancjaCzynna {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @XmlTransient
     private Integer id;
 
-    @XmlAttribute(name = "stanNaDzien")
-    private String stanNaDzien;
+    @XmlValue
+    private String substancjaCzynna;
 
-    @XmlElement(name = "produktLeczniczy")
-    private List<ProduktLeczniczy> produktyLecznicze;
-
+    @XmlTransient
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "substancje_czynne_id", referencedColumnName = "id")
+    private SubstancjeCzynne substancjeCzynne;
 }

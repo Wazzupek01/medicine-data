@@ -1,11 +1,9 @@
 package com.pedryczpietrak.medicinedata.model;
 
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 import java.util.List;
 
 @Getter
@@ -13,9 +11,20 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Entity
+@Table(name = "substancje_czynne")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "substancjeCzynne", namespace = "http://rejestrymedyczne.ezdrowie.gov.pl/rpl/eksport-danych-v1.0")
 public class SubstancjeCzynne {
+    @Id
+    @XmlTransient
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Integer id;
+
     @XmlElement(name = "substancjaCzynna")
-    private List<String> substancjeCzynne;
+    @OneToMany(mappedBy = "substancjeCzynne", cascade = CascadeType.ALL)
+    private List<SubstancjaCzynna> substancjeCzynne;
+
+    @XmlTransient
+    @OneToOne(mappedBy = "substancjeCzynne")
+    private ProduktLeczniczy produktLeczniczy;
 }
