@@ -1,4 +1,4 @@
-<!--TODO: Add logo to this page and data source for login and register-->
+<!--TODO: Add logo to this page-->
 
 <nav class="navbar my-navbar" aria-label="main navigation">
     <div class="navbar-brand">
@@ -14,7 +14,7 @@
     </div>
     <div class="navbar-menu" #navMenu (click)="toggleNavbar()">
         <div class="navbar-start">
-            <a class="navbar-item" routerLink="/" routerLinkActive="active" *ngIf="logged">
+            <a class="navbar-item" routerLink="/" routerLinkActive="active">
                 HOME
             </a>
             <a class="navbar-item" routerLink="/chart" routerLinkActive="active" *ngIf="logged">
@@ -28,7 +28,7 @@
         <div class="navbar-end" *ngIf="logged">
             <div class="navbar-item">
                 <div class="buttons">
-                    <a class="button is-success is-outlined" disabled>Kamil Pietrak</a>
+                    <a class="button is-success is-outlined" disabled>{{email}}</a>
                     <a class="button is-danger" routerLink="/logout" routerLinkActive="active">LOGOUT</a>
                 </div>
             </div>

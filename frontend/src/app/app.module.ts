@@ -25,7 +25,7 @@ import {HttpClientModule} from "@angular/common/http";
         MdFooterComponent,
         MdChartPageComponent,
         MdTablePageComponent,
-        MdLogoutPageComponent
+        MdLogoutPageComponent,
     ],
     imports: [
         BrowserModule,

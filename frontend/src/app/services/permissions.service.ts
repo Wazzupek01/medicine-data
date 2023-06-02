@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpAuthService} from "./http-auth.service";
 import {catchError, map, Observable, of, take} from "rxjs";
-import {LocalstorageService} from "./localstorage.service";
+import {LocalStorageService} from "./local-storage.service";
 import {MdConst} from "../md-const";
 
 @Injectable({
@@ -11,7 +11,7 @@ export class PermissionsService {
 
     constructor(
         private httpAuthService: HttpAuthService,
-        private localStorageService: LocalstorageService) {
+        private localStorageService: LocalStorageService) {
     }
 
     public canActivateWhenUserLoggedIn(): Observable<boolean> {

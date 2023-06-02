@@ -1,5 +1,5 @@
 export const environment = {
     production: false,
-    apiUser: "https://localhost:8080/api"
-
+    // Api url in format without trailing "/" "https://localhsot:8000"
+    apiUrl: "https://localhost:8080/api"
 };
