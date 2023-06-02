@@ -28,21 +28,9 @@ public class SecurityConfiguration {
         this.authenticationProvider = authenticationProvider;
     }
 
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource(){
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(List.of("http://localhost:80", "http://localhost:4200", "http://localhost:443"));
-//        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
-//        configuration.setAllowCredentials(true);
-//        configuration.setAllowedHeaders(List.of("Cookie", "Set-Cookie"));
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
-
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        http.cors().and().csrf().ignoringRequestMatchers("/auth/**","/auth/authenticate", "/review/**", "/user/**").and()
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.cors().and().csrf().ignoringRequestMatchers("/**").and()
                 .authorizeHttpRequests()
                 .requestMatchers(SecurityConstants.WHITELIST)
                 .permitAll()

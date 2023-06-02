@@ -1,6 +1,6 @@
 package com.pedryczpietrak.medicinedata.model.DTO;
 
-public record OpakowanieDTO (
+public record OpakowanieDTO(
         int wielkosc,
         String jednostkaWielkosci,
         String kodEAN,
@@ -8,4 +8,5 @@ public record OpakowanieDTO (
         String skasowane,
         String numerEU,
         String dystrybutorRownolegly
-){}
+) {
+}

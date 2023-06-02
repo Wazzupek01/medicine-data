@@ -1,9 +1,11 @@
 package com.pedryczpietrak.medicinedata.services;
 
 import com.pedryczpietrak.medicinedata.exceptions.EmailExistsException;
+import com.pedryczpietrak.medicinedata.exceptions.InvalidJwtException;
+import com.pedryczpietrak.medicinedata.model.DTO.AuthenticationResponseDTO;
 import com.pedryczpietrak.medicinedata.model.DTO.UserLoginDTO;
 import com.pedryczpietrak.medicinedata.model.DTO.UserRegisterDTO;
-import com.pedryczpietrak.medicinedata.model.User;
+import com.pedryczpietrak.medicinedata.model.entities.User;
 import com.pedryczpietrak.medicinedata.repositories.UserRepository;
 import com.pedryczpietrak.medicinedata.security.AuthenticationResponse;
 import com.pedryczpietrak.medicinedata.security.JwtService;
@@ -35,7 +37,7 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse register(UserRegisterDTO request) {
-        if(userRepository.findUserByEmail(request.getEmail()).isPresent()){
+        if (userRepository.findUserByEmail(request.getEmail()).isPresent()) {
             throw new EmailExistsException();
         }
         User user = new User(request.getEmail(), passwordEncoder.encode(request.getPassword()), request.getRole());
@@ -46,17 +48,29 @@ public class AuthenticationService {
         return new AuthenticationResponse(jwtToken, user.getEmail(), user.getRole());
     }
 
-    public AuthenticationResponse authenticate(UserLoginDTO request) {
+    public AuthenticationResponse login(UserLoginDTO request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(), request.getPassword()
                 )
         );
 
-        User user =  userRepository.findUserByEmail(request.getEmail()).orElseThrow(() -> new UsernameNotFoundException(request.getEmail()));
+        User user = userRepository.findUserByEmail(request.getEmail()).orElseThrow(() -> new UsernameNotFoundException(request.getEmail()));
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("ROLE", user.getRole());
         String jwtToken = jwtService.generateToken(extraClaims, user);
         return new AuthenticationResponse(jwtToken, user.getEmail(), user.getRole());
+    }
+
+    public AuthenticationResponseDTO user(String jwt) {
+        String email = jwtService.extractUsername(jwt);
+        User user = userRepository.findUserByEmail(email).orElseThrow(InvalidJwtException::new);
+        return new AuthenticationResponseDTO(email, user.getRole());
+    }
+
+    public boolean isAdmin(String jwt) {
+        String email = jwtService.extractUsername(jwt);
+        User user = userRepository.findUserByEmail(email).orElseThrow(InvalidJwtException::new);
+        return user.getRole().getName().equals("ADMIN");
     }
 }

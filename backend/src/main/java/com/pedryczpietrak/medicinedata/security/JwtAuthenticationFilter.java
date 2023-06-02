@@ -22,6 +22,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+
     @Autowired
     public JwtAuthenticationFilter(JwtService jwtService, UserDetailsService userDetailsService) {
         this.jwtService = jwtService;
@@ -33,18 +34,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
         Cookie[] cookies = request.getCookies();
-        if(cookies == null){
+        if (cookies == null) {
             filterChain.doFilter(request, response);
             return;
         }
         String jwt = null;
         final String userEmail;
 
-        for(Cookie c: cookies){
-            if(c.getName().equals("jwt")) jwt = c.getValue();
+        for (Cookie c : cookies) {
+            if (c.getName().equals("jwt")) jwt = c.getValue();
         }
 
-        if(jwt == null){
+        if (jwt == null) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -52,7 +53,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         userEmail = jwtService.extractUsername(jwt);
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
-            if(jwtService.isTokenValid(jwt, userDetails)){
+            if (jwtService.isTokenValid(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,

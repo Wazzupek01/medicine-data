@@ -27,12 +27,12 @@ public class ProduktLeczniczyServiceImpl implements ProduktLeczniczyService {
     @Override
     public Page<ProduktLeczniczyDTO> getAllProduktLeczniczyPage(int page, String sortBy, boolean isAscending) {
         Page<ProduktLeczniczyDTO> produkty = null;
-        if(isAscending) produkty = repository.findAllBy(PageRequest.of(page, 20, Sort.by(sortBy).ascending()))
+        if (isAscending) produkty = repository.findAllBy(PageRequest.of(page, 20, Sort.by(sortBy).ascending()))
                 .map(mapper::produktLeczniczyToProduktLeczniczyDTO);
         else repository.findAllBy(PageRequest.of(page, 20, Sort.by(sortBy).descending()))
                 .map(mapper::produktLeczniczyToProduktLeczniczyDTO);
 
-        if(produkty != null && produkty.hasContent()){
+        if (produkty != null && produkty.hasContent()) {
             return produkty;
         } else {
             throw new EmptyPageException();

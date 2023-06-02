@@ -1,6 +1,6 @@
 package com.pedryczpietrak.medicinedata.model.DTO;
 
-import com.pedryczpietrak.medicinedata.model.Role;
+import com.pedryczpietrak.medicinedata.model.entities.Role;
 import lombok.Getter;
 import lombok.Setter;
 

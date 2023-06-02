@@ -1,6 +1,6 @@
 package com.pedryczpietrak.medicinedata.repositories;
 
-import com.pedryczpietrak.medicinedata.model.User;
+import com.pedryczpietrak.medicinedata.model.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

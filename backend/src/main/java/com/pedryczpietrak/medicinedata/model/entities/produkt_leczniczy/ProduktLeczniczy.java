@@ -1,15 +1,27 @@
-package com.pedryczpietrak.medicinedata.model;
+package com.pedryczpietrak.medicinedata.model.entities.produkt_leczniczy;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name = "produkt_leczniczy")
 @XmlType(propOrder = {"nazwaProduktu", "rodzajPreparatu", "nazwaPowszechnieStosowana", "moc", "postac",
@@ -18,45 +30,45 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ProduktLeczniczy {
     @Id
-    @XmlAttribute(name ="id")
+    @XmlAttribute(name = "id")
     @Column(name = "id", length = 2048)
     private Integer id;
 
-    @XmlAttribute(name ="nazwaProduktu")
+    @XmlAttribute(name = "nazwaProduktu")
     @Column(name = "nazwaProduktu", length = 2048)
     private String nazwaProduktu;
 
-    @XmlAttribute(name ="rodzajPreparatu")
+    @XmlAttribute(name = "rodzajPreparatu")
     @Column(name = "rodzajPreparatu", length = 2048)
     private String rodzajPreparatu;
 
-    @XmlAttribute(name ="nazwaPowszechnieStosowana")
+    @XmlAttribute(name = "nazwaPowszechnieStosowana")
     @Column(name = "nazwaPowszechnieStosowana", length = 2048)
     private String nazwaPowszechnieStosowana;
 
-    @XmlAttribute(name ="moc")
+    @XmlAttribute(name = "moc")
     @Column(name = "moc", length = 2048)
     private String moc;
 
-    @XmlAttribute(name ="postac")
+    @XmlAttribute(name = "postac")
     private String postac;
 
-    @XmlAttribute(name ="podmiotOdpowiedzialny")
+    @XmlAttribute(name = "podmiotOdpowiedzialny")
     private String podmiotOdpowiedzialny;
 
-    @XmlAttribute(name ="typProcedury")
+    @XmlAttribute(name = "typProcedury")
     private String typProcedury;
 
-    @XmlAttribute(name ="numerPozwolenia")
+    @XmlAttribute(name = "numerPozwolenia")
     private String numerPozwolenia;
 
-    @XmlAttribute(name ="waznoscPozwolenia")
+    @XmlAttribute(name = "waznoscPozwolenia")
     private String waznoscPozwolenia;
 
-    @XmlAttribute(name ="kodATC")
+    @XmlAttribute(name = "kodATC")
     private String kodATC;
 
-    @XmlElement(name  = "opakowania")
+    @XmlElement(name = "opakowania")
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "opakowania_id", referencedColumnName = "id")
     private Opakowania opakowania;

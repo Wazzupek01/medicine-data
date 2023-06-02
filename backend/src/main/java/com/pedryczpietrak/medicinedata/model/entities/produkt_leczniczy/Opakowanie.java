@@ -1,16 +1,25 @@
-package com.pedryczpietrak.medicinedata.model;
+package com.pedryczpietrak.medicinedata.model.entities.produkt_leczniczy;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.xml.bind.annotation.*;
-
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name = "opakowanie")
 @XmlType(propOrder = {"wielkosc", "jednostkaWielkosci", "kodEAN", "kategoriaDostepnosci", "skasowane", "numerEU",

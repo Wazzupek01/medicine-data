@@ -1,8 +1,10 @@
-package com.pedryczpietrak.medicinedata.model;
+package com.pedryczpietrak.medicinedata.model.entities;
 
-import jakarta.persistence.*;
 
-import java.util.List;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class Role {
