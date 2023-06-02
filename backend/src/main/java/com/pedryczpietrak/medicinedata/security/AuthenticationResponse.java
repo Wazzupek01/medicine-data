@@ -1,19 +1,21 @@
 package com.pedryczpietrak.medicinedata.security;
 
-import com.pedryczpietrak.medicinedata.model.enums.Role;
-import lombok.AllArgsConstructor;
+import com.pedryczpietrak.medicinedata.model.Role;
 import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Data
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class AuthenticationResponse {
     private String token;
-    private String nickname;
+    private String email;
     private Role role;
+
+    public AuthenticationResponse(String token, String email, Role role) {
+        this.token = token;
+        this.email = email;
+        this.role = role;
+    }
 }

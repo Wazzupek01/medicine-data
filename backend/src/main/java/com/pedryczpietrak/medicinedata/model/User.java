@@ -1,7 +1,5 @@
 package com.pedryczpietrak.medicinedata.model;
 
-import com.pedryczpietrak.medicinedata.model.enums.Role;
-import com.pedryczpietrak.medicinedata.validation.Password;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.Getter;
@@ -26,10 +24,9 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String email;
 
-    @Password
     private String password;
 
-    @Column(name = "role")
+    @ManyToOne
     private Role role;
 
     public User(Integer id, String email, String password, Role role) {
@@ -55,7 +52,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return List.of(new SimpleGrantedAuthority(role.getName()));
     }
 
     @Override

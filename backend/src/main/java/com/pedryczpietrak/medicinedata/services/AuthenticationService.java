@@ -1,5 +1,6 @@
 package com.pedryczpietrak.medicinedata.services;
 
+import com.pedryczpietrak.medicinedata.exceptions.EmailExistsException;
 import com.pedryczpietrak.medicinedata.model.DTO.UserLoginDTO;
 import com.pedryczpietrak.medicinedata.model.DTO.UserRegisterDTO;
 import com.pedryczpietrak.medicinedata.model.User;
@@ -37,7 +38,7 @@ public class AuthenticationService {
         if(userRepository.findUserByEmail(request.getEmail()).isPresent()){
             throw new EmailExistsException();
         }
-        User user = new User(request.getEmail(), request.getPassword(), request.getRole());
+        User user = new User(request.getEmail(), passwordEncoder.encode(request.getPassword()), request.getRole());
         userRepository.save(user);
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("ROLE", user.getRole());

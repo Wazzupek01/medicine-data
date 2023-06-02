@@ -1,6 +1,6 @@
 package com.pedryczpietrak.medicinedata.model.DTO;
 
-import com.pedryczpietrak.medicinedata.model.enums.Role;
+import com.pedryczpietrak.medicinedata.model.Role;
 import com.pedryczpietrak.medicinedata.validation.Password;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;

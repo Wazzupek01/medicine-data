@@ -2,14 +2,13 @@ package com.pedryczpietrak.medicinedata;
 
 import com.pedryczpietrak.medicinedata.model.*;
 import com.pedryczpietrak.medicinedata.model.DTO.UserRegisterDTO;
-import com.pedryczpietrak.medicinedata.model.enums.Role;
 import com.pedryczpietrak.medicinedata.repositories.ProduktLeczniczyRepository;
+import com.pedryczpietrak.medicinedata.repositories.RoleRepository;
 import com.pedryczpietrak.medicinedata.repositories.UserRepository;
 import com.pedryczpietrak.medicinedata.services.AuthenticationService;
 import me.tongfei.progressbar.ProgressBar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.xml.bind.JAXBContext;
@@ -21,21 +20,24 @@ public class DataLoader implements CommandLineRunner {
 
     private final ProduktLeczniczyRepository produktLeczniczyRepository;
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final AuthenticationService authenticationService;
 
     @Autowired
-    public DataLoader(ProduktLeczniczyRepository produktLeczniczyRepository, UserRepository userRepository, AuthenticationService authenticationService) {
+    public DataLoader(ProduktLeczniczyRepository produktLeczniczyRepository, UserRepository userRepository,
+                      RoleRepository roleRepository, AuthenticationService authenticationService) {
         this.produktLeczniczyRepository = produktLeczniczyRepository;
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
         this.authenticationService = authenticationService;
     }
 
     @Override
     public void run(String... args) throws Exception {
         if(userRepository.count() == 0){
-            authenticationService.register(new UserRegisterDTO("Admin!01", "admin@admin.pl", Role.ADMIN));
-            authenticationService.register(new UserRegisterDTO("User1!01", "user1@user.pl", Role.USER));
-            authenticationService.register(new UserRegisterDTO("User1!01", "user1@user.pl", Role.USER));
+            roleRepository.saveAll(List.of(new Role(1, "ADMIN"), new Role(0, "USER")));
+            authenticationService.register(new UserRegisterDTO("Admin!01", "admin@admin.pl", roleRepository.findRoleByName("ADMIN")));
+            authenticationService.register(new UserRegisterDTO("User1!01", "user1@user.pl", roleRepository.findRoleByName("USER")));
         }
 
         if(produktLeczniczyRepository.count() > 0) return;
@@ -49,10 +51,10 @@ public class DataLoader implements CommandLineRunner {
                 Opakowania opakowania = p.getOpakowania();
                 SubstancjeCzynne substancjeCzynne = p.getSubstancjeCzynne();
                 if(opakowania.getOpakowania() != null)
-                    opakowania.getOpakowania().forEach((o) -> {o.setOpakowania(opakowania);});
+                    opakowania.getOpakowania().forEach((o) -> o.setOpakowania(opakowania));
 
                 if(substancjeCzynne.getSubstancjeCzynne() != null)
-                    substancjeCzynne.getSubstancjeCzynne().forEach((s) -> {s.setSubstancjeCzynne(substancjeCzynne);});
+                    substancjeCzynne.getSubstancjeCzynne().forEach((s) -> s.setSubstancjeCzynne(substancjeCzynne));
                 produktLeczniczyRepository.save(p);
                 pb.step();
                 pb.setExtraMessage("Loading...");

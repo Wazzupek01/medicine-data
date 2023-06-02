@@ -1,8 +1,12 @@
 package com.pedryczpietrak.medicinedata.model.DTO;
 
+import lombok.Builder;
+
 import java.util.List;
 
-public record produktLeczniczyDTO(
+@Builder
+
+public record ProduktLeczniczyDTO(
         String nazwaProduktu,
         String rodzajPreparatu,
         String nazwaPowszechnieStosowana,

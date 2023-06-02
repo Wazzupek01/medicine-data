@@ -1,6 +1,7 @@
 package com.pedryczpietrak.medicinedata;
 
 import com.pedryczpietrak.medicinedata.exceptions.EmailExistsException;
+import com.pedryczpietrak.medicinedata.exceptions.EmptyPageException;
 import com.pedryczpietrak.medicinedata.exceptions.ErrorResponse;
 import lombok.NonNull;
 import org.springframework.http.HttpHeaders;
@@ -18,6 +19,12 @@ import java.util.List;
 
 @ControllerAdvice
 public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler {
+
+    @ExceptionHandler({EmptyPageException.class})
+    private ResponseEntity<ErrorResponse> handleEmptyPageException(EmptyPageException e){
+        ErrorResponse error = new ErrorResponse(List.of(e.getMessage()));
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
 
     @ExceptionHandler({EmailExistsException.class})
     private ResponseEntity<ErrorResponse> handleEmailExistsException(EmailExistsException e){
