@@ -3,7 +3,6 @@ package com.pedryczpietrak.medicinedata.config;
 import com.pedryczpietrak.medicinedata.security.ExceptionFilter;
 import com.pedryczpietrak.medicinedata.security.JwtAuthenticationFilter;
 import com.pedryczpietrak.medicinedata.security.SecurityConstants;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -11,9 +10,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -24,9 +20,6 @@ public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final ExceptionFilter exceptionFilter;
     private final AuthenticationProvider authenticationProvider;
-
-    @Value("${security.allowed-origin}")
-    private String allowedOrigins;
 
     public SecurityConfiguration(JwtAuthenticationFilter jwtAuthenticationFilter, ExceptionFilter exceptionFilter,
                                  AuthenticationProvider authenticationProvider) {
@@ -45,18 +38,5 @@ public class SecurityConfiguration {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(exceptionFilter, JwtAuthenticationFilter.class);
         return http.build();
-    }
-
-    @Configuration
-    @EnableWebMvc
-    public class WebConfig implements WebMvcConfigurer {
-
-        @Override
-        public void addCorsMappings(CorsRegistry registry) {
-            registry.addMapping("/**")
-                    .allowedOrigins(allowedOrigins)
-                    .allowCredentials(true)
-                    .allowedMethods("GET", "PUT", "POST", "DELETE");
-        }
     }
 }
