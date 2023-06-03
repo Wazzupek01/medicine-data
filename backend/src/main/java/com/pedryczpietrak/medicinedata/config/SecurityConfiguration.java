@@ -3,14 +3,12 @@ package com.pedryczpietrak.medicinedata.config;
 import com.pedryczpietrak.medicinedata.security.ExceptionFilter;
 import com.pedryczpietrak.medicinedata.security.JwtAuthenticationFilter;
 import com.pedryczpietrak.medicinedata.security.SecurityConstants;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -22,6 +20,9 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+
+    @Value("${security.allowed-origin}")
+    private String allowedOrigins;
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final ExceptionFilter exceptionFilter;
@@ -35,6 +36,7 @@ public class SecurityConfiguration {
         this.exceptionFilter = exceptionFilter;
         this.authenticationProvider = authenticationProvider;
         this.corsConfigurationSource = corsConfigurationSource;
+        System.out.println(allowedOrigins);
     }
 
     @Bean
@@ -52,7 +54,7 @@ public class SecurityConfiguration {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:4200"));
+        config.setAllowedOrigins(List.of(allowedOrigins));
         config.setAllowCredentials(true);
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
