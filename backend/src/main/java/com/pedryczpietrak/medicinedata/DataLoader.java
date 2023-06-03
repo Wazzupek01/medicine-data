@@ -48,7 +48,6 @@ public class DataLoader implements CommandLineRunner {
 
         if (produktLeczniczyRepository.count() > 0) return;
 
-        System.out.println(System.getProperty("user.dir"));
         JAXBContext context = JAXBContext.newInstance(ProduktyLecznicze.class);
         ProduktyLecznicze produktyLecznicze = (ProduktyLecznicze) context.createUnmarshaller()
                 .unmarshal(new FileReader("./src/main/resources/data.xml"));
