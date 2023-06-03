@@ -26,9 +26,6 @@ public class ApplicationConfiguration {
 
     private final UserRepository userRepository;
 
-    @Value("${security.allowed-origin}")
-    private String allowedOrigins;
-
     @Autowired
     public ApplicationConfiguration(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -45,17 +42,6 @@ public class ApplicationConfiguration {
         authenticationProvider.setUserDetailsService(userDetailsService());
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
-    }
-
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of(allowedOrigins));
-        config.setAllowCredentials(true);
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
-        return source;
     }
 
     @Bean
