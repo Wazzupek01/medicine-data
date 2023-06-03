@@ -1,5 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
+import {HttpProduktLeczniczyService} from "../../services/http-produkt-leczniczy.service";
 
 @Component({
   selector: 'app-md-search-page',
@@ -10,7 +11,9 @@ export class MdSearchPageComponent implements OnInit, OnDestroy{
 
     private subscriptions: Subscription[] = [];
 
-    constructor() {
+    constructor(
+        private httpProduktLeczniczyService: HttpProduktLeczniczyService
+    ) {
     }
 
     ngOnInit() {
@@ -20,4 +23,8 @@ export class MdSearchPageComponent implements OnInit, OnDestroy{
         this.subscriptions.forEach(s => s.unsubscribe());
     }
 
+    private performSearch() {
+        this.subscriptions.push(
+        )
+    }
 }

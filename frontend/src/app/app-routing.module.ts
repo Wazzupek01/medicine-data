@@ -8,9 +8,11 @@ import {MdLoginPageComponent} from "./pages/md-login-page/md-login-page.componen
 import {MdChartPageComponent} from "./pages/md-chart-page/md-chart-page.component";
 import {MdTablePageComponent} from "./pages/md-table-page/md-table-page.component";
 import {MdLogoutPageComponent} from "./pages/md-logout-page/md-logout-page.component";
+import {MdSearchPageComponent} from "./pages/md-search-page/md-search-page.component";
 
 const routes: Routes = [
     {path: "", component: MdMainPageComponent},
+    {path: "search", component: MdSearchPageComponent},
     {path: "chart", component: MdChartPageComponent, canActivate: [isLoginGuard]},
     {path: "table", component: MdTablePageComponent, canActivate: [isLoginGuard]},
     {path: "login", component: MdLoginPageComponent, canActivate: [isLoggedOutGuard]},
