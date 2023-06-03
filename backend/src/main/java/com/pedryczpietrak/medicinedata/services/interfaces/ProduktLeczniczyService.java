@@ -1,6 +1,6 @@
 package com.pedryczpietrak.medicinedata.services.interfaces;
 
-import com.pedryczpietrak.medicinedata.model.DTO.ProduktLeczniczyDTO;;
+import com.pedryczpietrak.medicinedata.model.DTO.ProduktLeczniczyDTO;
 import org.springframework.data.domain.Page;
 
 import java.util.List;

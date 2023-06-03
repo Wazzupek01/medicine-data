@@ -1,10 +1,7 @@
 package com.pedryczpietrak.medicinedata.controllers;
 
 import com.pedryczpietrak.medicinedata.exceptions.ErrorResponse;
-import com.pedryczpietrak.medicinedata.model.DTO.AuthenticationResponseDTO;
 import com.pedryczpietrak.medicinedata.model.DTO.OpakowanieDTO;
-import com.pedryczpietrak.medicinedata.model.DTO.ProduktLeczniczyDTO;
-import com.pedryczpietrak.medicinedata.model.entities.produkt_leczniczy.Opakowanie;
 import com.pedryczpietrak.medicinedata.services.interfaces.OpakowanieService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

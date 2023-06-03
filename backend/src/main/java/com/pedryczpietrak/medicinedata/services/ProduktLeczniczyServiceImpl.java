@@ -30,13 +30,13 @@ public class ProduktLeczniczyServiceImpl implements ProduktLeczniczyService {
 
     @Override
     public Page<ProduktLeczniczyDTO> getAllProduktLeczniczyPage(int page, String sortBy, boolean isAscending) {
-        Page<ProduktLeczniczyDTO> produkty = null;
+        Page<ProduktLeczniczyDTO> produkty;
         if (isAscending) produkty = repository.findAllBy(PageRequest.of(page, 20, Sort.by(sortBy).ascending()))
                 .map(mapper::produktLeczniczyToProduktLeczniczyDTO);
         else produkty = repository.findAllBy(PageRequest.of(page, 20, Sort.by(sortBy).descending()))
                 .map(mapper::produktLeczniczyToProduktLeczniczyDTO);
 
-        if (produkty != null && produkty.hasContent()) {
+        if (produkty.hasContent()) {
             return produkty;
         } else {
             throw new EmptyPageException();
@@ -45,13 +45,13 @@ public class ProduktLeczniczyServiceImpl implements ProduktLeczniczyService {
 
     @Override
     public Page<ProduktLeczniczyDTO> getProduktLeczniczyByNamePage(String name, int page, String sortBy, boolean isAscending) {
-        Page<ProduktLeczniczyDTO> produkty = null;
+        Page<ProduktLeczniczyDTO> produkty;
         if (isAscending) produkty = repository.findAllByNazwaProduktuContainingIgnoreCase(name, PageRequest.of(page, 20, Sort.by(sortBy).ascending()))
                 .map(mapper::produktLeczniczyToProduktLeczniczyDTO);
         else produkty = repository.findAllByNazwaProduktuContainingIgnoreCase(name, PageRequest.of(page, 20, Sort.by(sortBy).descending()))
                 .map(mapper::produktLeczniczyToProduktLeczniczyDTO);
 
-        if (produkty != null && produkty.hasContent()) {
+        if (produkty.hasContent()) {
             return produkty;
         } else {
             throw new EmptyPageException();

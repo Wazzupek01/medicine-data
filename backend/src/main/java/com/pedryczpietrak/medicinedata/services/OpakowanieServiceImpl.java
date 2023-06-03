@@ -29,13 +29,13 @@ public class OpakowanieServiceImpl implements OpakowanieService {
 
     @Override
     public Page<OpakowanieDTO> getAllOpakowaniePage(int page, String sortBy, boolean isAscending) {
-        Page<OpakowanieDTO> opakowania = null;
+        Page<OpakowanieDTO> opakowania;
         if (isAscending) opakowania = opakowanieRepository.findAllBy(PageRequest.of(page, 20, Sort.by(sortBy).ascending()))
                 .map(mapper::opakowanieToOpakowanieDTO);
         else opakowania = opakowanieRepository.findAllBy(PageRequest.of(page, 20, Sort.by(sortBy).descending()))
                 .map(mapper::opakowanieToOpakowanieDTO);
 
-        if (opakowania != null && opakowania.hasContent()) {
+        if (opakowania.hasContent()) {
             return opakowania;
         } else {
             throw new EmptyPageException();
