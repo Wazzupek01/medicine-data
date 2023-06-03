@@ -12,6 +12,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class ProduktLeczniczyServiceImpl implements ProduktLeczniczyService {
 
@@ -37,5 +41,32 @@ public class ProduktLeczniczyServiceImpl implements ProduktLeczniczyService {
         } else {
             throw new EmptyPageException();
         }
+    }
+
+    @Override
+    public Page<ProduktLeczniczyDTO> getProduktLeczniczyByNamePage(String name, int page, String sortBy, boolean isAscending) {
+        Page<ProduktLeczniczyDTO> produkty = null;
+        if (isAscending) produkty = repository.findAllByNazwaProduktuContainingIgnoreCase(name, PageRequest.of(page, 20, Sort.by(sortBy).ascending()))
+                .map(mapper::produktLeczniczyToProduktLeczniczyDTO);
+        else produkty = repository.findAllByNazwaProduktuContainingIgnoreCase(name, PageRequest.of(page, 20, Sort.by(sortBy).descending()))
+                .map(mapper::produktLeczniczyToProduktLeczniczyDTO);
+
+        if (produkty != null && produkty.hasContent()) {
+            return produkty;
+        } else {
+            throw new EmptyPageException();
+        }
+    }
+
+    @Override
+    public List<String> listAllSortParameters() {
+        Field[] fields = ProduktLeczniczyDTO.class.getDeclaredFields();
+        List<String> fieldNames = new ArrayList<>();
+
+        for (Field f: fields) {
+            fieldNames.add(f.getName());
+        }
+
+        return fieldNames;
     }
 }

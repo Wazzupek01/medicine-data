@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProduktLeczniczyRepository extends JpaRepository<ProduktLeczniczy, Integer> {
     Page<ProduktLeczniczy> findAllBy(Pageable pageable);
+    Page<ProduktLeczniczy> findAllByNazwaProduktuContainingIgnoreCase(String nazwaProduktu, Pageable pageable);
 }
