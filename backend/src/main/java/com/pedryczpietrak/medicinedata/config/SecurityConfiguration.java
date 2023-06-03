@@ -3,15 +3,21 @@ package com.pedryczpietrak.medicinedata.config;
 import com.pedryczpietrak.medicinedata.security.ExceptionFilter;
 import com.pedryczpietrak.medicinedata.security.JwtAuthenticationFilter;
 import com.pedryczpietrak.medicinedata.security.SecurityConstants;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -21,8 +27,8 @@ public class SecurityConfiguration {
     private final ExceptionFilter exceptionFilter;
     private final AuthenticationProvider authenticationProvider;
 
-    @Autowired
-    public SecurityConfiguration(JwtAuthenticationFilter jwtAuthenticationFilter, ExceptionFilter exceptionFilter, AuthenticationProvider authenticationProvider) {
+    public SecurityConfiguration(JwtAuthenticationFilter jwtAuthenticationFilter, ExceptionFilter exceptionFilter,
+                                 AuthenticationProvider authenticationProvider) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.exceptionFilter = exceptionFilter;
         this.authenticationProvider = authenticationProvider;
@@ -30,16 +36,10 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().ignoringRequestMatchers("/**").and()
-                .authorizeHttpRequests()
-                .requestMatchers(SecurityConstants.WHITELIST)
-                .permitAll()
-//                .requestMatchers("/produkt/params").hasAnyRole("USER")
-                .anyRequest().authenticated()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
+        http.cors(withDefaults())
+                .csrf((csrf) -> csrf.ignoringRequestMatchers("/**"))
+                .authorizeHttpRequests((authorize) ->
+                        authorize.requestMatchers(SecurityConstants.WHITELIST).permitAll().anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(exceptionFilter, JwtAuthenticationFilter.class);
