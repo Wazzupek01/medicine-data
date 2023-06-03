@@ -29,7 +29,7 @@ public class ProduktLeczniczyServiceImpl implements ProduktLeczniczyService {
         Page<ProduktLeczniczyDTO> produkty = null;
         if (isAscending) produkty = repository.findAllBy(PageRequest.of(page, 20, Sort.by(sortBy).ascending()))
                 .map(mapper::produktLeczniczyToProduktLeczniczyDTO);
-        else repository.findAllBy(PageRequest.of(page, 20, Sort.by(sortBy).descending()))
+        else produkty = repository.findAllBy(PageRequest.of(page, 20, Sort.by(sortBy).descending()))
                 .map(mapper::produktLeczniczyToProduktLeczniczyDTO);
 
         if (produkty != null && produkty.hasContent()) {
