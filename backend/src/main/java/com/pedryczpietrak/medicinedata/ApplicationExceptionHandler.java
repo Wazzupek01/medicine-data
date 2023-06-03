@@ -4,6 +4,8 @@ import com.pedryczpietrak.medicinedata.exceptions.EmailExistsException;
 import com.pedryczpietrak.medicinedata.exceptions.EmptyPageException;
 import com.pedryczpietrak.medicinedata.exceptions.ErrorResponse;
 import com.pedryczpietrak.medicinedata.exceptions.InvalidJwtException;
+import com.pedryczpietrak.medicinedata.exceptions.NotMatchingPasswordException;
+import com.pedryczpietrak.medicinedata.exceptions.RoleNotFoundException;
 import lombok.NonNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,18 @@ import java.util.List;
 
 @ControllerAdvice
 public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler {
+
+    @ExceptionHandler({NotMatchingPasswordException.class})
+    private ResponseEntity<ErrorResponse> handleNotMatchingPasswordException(NotMatchingPasswordException e){
+        ErrorResponse error = new ErrorResponse(List.of(e.getMessage()));
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({RoleNotFoundException.class})
+    private ResponseEntity<ErrorResponse> handleRoleNotFoundException(RoleNotFoundException e){
+        ErrorResponse error = new ErrorResponse(List.of(e.getMessage()));
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
 
     @ExceptionHandler({InvalidJwtException.class})
     private ResponseEntity<ErrorResponse> handleInvalidJwtException(InvalidJwtException e) {
