@@ -15,6 +15,14 @@ export class HttpProduktLeczniczyService {
     constructor(private http: HttpClient) {
     }
 
+    public getParams(): Observable<string[]> {
+        return this.http.get<string[]>(`${this.baseApiUrl}/params`, {withCredentials: true});
+    }
+
+    public geByNames(name: string, sortBy: string, isAscending: boolean, page: number): Observable<MdPageDto<MdProduktLeczniczyDto>>  {
+        return this.http.get<MdPageDto<MdProduktLeczniczyDto>>(`${this.baseApiUrl}/name/${name}/${sortBy}/${isAscending}/${page}`, {withCredentials: true});
+    }
+
     public getAll(sortBy: string, isAscending: boolean, page: number): Observable<MdPageDto<MdProduktLeczniczyDto>> {
         return this.http.get<MdPageDto<MdProduktLeczniczyDto>>(`${this.baseApiUrl}/all/${sortBy}/${isAscending}/${page}`, {withCredentials: true});
     }

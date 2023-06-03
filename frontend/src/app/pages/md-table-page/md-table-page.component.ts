@@ -1,13 +1,14 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {CellClickedEvent, ColDef, GridReadyEvent} from "ag-grid-community";
+import {ColDef} from "ag-grid-community";
 import {AgGridAngular} from "ag-grid-angular";
 import {Subscription} from "rxjs";
 import {HttpProduktLeczniczyService} from "../../services/http-produkt-leczniczy.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MdPageDto} from "../../models/md-page-dto";
-import {MdProduktLeczniczyDto, ProduktLeczniczyKeys} from "../../models/md-produkt-leczniczy-dto";
+import {MdProduktLeczniczyDto} from "../../models/md-produkt-leczniczy-dto";
+import {HttpOpakowanieService} from "../../services/http-opakowanie.service";
 import {MdOpakowanieDto} from "../../models/md-opakowanie-dto";
-import {keys} from 'ts-transformer-keys';
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 
 @Component({
     selector: 'app-md-table-page',
@@ -16,61 +17,125 @@ import {keys} from 'ts-transformer-keys';
 })
 export class MdTablePageComponent implements OnInit, OnDestroy {
 
-    @ViewChild(AgGridAngular) agGrid!: AgGridAngular;
-
-    private subscriptions: Subscription[] = [];
-    private valuesFromWeb!: MdPageDto<MdProduktLeczniczyDto> | MdPageDto<MdOpakowanieDto>;
-
+    @ViewChild(AgGridAngular) protected agGrid!: AgGridAngular;
+    protected optionForm: FormGroup;
     protected currentPage: number = 0;
     protected allPages: number = 0;
+    protected sortTypes: string[] = [];
+    protected columnDefs: ColDef[] = [];
+    protected rowData: any = [];
 
-    constructor(private httpProduktLeczniczyService: HttpProduktLeczniczyService) {
+    private subscriptions: Subscription[] = [];
 
+    private type: string = "produkt";
+    private sortBy: string = "";
+    private sortDir: boolean = true;
+
+    constructor(
+        private httpProduktLeczniczyService: HttpProduktLeczniczyService,
+        private httpOpakowaniaService: HttpOpakowanieService,
+        formBuilder: FormBuilder
+    ) {
+        this.optionForm = formBuilder.group({
+            type: new FormControl(this.type),
+            sortBy: new FormControl(this.sortBy),
+            sortDir: new FormControl(this.sortDir),
+        });
     }
 
     ngOnInit() {
-        this.getProduktyLecznicze(this.currentPage);
+        this.getProductLeczniczyParams();
+        this.subscriptions.push(
+            this.optionForm.get("type")!.valueChanges.subscribe({
+                next: (value) => {
+                    this.type = value;
+                    this.getSortByList();
+                }
+            })
+        );
+
+        this.subscriptions.push(
+            this.optionForm.get("sortBy")!.valueChanges.subscribe({
+                next: (value) => {
+                    this.sortBy = value;
+                    this.getValues();
+                }
+            })
+        );
+
+        this.subscriptions.push(
+            this.optionForm.get("sortDir")!.valueChanges.subscribe({
+                next: (value) => {
+                    this.sortDir = value;
+                    this.getValues();
+                }
+            })
+        );
     }
 
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
 
-    protected columnDefs: ColDef[] = [
-        {field: 'make'},
-        {field: 'model'},
-        {field: 'price'}
-    ];
-
-    protected rowData: any = [
-        {make: 'Toyota', model: 'Celica', price: 35000},
-        {make: 'Ford', model: 'Mondeo', price: 32000},
-        {make: 'Porsche', model: 'Boxster', price: 72000}
-    ];
-
-    protected defaultColDef: ColDef = {
-        sortable: true,
-        filter: true,
-    };
-
-    onGridReady(params: GridReadyEvent) {
-        // this.rowData$ = this.http
-        //     .get<any[]>('https://www.ag-grid.com/example-assets/row-data.json');
+    protected pageChanged(page: number) {
+        this.currentPage = page;
+        const asc = this.optionForm.get("sortDir")?.value;
+        const sortBy = this.optionForm.get("sortBy")?.value;
+        if (this.optionForm.get("type")?.value == "produkt") {
+            this.getProduktyLecznicze(page, sortBy, asc);
+        } else {
+            this.getOpakaowania(page, sortBy, asc);
+        }
     }
 
-    // Example of consuming Grid Event
-    onCellClicked(e: CellClickedEvent): void {
-        console.log('cellClicked', e);
+    protected prepareNameForColumns(name: string): string {
+        const result = name.replace(/([A-Z])/g, " $1");
+        return result.charAt(0).toUpperCase() + result.slice(1);
     }
 
-    // Example using Grid's API
-    clearSelection(): void {
-        this.agGrid.api.deselectAll();
+    private getSortByList() {
+        if (this.type == "produkt") {
+            this.getProductLeczniczyParams();
+        } else {
+            this.getOpakaowaniaParams();
+        }
+        this.currentPage = 0;
     }
 
-    private getProduktyLecznicze(page: number) {
+    private getValues() {
+        this.currentPage = 0;
+        if (this.type == "produkt") {
+            this.getProduktyLecznicze(this.currentPage, this.sortBy, this.sortDir);
+        } else {
+            this.getOpakaowania(this.currentPage, this.sortBy, this.sortDir);
+        }
+    }
+
+    private getProductLeczniczyParams() {
         this.subscriptions.push(
-            this.httpProduktLeczniczyService.getAll("nazwaProduktu", true, page).subscribe({
+            this.httpProduktLeczniczyService.getParams().subscribe({
+                next: (value: string[]) => {
+                    const filtered = value.filter(option => {
+                        return option != "opakowania" && option != "substancjeCzynne";
+                    });
+
+                    this.sortTypes = filtered;
+                    this.optionForm.get("sortBy")?.setValue(this.sortTypes[0]);
+                    this.columnDefs = filtered.map((value) => {
+                        return {field: value};
+                    });
+
+                },
+                error: (error: HttpErrorResponse) => {
+                    console.log(error);
+                }
+            })
+        );
+    }
+
+    private getProduktyLecznicze(page: number, sortBy: string, asc: boolean) {
+        this.subscriptions.push(
+            this.httpProduktLeczniczyService.getAll(sortBy, asc, page).subscribe({
                 next: (value: MdPageDto<MdProduktLeczniczyDto>) => {
                     this.currentPage = value.number;
                     this.allPages = value.totalPages;
@@ -83,15 +148,43 @@ export class MdTablePageComponent implements OnInit, OnDestroy {
         );
     }
 
-    protected pageChanged(page: number) {
-        this.currentPage = page;
-        this.getProduktyLecznicze(page);
+    private prepareProduktyLecznicze(produktyLecznicze: MdProduktLeczniczyDto[]) {
+        this.rowData = produktyLecznicze;
     }
 
-    private prepareProduktyLecznicze(produktyLecznicze: MdProduktLeczniczyDto[]) {
-        this.columnDefs = [];
-        this.columnDefs = ProduktLeczniczyKeys.map((value) => { return {field: value}});
+    private getOpakaowaniaParams() {
+        this.subscriptions.push(
+            this.httpOpakowaniaService.getParams().subscribe({
+                next: (value: string[]) => {
+                    this.sortTypes = value;
+                    this.optionForm.get("sortBy")?.setValue(this.sortTypes[0]);
+                    this.columnDefs = value.map((value) => {
+                        return {field: value};
+                    });
+                },
+                error: (error: HttpErrorResponse) => {
+                    console.log(error);
+                }
+            })
+        );
+    }
 
-        this.rowData = produktyLecznicze;
+    private getOpakaowania(page: number, sortBy: string, asc: boolean) {
+        this.subscriptions.push(
+            this.httpOpakowaniaService.getAll(sortBy, asc, page).subscribe({
+                next: (value: MdPageDto<MdOpakowanieDto>) => {
+                    this.currentPage = value.number;
+                    this.allPages = value.totalPages;
+                    this.prepareOpakowanie(value.content);
+                },
+                error: (error: HttpErrorResponse) => {
+                    console.log(error)
+                }
+            })
+        );
+    }
+
+    private prepareOpakowanie(opakowania: MdOpakowanieDto[]) {
+        this.rowData = opakowania;
     }
 }
