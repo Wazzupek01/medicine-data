@@ -6,6 +6,7 @@ public class SecurityConstants {
             "/documentation/**",
             "/auth/login",
             "/auth/register",
+            "/produkt/name/**",
             "/swagger-ui.html", "/docs", "/swagger-resources/**",
             "/swagger-resources", "/v3/api-docs/**", "/swagger-ui/**",
             "/swagger-ui/favicon-32x32.png", "/swagger-ui/favicon-16x16.png",

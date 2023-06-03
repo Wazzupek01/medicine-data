@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/produkt")
 @Tag(name = "Produkt leczniczy", description = "Getting 'produktLeczniczy' related data")
@@ -44,5 +46,34 @@ public class ProduktLeczniczyController {
                                                                              @PathVariable boolean isAscending,
                                                                              @PathVariable int page) {
         return new ResponseEntity<>(produktLeczniczyService.getAllProduktLeczniczyPage(page, sortBy, isAscending), HttpStatus.OK);
+    }
+
+    @GetMapping("/name/{name}/{sortBy}/{isAscending}/{page}")
+    @SecurityRequirement(name = "Bearer authentication")
+    @Operation(summary = "Get by name", description = "Get page of sorted produktLeczniczy filtered by name")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Page found",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuthenticationResponseDTO.class))),
+            @ApiResponse(responseCode = "403", description = "Page does not exist or user not logged in",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    public ResponseEntity<Page<ProduktLeczniczyDTO>> getProduktLeczniczyPage(@PathVariable String name,
+                                                                             @PathVariable String sortBy,
+                                                                             @PathVariable boolean isAscending,
+                                                                             @PathVariable int page) {
+        return new ResponseEntity<>(produktLeczniczyService.getProduktLeczniczyByNamePage(name, page, sortBy, isAscending), HttpStatus.OK);
+    }
+
+    @GetMapping("/params")
+    @SecurityRequirement(name = "Bearer authentication")
+    @Operation(summary = "Get sort params", description = "Returns all possible parameters for sorting")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Parameters returned",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = List.class))),
+            @ApiResponse(responseCode = "403", description = "User is not logged in",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    public ResponseEntity<List<String>> listAllSortParameters() {
+        return new ResponseEntity<>(produktLeczniczyService.listAllSortParameters(), HttpStatus.OK);
     }
 }

@@ -34,6 +34,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests()
                 .requestMatchers(SecurityConstants.WHITELIST)
                 .permitAll()
+//                .requestMatchers("/produkt/params").hasAnyRole("USER")
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
