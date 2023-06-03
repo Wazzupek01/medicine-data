@@ -27,6 +27,9 @@ public class SecurityConfiguration {
     private final ExceptionFilter exceptionFilter;
     private final AuthenticationProvider authenticationProvider;
 
+    @Value("${security.allowed-origin}")
+    private String allowedOrigins;
+
     public SecurityConfiguration(JwtAuthenticationFilter jwtAuthenticationFilter, ExceptionFilter exceptionFilter,
                                  AuthenticationProvider authenticationProvider) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
@@ -44,5 +47,16 @@ public class SecurityConfiguration {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(exceptionFilter, JwtAuthenticationFilter.class);
         return http.build();
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of(allowedOrigins));
+        config.setAllowCredentials(true);
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 }
