@@ -1,6 +1,6 @@
 <app-md-navbar></app-md-navbar>
 
-<button (click)="getProduktyLecznicze()" class="button isinfo">Get produkty lecznicze</button>
+<!--<button (click)="getProduktyLecznicze()" class="button isinfo">Get produkty lecznicze</button>-->
 
 <ag-grid-angular
     (cellClicked)="onCellClicked($event)"
@@ -13,3 +13,5 @@
     style="width: 100%; height: 500px"
 >
 </ag-grid-angular>
+
+<app-md-pagination [allPages]="allPages" [currentPage]="currentPage" (pageChanged)="pageChanged($event)"></app-md-pagination>

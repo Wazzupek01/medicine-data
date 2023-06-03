@@ -15,3 +15,18 @@ export interface MdProduktLeczniczyDto {
     opakowania: MdOpakowanieDto[];
     substancjeCzynne: MdSubstancjaCzynnaDto[];
 }
+
+export const ProduktLeczniczyKeys: string[] = [
+    "nazwaProduktu",
+    "rodzajPreparatu",
+    "nazwaPowszechnieStosowana",
+    "moc",
+    "postac",
+    "podmiotOdpowiedzialny",
+    "typProcedury",
+    "numerPozwolenia",
+    "waznoscPozwolenia",
+    "kodATC",
+    // "opakowania",
+    // "substancjeCzynne"
+]

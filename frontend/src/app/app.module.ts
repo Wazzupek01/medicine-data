@@ -15,6 +15,7 @@ import {MdTablePageComponent} from './pages/md-table-page/md-table-page.componen
 import {MdLogoutPageComponent} from './pages/md-logout-page/md-logout-page.component';
 import {HttpClientModule} from "@angular/common/http";
 import { MdSearchPageComponent } from './pages/md-search-page/md-search-page.component';
+import { MdPaginationComponent } from './components/md-pagination/md-pagination.component';
 
 @NgModule({
     declarations: [
@@ -28,6 +29,7 @@ import { MdSearchPageComponent } from './pages/md-search-page/md-search-page.com
         MdTablePageComponent,
         MdLogoutPageComponent,
         MdSearchPageComponent,
+        MdPaginationComponent,
     ],
     imports: [
         BrowserModule,

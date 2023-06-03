@@ -5,8 +5,9 @@ import {Subscription} from "rxjs";
 import {HttpProduktLeczniczyService} from "../../services/http-produkt-leczniczy.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MdPageDto} from "../../models/md-page-dto";
-import {MdProduktLeczniczyDto} from "../../models/md-produkt-leczniczy-dto";
+import {MdProduktLeczniczyDto, ProduktLeczniczyKeys} from "../../models/md-produkt-leczniczy-dto";
 import {MdOpakowanieDto} from "../../models/md-opakowanie-dto";
+import {keys} from 'ts-transformer-keys';
 
 @Component({
     selector: 'app-md-table-page',
@@ -18,14 +19,17 @@ export class MdTablePageComponent implements OnInit, OnDestroy {
     @ViewChild(AgGridAngular) agGrid!: AgGridAngular;
 
     private subscriptions: Subscription[] = [];
-
     private valuesFromWeb!: MdPageDto<MdProduktLeczniczyDto> | MdPageDto<MdOpakowanieDto>;
+
+    protected currentPage: number = 0;
+    protected allPages: number = 0;
 
     constructor(private httpProduktLeczniczyService: HttpProduktLeczniczyService) {
 
     }
 
     ngOnInit() {
+        this.getProduktyLecznicze(this.currentPage);
     }
 
     ngOnDestroy() {
@@ -38,7 +42,7 @@ export class MdTablePageComponent implements OnInit, OnDestroy {
         {field: 'price'}
     ];
 
-    protected rowData = [
+    protected rowData: any = [
         {make: 'Toyota', model: 'Celica', price: 35000},
         {make: 'Ford', model: 'Mondeo', price: 32000},
         {make: 'Porsche', model: 'Boxster', price: 72000}
@@ -64,16 +68,30 @@ export class MdTablePageComponent implements OnInit, OnDestroy {
         this.agGrid.api.deselectAll();
     }
 
-    protected getProduktyLecznicze() {
+    private getProduktyLecznicze(page: number) {
         this.subscriptions.push(
-            this.httpProduktLeczniczyService.getAll("nazwaProduktu", true, 0).subscribe({
+            this.httpProduktLeczniczyService.getAll("nazwaProduktu", true, page).subscribe({
                 next: (value: MdPageDto<MdProduktLeczniczyDto>) => {
-                    this.valuesFromWeb = value;
+                    this.currentPage = value.number;
+                    this.allPages = value.totalPages;
+                    this.prepareProduktyLecznicze(value.content);
                 },
                 error: (error: HttpErrorResponse) => {
                     console.log(error)
                 }
             })
         );
+    }
+
+    protected pageChanged(page: number) {
+        this.currentPage = page;
+        this.getProduktyLecznicze(page);
+    }
+
+    private prepareProduktyLecznicze(produktyLecznicze: MdProduktLeczniczyDto[]) {
+        this.columnDefs = [];
+        this.columnDefs = ProduktLeczniczyKeys.map((value) => { return {field: value}});
+
+        this.rowData = produktyLecznicze;
     }
 }
