@@ -40,8 +40,10 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
         if (userRepository.count() == 0) {
             roleRepository.saveAll(List.of(new Role(1, "ADMIN"), new Role(0, "USER")));
-            authenticationService.register(new UserRegisterDTO("Admin!01", "admin@admin.pl", roleRepository.findRoleByName("ADMIN")));
-            authenticationService.register(new UserRegisterDTO("User1!01", "user1@user.pl", roleRepository.findRoleByName("USER")));
+            authenticationService.register(new UserRegisterDTO("Admin!01","Admin!01",
+                    "admin@admin.pl", roleRepository.findRoleByName("ADMIN").get().getName()));
+            authenticationService.register(new UserRegisterDTO("User1!01", "User1!01",
+                    "user1@user.pl", roleRepository.findRoleByName("USER").get().getName()));
         }
 
         if (produktLeczniczyRepository.count() > 0) return;

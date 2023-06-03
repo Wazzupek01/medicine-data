@@ -18,9 +18,12 @@ public class UserRegisterDTO {
     @Password
     private String password;
 
+    @Password
+    private String repeatPassword;
+
     @Email
     private String email;
 
     @NotNull
-    private Role role;
+    private String role;
 }
