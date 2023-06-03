@@ -13,6 +13,7 @@ import {Router} from "@angular/router";
 export class MdLogoutPageComponent implements OnInit, OnDestroy {
 
     private subscriptions: Subscription[] = [];
+    protected email!: string;
 
     constructor(
         private httpAuthService: HttpAuthService,
@@ -22,6 +23,7 @@ export class MdLogoutPageComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.email = this.localStorageService.getValue(MdConst.USEREMAIL)!;
     }
 
     ngOnDestroy() {
@@ -33,6 +35,7 @@ export class MdLogoutPageComponent implements OnInit, OnDestroy {
             this.httpAuthService.logoutUser().subscribe({
                 next: async () => {
                     this.localStorageService.removeValue(MdConst.USEREMAIL);
+                    this.localStorageService.removeValue(MdConst.USERROLE);
                     await this.router.navigateByUrl("");
                 },
                 error: (error: any) => {

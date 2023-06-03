@@ -1,11 +1,15 @@
+<app-md-navbar></app-md-navbar>
+
+<button (click)="getProduktyLecznicze()" class="button isinfo">Get produkty lecznicze</button>
+
 <ag-grid-angular
-    style="width: 100%; height: 500px"
-    class="ag-theme-alpine"
-    [rowData]="rowData"
+    (cellClicked)="onCellClicked($event)"
+    [animateRows]="true"
     [columnDefs]="columnDefs"
     [defaultColDef]="defaultColDef"
+    [rowData]="rowData"
     [rowSelection]="'multiple'"
-    [animateRows]="true"
-    (cellClicked)="onCellClicked($event)"
+    class="ag-theme-alpine"
+    style="width: 100%; height: 500px"
 >
 </ag-grid-angular>

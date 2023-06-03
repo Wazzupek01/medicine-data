@@ -10,7 +10,7 @@ import {MdTablePageComponent} from "./pages/md-table-page/md-table-page.componen
 import {MdLogoutPageComponent} from "./pages/md-logout-page/md-logout-page.component";
 
 const routes: Routes = [
-    {path: "", component: MdMainPageComponent, canActivate: [isLoginGuard]},
+    {path: "", component: MdMainPageComponent},
     {path: "chart", component: MdChartPageComponent, canActivate: [isLoginGuard]},
     {path: "table", component: MdTablePageComponent, canActivate: [isLoginGuard]},
     {path: "login", component: MdLoginPageComponent, canActivate: [isLoggedOutGuard]},

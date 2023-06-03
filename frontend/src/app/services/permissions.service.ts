@@ -3,6 +3,7 @@ import {HttpAuthService} from "./http-auth.service";
 import {catchError, map, Observable, of, take} from "rxjs";
 import {LocalStorageService} from "./local-storage.service";
 import {MdConst} from "../md-const";
+import {MdUserInfoDto} from "../models/md-user-info-dto";
 
 @Injectable({
     providedIn: 'root'
@@ -18,12 +19,14 @@ export class PermissionsService {
         return this.httpAuthService.getUser().pipe(
             take(1)
         ).pipe(
-            map((value: string) => {
-                this.localStorageService.setValue(MdConst.USEREMAIL, value);
+            map((value: MdUserInfoDto) => {
+                this.localStorageService.setValue(MdConst.USEREMAIL, value.email);
+                this.localStorageService.setValue(MdConst.USERROLE, value.role.name);
                 return true;
             }),
             catchError((error: any) => {
                 this.localStorageService.removeValue(MdConst.USEREMAIL);
+                this.localStorageService.removeValue(MdConst.USERROLE);
                 return of(false);
             })
         );
@@ -33,8 +36,8 @@ export class PermissionsService {
         return this.httpAuthService.getUser().pipe(
             take(1)
         ).pipe(
-            map((value: string) => {
-                this.localStorageService.setValue(MdConst.USEREMAIL, value);
+            map((value: MdUserInfoDto) => {
+                this.localStorageService.setValue(MdConst.USEREMAIL, value.email);
                 return false;
             }),
             catchError((error: any) => {

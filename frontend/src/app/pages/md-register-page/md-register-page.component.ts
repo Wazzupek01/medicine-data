@@ -13,6 +13,7 @@ import {LocalStorageService} from "../../services/local-storage.service";
 import {HttpAuthService} from "../../services/http-auth.service";
 import {MdConst} from "../../md-const";
 import {MdUserInfoDto} from "../../models/md-user-info-dto";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
     selector: 'app-md-register-page',
@@ -88,8 +89,6 @@ export class MdRegisterPageComponent implements OnInit, OnDestroy {
             role: this.registerForm.get("role")?.value
         };
 
-        console.log(registerDto);
-
         this.subscriptions.push(
             this.httpAuthService.registerUser(registerDto).subscribe({
                 next: async (value: MdUserInfoDto) => {
@@ -97,8 +96,15 @@ export class MdRegisterPageComponent implements OnInit, OnDestroy {
                     this.localstorageService.setValue(MdConst.USERROLE, value.role.name);
                     await this.router.navigateByUrl("/")
                 },
-                error: (error: any) => {
-                    console.log(error);
+                error: (error: HttpErrorResponse) => {
+                    if(error.status === 400) {
+                        if(error.error.message.includes("Invalid Password")) {
+                            this.registerForm.get("password")?.setErrors({toShortPassword: true});
+                        }
+                        if(error.error.message.includes("Email has to be unique!")) {
+                            this.registerForm.get("email")?.setErrors({emailTaken: true});
+                        }
+                    }
                 }
             })
         );

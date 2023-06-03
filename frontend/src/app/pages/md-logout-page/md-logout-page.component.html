@@ -1,3 +1,6 @@
+<app-md-navbar></app-md-navbar>
+
+
 <!--TODO: Get email from localstorage-->
 
 <div class="my-container">
@@ -6,7 +9,7 @@
             <div class="card-content">
                 <p class="title">Logout</p>
                 <div class="content">
-                    <p>Do you wanna log out user Kamil Pietrak </p>
+                    <p>Do you wanna log out user {{email}} </p>
                     <button (click)="logout()" class="button is-danger is-fullwidth mt-3">Logout</button>
                     <a routerLink="/" routerLinkActive="active" class="button is-primary is-fullwidth mt-3">Home</a>
                 </div>

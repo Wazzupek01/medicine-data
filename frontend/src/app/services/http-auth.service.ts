@@ -16,8 +16,8 @@ export class HttpAuthService {
     constructor(private http: HttpClient) {
     }
 
-    public getUser(): Observable<string> {
-        return this.http.get<string>(this.baseApiUrl + "/user", {withCredentials: true});
+    public getUser(): Observable<MdUserInfoDto> {
+        return this.http.get<MdUserInfoDto>(this.baseApiUrl + "/user", {withCredentials: true});
     }
 
     public isAdmin(): Observable<boolean> {

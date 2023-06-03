@@ -3,6 +3,7 @@ import {Subscription} from "rxjs";
 import {HttpAuthService} from "../../services/http-auth.service";
 import {LocalStorageService} from "../../services/local-storage.service";
 import {MdConst} from "../../md-const";
+import {MdUserInfoDto} from "../../models/md-user-info-dto";
 
 @Component({
     selector: 'app-md-navbar',
@@ -43,15 +44,17 @@ export class MdNavbarComponent implements OnInit, OnDestroy {
     private getUserEmail() {
         this.subscriptions.push(
             this.authHttpService.getUser().subscribe({
-                next: (value: string) => {
-                    this.email = value;
+                next: (value: MdUserInfoDto) => {
+                    this.email = value.email;
                     this.logged = true;
-                    this.localStorageService.setValue(MdConst.USEREMAIL, value);
+                    this.localStorageService.setValue(MdConst.USEREMAIL, value.email);
+                    this.localStorageService.setValue(MdConst.USERROLE, value.role.name);
                 },
                 error: (error: any) => {
                     this.email = undefined;
                     this.logged = false;
                     this.localStorageService.removeValue(MdConst.USEREMAIL);
+                    this.localStorageService.removeValue(MdConst.USERROLE);
                     console.log(error);
                 }
             })

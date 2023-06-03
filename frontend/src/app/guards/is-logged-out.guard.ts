@@ -1,9 +1,19 @@
-import {CanActivateFn} from '@angular/router';
+import {CanActivateFn, Router} from '@angular/router';
 import {inject} from "@angular/core";
 import {PermissionsService} from "../services/permissions.service";
+import {take, tap} from "rxjs";
 
 export const isLoggedOutGuard: CanActivateFn = (route, state) => {
-    // return inject(PermissionsService).canActivateWhenUserLoggedOut()
-    return true;
+    const router = inject(Router);
+
+    return inject(PermissionsService).canActivateWhenUserLoggedOut().pipe(
+        take(1),
+        tap(async (loggedOut) => {
+            if (!loggedOut) {
+                await router.navigateByUrl("/");
+            }
+            return loggedOut;
+        })
+    );
 };
 

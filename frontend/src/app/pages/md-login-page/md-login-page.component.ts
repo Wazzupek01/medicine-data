@@ -7,6 +7,7 @@ import {MdLoginDto} from "../../models/md-login-dto";
 import {LocalStorageService} from "../../services/local-storage.service";
 import {MdConst} from "../../md-const";
 import {MdUserInfoDto} from "../../models/md-user-info-dto";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
     selector: 'app-md-login-page',
@@ -27,7 +28,8 @@ export class MdLoginPageComponent implements OnInit, OnDestroy {
         private localstorageService: LocalStorageService
     ) {
         this.loginForm = formBuilder.group({
-            email: new FormControl("", [
+            email: new FormControl("",
+                [
                     Validators.required,
                     Validators.email
                 ]
@@ -64,10 +66,13 @@ export class MdLoginPageComponent implements OnInit, OnDestroy {
                 next: async (value: MdUserInfoDto) => {
                     this.localstorageService.setValue(MdConst.USEREMAIL, value.email);
                     this.localstorageService.setValue(MdConst.USERROLE, value.role.name);
+                    this.loginError = false;
                     await this.router.navigateByUrl("/");
                 },
-                error: (value: any) => {
-                    console.log(value);
+                error: (value: HttpErrorResponse) => {
+                    if (value.status === 403 || value.status === 400) {
+                        this.loginError = true;
+                    }
                 }
             })
         );
