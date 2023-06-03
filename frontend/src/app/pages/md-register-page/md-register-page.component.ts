@@ -12,6 +12,7 @@ import {MdRegisterDto} from "../../models/md-register-dto";
 import {LocalStorageService} from "../../services/local-storage.service";
 import {HttpAuthService} from "../../services/http-auth.service";
 import {MdConst} from "../../md-const";
+import {MdUserInfoDto} from "../../models/md-user-info-dto";
 
 @Component({
     selector: 'app-md-register-page',
@@ -87,10 +88,13 @@ export class MdRegisterPageComponent implements OnInit, OnDestroy {
             role: this.registerForm.get("role")?.value
         };
 
+        console.log(registerDto);
+
         this.subscriptions.push(
             this.httpAuthService.registerUser(registerDto).subscribe({
-                next: async (value: string) => {
-                    this.localstorageService.setValue(MdConst.USEREMAIL, value);
+                next: async (value: MdUserInfoDto) => {
+                    this.localstorageService.setValue(MdConst.USEREMAIL, value.email);
+                    this.localstorageService.setValue(MdConst.USERROLE, value.role.name);
                     await this.router.navigateByUrl("/")
                 },
                 error: (error: any) => {

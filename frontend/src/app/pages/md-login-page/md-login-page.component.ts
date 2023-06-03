@@ -6,6 +6,7 @@ import {HttpAuthService} from "../../services/http-auth.service";
 import {MdLoginDto} from "../../models/md-login-dto";
 import {LocalStorageService} from "../../services/local-storage.service";
 import {MdConst} from "../../md-const";
+import {MdUserInfoDto} from "../../models/md-user-info-dto";
 
 @Component({
     selector: 'app-md-login-page',
@@ -60,8 +61,9 @@ export class MdLoginPageComponent implements OnInit, OnDestroy {
 
         this.subscriptions.push(
             this.httpAuthService.loginUser(loginDto).subscribe({
-                next: async (value: string) => {
-                    this.localstorageService.setValue(MdConst.USEREMAIL, value)
+                next: async (value: MdUserInfoDto) => {
+                    this.localstorageService.setValue(MdConst.USEREMAIL, value.email);
+                    this.localstorageService.setValue(MdConst.USERROLE, value.role.name);
                     await this.router.navigateByUrl("/");
                 },
                 error: (value: any) => {

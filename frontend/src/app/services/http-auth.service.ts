@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {MdLoginDto} from "../models/md-login-dto";
 import {MdRegisterDto} from "../models/md-register-dto";
 import {environment} from '../../environments/environment';
+import {MdUserInfoDto} from "../models/md-user-info-dto";
 
 @Injectable({
     providedIn: 'root'
@@ -23,12 +24,12 @@ export class HttpAuthService {
         return this.http.get<boolean>(this.baseApiUrl + "/admin", {withCredentials: true});
     }
 
-    public loginUser(loginDto: MdLoginDto): Observable<string> {
-        return this.http.post<string>(this.baseApiUrl + "/login", loginDto, {withCredentials: true});
+    public loginUser(loginDto: MdLoginDto): Observable<MdUserInfoDto> {
+        return this.http.post<MdUserInfoDto>(this.baseApiUrl + "/login", loginDto, {withCredentials: true});
     }
 
-    public registerUser(registerDto: MdRegisterDto): Observable<string> {
-        return this.http.post<string>(this.baseApiUrl + "/register", registerDto, {withCredentials: true});
+    public registerUser(registerDto: MdRegisterDto): Observable<MdUserInfoDto> {
+        return this.http.post<MdUserInfoDto>(this.baseApiUrl + "/register", registerDto, {withCredentials: true});
     }
 
     public logoutUser(): Observable<any> {
