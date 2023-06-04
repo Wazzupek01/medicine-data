@@ -13,7 +13,7 @@
     flex-direction: row;
     align-items: center;
     flex-wrap: wrap;
-    justify-content: start;
+    justify-content: flex-start;
 }
 
 .my-select-container {

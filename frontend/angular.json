@@ -37,8 +37,8 @@
                             "budgets": [
                                 {
                                     "type": "initial",
-                                    "maximumWarning": "500kb",
-                                    "maximumError": "1mb"
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "4mb"
                                 },
                                 {
                                     "type": "anyComponentStyle",
@@ -74,6 +74,11 @@
                         "development": {
                             "browserTarget": "frontend:build:development"
                         }
+                    },
+                    "options": {
+                        "sslKey": "./server.key",
+                        "sslCert": "./server.crt",
+                        "ssl": true
                     },
                     "defaultConfiguration": "development"
                 },
