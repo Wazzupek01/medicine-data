@@ -6,7 +6,6 @@ import com.pedryczpietrak.medicinedata.model.DTO.OpakowanieDTO;
 import com.pedryczpietrak.medicinedata.model.mappers.OpakowanieDTOMapper;
 import com.pedryczpietrak.medicinedata.repositories.OpakowanieRepository;
 import com.pedryczpietrak.medicinedata.services.interfaces.OpakowanieService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

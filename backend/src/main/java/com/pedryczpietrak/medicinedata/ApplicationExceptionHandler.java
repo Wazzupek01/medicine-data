@@ -6,7 +6,6 @@ import com.pedryczpietrak.medicinedata.exceptions.ErrorResponse;
 import com.pedryczpietrak.medicinedata.exceptions.InvalidJwtException;
 import com.pedryczpietrak.medicinedata.exceptions.NotMatchingPasswordException;
 import com.pedryczpietrak.medicinedata.exceptions.RoleNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.NonNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

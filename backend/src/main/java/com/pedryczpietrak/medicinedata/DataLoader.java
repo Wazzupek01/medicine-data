@@ -29,9 +29,6 @@ public class DataLoader implements CommandLineRunner {
     private final AuthenticationService authenticationService;
 
     @Autowired
-    private OpakowanieRepository opakowanieRepository;
-
-    @Autowired
     public DataLoader(ProduktLeczniczyRepository produktLeczniczyRepository, UserRepository userRepository,
                       RoleRepository roleRepository, AuthenticationService authenticationService) {
         this.produktLeczniczyRepository = produktLeczniczyRepository;
