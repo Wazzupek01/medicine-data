@@ -67,7 +67,8 @@ public class OpakowanieController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "kategorieDostepnosci found and counted",
                     content = @Content(array = @ArraySchema(schema = @Schema(implementation = CountResult.class)))),
-            @ApiResponse(responseCode = "404", description = "No opakowanie in database")
+            @ApiResponse(responseCode = "404", description = "No opakowanie in database"),
+            @ApiResponse(responseCode = "403", description = "User not logged in")
     })
     public ResponseEntity<List<CountResult>> countKategoriaDostepnosci(){
         return new ResponseEntity<>(opakowanieService.countKategoriaDostepnosci(), HttpStatus.OK);

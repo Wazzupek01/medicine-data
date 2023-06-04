@@ -10,6 +10,7 @@ import com.pedryczpietrak.medicinedata.repositories.ProduktLeczniczyRepository;
 import com.pedryczpietrak.medicinedata.repositories.RoleRepository;
 import com.pedryczpietrak.medicinedata.repositories.UserRepository;
 import com.pedryczpietrak.medicinedata.services.AuthenticationService;
+import com.pedryczpietrak.medicinedata.services.interfaces.ProduktLeczniczyService;
 import me.tongfei.progressbar.ProgressBar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -28,6 +29,9 @@ public class DataLoader implements CommandLineRunner {
     private final AuthenticationService authenticationService;
 
     @Autowired
+    private ProduktLeczniczyService produktLeczniczyService;
+
+    @Autowired
     public DataLoader(ProduktLeczniczyRepository produktLeczniczyRepository, UserRepository userRepository,
                       RoleRepository roleRepository, AuthenticationService authenticationService) {
         this.produktLeczniczyRepository = produktLeczniczyRepository;
@@ -38,6 +42,9 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+
+        produktLeczniczyService.getSubstancjaCzynnaCountTop10();
+
         if (userRepository.count() == 0) {
             roleRepository.saveAll(List.of(new Role(1, "ADMIN"), new Role(0, "USER")));
             authenticationService.register(new UserRegisterDTO("Admin!01","Admin!01",

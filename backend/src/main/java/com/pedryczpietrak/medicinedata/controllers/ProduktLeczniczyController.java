@@ -2,9 +2,11 @@ package com.pedryczpietrak.medicinedata.controllers;
 
 import com.pedryczpietrak.medicinedata.exceptions.ErrorResponse;
 import com.pedryczpietrak.medicinedata.model.DTO.AuthenticationResponseDTO;
+import com.pedryczpietrak.medicinedata.model.DTO.CountResult;
 import com.pedryczpietrak.medicinedata.model.DTO.ProduktLeczniczyDTO;
 import com.pedryczpietrak.medicinedata.services.interfaces.ProduktLeczniczyService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -69,11 +71,26 @@ public class ProduktLeczniczyController {
     @Operation(summary = "Get sort params", description = "Returns all possible parameters for sorting")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Parameters returned",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = List.class))),
+                    content = @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = String.class)))),
             @ApiResponse(responseCode = "403", description = "User is not logged in",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
     })
     public ResponseEntity<List<String>> listAllSortParameters() {
         return new ResponseEntity<>(produktLeczniczyService.listAllSortParameters(), HttpStatus.OK);
+    }
+
+    @GetMapping("/topsubstancje")
+    @SecurityRequirement(name = "Bearer authentication")
+    @Operation(summary = "Top substancjaLecznicza count", description = "Returns top 10 most common substancjaLecznicza counted")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Parameters returned",
+                    content = @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = CountResult.class)))),
+            @ApiResponse(responseCode = "404", description = "No substancjaLecznica found"),
+            @ApiResponse(responseCode = "403", description = "User not logged in")
+    })
+    public ResponseEntity<List<CountResult>> getTop10SubstancjaLecznicza(){
+        return new ResponseEntity<>(produktLeczniczyService.getSubstancjaCzynnaCountTop10(), HttpStatus.OK);
     }
 }
