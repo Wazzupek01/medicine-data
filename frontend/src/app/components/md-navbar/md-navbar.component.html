@@ -1,31 +1,31 @@
 <!--TODO: Add logo to this page-->
 
-<nav class="navbar my-navbar" aria-label="main navigation">
+<nav aria-label="main navigation" class="navbar my-navbar">
     <div class="navbar-brand">
         <a class="navbar-item" href="/">
-            <img src="/assets/img/logo.png"
-                 alt="Medicine data" width="112" height="28">
+            <img alt="Medicine data"
+                 height="28" src="/assets/img/logo.png" width="112">
         </a>
-        <a role="button" #navBurger class="navbar-burger" (click)="toggleNavbar()">
+        <a #navBurger (click)="toggleNavbar()" class="navbar-burger" role="button">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
         </a>
     </div>
-    <div class="navbar-menu" #navMenu (click)="toggleNavbar()">
+    <div #navMenu (click)="toggleNavbar()" class="navbar-menu">
         <div class="navbar-start">
             <a class="navbar-item" routerLink="/" routerLinkActive="active">
                 HOME
             </a>
-            <a class="navbar-item" routerLink="/chart" routerLinkActive="active" *ngIf="logged">
+            <a *ngIf="logged" class="navbar-item" routerLink="/chart" routerLinkActive="active">
                 CHART
             </a>
-            <a class="navbar-item" routerLink="/table" routerLinkActive="active" *ngIf="logged">
+            <a *ngIf="logged" class="navbar-item" routerLink="/table" routerLinkActive="active">
                 TABLE
             </a>
         </div>
 
-        <div class="navbar-end" *ngIf="logged">
+        <div *ngIf="logged" class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
                     <a class="button is-success is-outlined" disabled>{{email}}</a>
@@ -34,11 +34,12 @@
             </div>
         </div>
 
-        <div class="navbar-end" *ngIf="!logged">
+        <div *ngIf="!logged" class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
                     <a class="button is-success is-outlined" routerLink="/login" routerLinkActive="active">LOGIN</a>
-                    <a class="button is-primary is-outlined" routerLink="/register" routerLinkActive="active">REGISTER</a>
+                    <a class="button is-primary is-outlined" routerLink="/register"
+                       routerLinkActive="active">REGISTER</a>
                 </div>
             </div>
         </div>

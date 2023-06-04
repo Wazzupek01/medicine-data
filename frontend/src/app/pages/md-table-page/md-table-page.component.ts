@@ -58,6 +58,7 @@ export class MdTablePageComponent implements OnInit, OnDestroy {
             this.optionForm.get("sortBy")!.valueChanges.subscribe({
                 next: (value) => {
                     this.sortBy = value;
+                    this.currentPage = 0;
                     this.getValues();
                 }
             })
@@ -67,6 +68,7 @@ export class MdTablePageComponent implements OnInit, OnDestroy {
             this.optionForm.get("sortDir")!.valueChanges.subscribe({
                 next: (value) => {
                     this.sortDir = value;
+                    this.currentPage = 0;
                     this.getValues();
                 }
             })
@@ -79,13 +81,7 @@ export class MdTablePageComponent implements OnInit, OnDestroy {
 
     protected pageChanged(page: number) {
         this.currentPage = page;
-        const asc = this.optionForm.get("sortDir")?.value;
-        const sortBy = this.optionForm.get("sortBy")?.value;
-        if (this.optionForm.get("type")?.value == "produkt") {
-            this.getProduktyLecznicze(page, sortBy, asc);
-        } else {
-            this.getOpakaowania(page, sortBy, asc);
-        }
+        this.getValues();
     }
 
     protected prepareNameForColumns(name: string): string {
@@ -103,7 +99,6 @@ export class MdTablePageComponent implements OnInit, OnDestroy {
     }
 
     private getValues() {
-        this.currentPage = 0;
         if (this.type == "produkt") {
             this.getProduktyLecznicze(this.currentPage, this.sortBy, this.sortDir);
         } else {

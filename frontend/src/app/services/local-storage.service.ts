@@ -12,7 +12,7 @@ export class LocalStorageService {
         localStorage.setItem(key, value);
     }
 
-    public getValue(key: string): string | null{
+    public getValue(key: string): string | null {
         return localStorage.getItem(key);
     }
 

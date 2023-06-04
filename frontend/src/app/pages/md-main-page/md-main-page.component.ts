@@ -1,16 +1,20 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-md-main-page',
-  templateUrl: './md-main-page.component.html',
-  styleUrls: ['./md-main-page.component.css']
+    selector: 'app-md-main-page',
+    templateUrl: './md-main-page.component.html',
+    styleUrls: ['./md-main-page.component.css']
 })
-export class MdMainPageComponent implements OnInit, OnDestroy{
+export class MdMainPageComponent implements OnInit, OnDestroy {
 
     protected searchForm: FormGroup;
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor(
+        private router: Router,
+        formBuilder: FormBuilder
+    ) {
         this.searchForm = formBuilder.group({
             search: new FormControl("",
                 [
@@ -26,10 +30,11 @@ export class MdMainPageComponent implements OnInit, OnDestroy{
     ngOnDestroy() {
     }
 
-    protected searchHandler() {
-        if(this.searchForm.invalid) {
+    protected async searchHandler() {
+        if (this.searchForm.invalid) {
             return;
         }
-        // TODO: Implement search page
+
+        await this.router.navigateByUrl("/search", {state: {search: this.searchForm.get("search")?.value}});
     }
 }

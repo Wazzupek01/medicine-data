@@ -1,5 +1,5 @@
 <div *ngIf="currentPage != allPages || allPages != 0 ">
-    <div *ngIf="currentPage <= 2">
+    <div *ngIf="allPages >= 5 && currentPage <= 2">
         <nav aria-label="pagination" class="pagination is-small" role="navigation">
             <ul class="pagination-list">
                 <li><a (click)="pageChangedHandler(0)" [ngClass]="{'is-current': currentPage == 0}"
@@ -16,7 +16,17 @@
         </nav>
     </div>
 
-    <div *ngIf="currentPage > 2 && currentPage + 3 < allPages">
+    <div *ngIf="allPages <= 5">
+        <nav aria-label="pagination" class="pagination is-small" role="navigation">
+            <ul class="pagination-list">
+                <li *ngFor="let page of lowpageNumbers"><a (click)="pageChangedHandler(page)"
+                                                           [ngClass]="{'is-current': currentPage == page}"
+                                                           class="pagination-link">{{page + 1}}</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div *ngIf="allPages >= 5 && currentPage > 2 && currentPage + 3 < allPages">
         <nav aria-label="pagination" class="pagination is-small" role="navigation">
             <ul class="pagination-list">
                 <li><a (click)="pageChangedHandler(0)" aria-label="Goto page 1" class="pagination-link">1</a></li>
@@ -31,7 +41,7 @@
         </nav>
     </div>
 
-    <div *ngIf="currentPage + 3 >= allPages">
+    <div *ngIf="allPages >= 5 && currentPage + 3 >= allPages">
         <nav aria-label="pagination" class="pagination is-small" role="navigation">
             <ul class="pagination-list">
                 <li><a (click)="pageChangedHandler(0)" aria-label="Goto page 1" class="pagination-link">1</a></li>

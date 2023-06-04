@@ -1,11 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {
-    AbstractControl,
-    FormBuilder, FormControl,
-    FormGroup,
-    ValidationErrors,
-    Validators
-} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {MdRegisterDto} from "../../models/md-register-dto";
@@ -77,7 +71,7 @@ export class MdRegisterPageComponent implements OnInit, OnDestroy {
     }
 
     protected registerUser() {
-        if(this.registerForm.invalid) {
+        if (this.registerForm.invalid) {
             this.registerForm.markAllAsTouched();
             return;
         }
@@ -97,11 +91,11 @@ export class MdRegisterPageComponent implements OnInit, OnDestroy {
                     await this.router.navigateByUrl("/")
                 },
                 error: (error: HttpErrorResponse) => {
-                    if(error.status === 400) {
-                        if(error.error.message.includes("Invalid Password")) {
+                    if (error.status === 400) {
+                        if (error.error.message.includes("Invalid Password")) {
                             this.registerForm.get("password")?.setErrors({toShortPassword: true});
                         }
-                        if(error.error.message.includes("Email has to be unique!")) {
+                        if (error.error.message.includes("Email has to be unique!")) {
                             this.registerForm.get("email")?.setErrors({emailTaken: true});
                         }
                     }
