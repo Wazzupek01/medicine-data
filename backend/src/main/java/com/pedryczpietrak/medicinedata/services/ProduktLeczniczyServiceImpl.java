@@ -1,12 +1,16 @@
 package com.pedryczpietrak.medicinedata.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pedryczpietrak.medicinedata.exceptions.EmptyPageException;
 import com.pedryczpietrak.medicinedata.model.DTO.CountResult;
+import com.pedryczpietrak.medicinedata.model.DTO.GeneratedFileParams;
 import com.pedryczpietrak.medicinedata.model.DTO.ProduktLeczniczyDTO;
+import com.pedryczpietrak.medicinedata.model.entities.produkt_leczniczy.ProduktLeczniczy;
+import com.pedryczpietrak.medicinedata.model.entities.produkt_leczniczy.ProduktyLecznicze;
 import com.pedryczpietrak.medicinedata.model.mappers.ProduktLeczniczyDTOMapper;
 import com.pedryczpietrak.medicinedata.repositories.ProduktLeczniczyRepository;
 import com.pedryczpietrak.medicinedata.services.interfaces.ProduktLeczniczyService;
-import jakarta.persistence.Tuple;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,8 +18,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import javax.lang.model.element.Element;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -68,10 +80,64 @@ public class ProduktLeczniczyServiceImpl implements ProduktLeczniczyService {
         if(response.isEmpty()) throw new NullPointerException();
         List<CountResult> results = new ArrayList<>();
         for(Map<String, Long> res: response){
-            int i = 0;
             results.add(new CountResult(res.get("substancja_czynna") + "", res.get("count")));
         }
         return results;
+    }
+
+    @Override
+    public List<CountResult> getPostacCountTop10() {
+        return repository.countPostacTop10();
+    }
+
+    @Override
+    public void deleteProduktLeczniczyById(Integer id) {
+        repository.deleteProduktLeczniczyById(id);
+    }
+
+    @Override
+    public byte[] getProduktLeczniczyXmlFile(GeneratedFileParams params) {
+        ProduktyLecznicze produktyLecznicze = new ProduktyLecznicze();
+        List<ProduktLeczniczy> produkty = getProduktyLeczniczeForFile(params);
+
+        produkty = nullValuesInProduktLeczniczy(produkty, params.getNullFields());
+        produktyLecznicze.setProduktyLecznicze(produkty);
+
+        try {
+            JAXBContext context = JAXBContext.newInstance(ProduktyLecznicze.class);
+            Marshaller mar = context.createMarshaller();
+            mar.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            mar.marshal(produktyLecznicze, new File("./result.xml"));
+            byte[] data = Files.readAllBytes(Paths.get("./result.xml"));
+            return data;
+        } catch (JAXBException e){
+            throw new EmptyPageException();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public byte[] getProduktLeczniczyJsonFile(GeneratedFileParams params) {
+        ProduktyLecznicze produktyLecznicze = new ProduktyLecznicze();
+        List<ProduktLeczniczy> produkty = getProduktyLeczniczeForFile(params);
+
+        produkty = nullValuesInProduktLeczniczy(produkty, params.getNullFields());
+        produktyLecznicze.setProduktyLecznicze(produkty);
+
+        ObjectMapper mapperJson = new ObjectMapper();
+        List<ProduktLeczniczyDTO> dto = new ArrayList<>();
+        for(ProduktLeczniczy p: produkty){
+            dto.add(mapper.produktLeczniczyToProduktLeczniczyDTO(p));
+        }
+        try{
+            String json = mapperJson.writeValueAsString(dto);
+            Charset charset = StandardCharsets.UTF_8;
+            return json.getBytes(charset);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
@@ -84,5 +150,69 @@ public class ProduktLeczniczyServiceImpl implements ProduktLeczniczyService {
         }
 
         return fieldNames;
+    }
+
+    private List<ProduktLeczniczy> getProduktyLeczniczeForFile(GeneratedFileParams params){
+
+        List<ProduktLeczniczy> produkty;
+        if(params.getSortBy() == null || params.getSortBy() == ""){
+            produkty = repository.findAllBy(PageRequest.of(0, params.getElementsNum())).getContent();
+        } else {
+            Sort sort = Sort.by(params.getSortBy());
+            if(params.isAscending())
+                sort.ascending();
+            else sort.descending();
+            PageRequest pageRequest = PageRequest.of(0, params.getElementsNum()).withSort(sort);
+            produkty = repository.findAllBy(pageRequest).getContent();
+        }
+        return produkty;
+    }
+
+    private List<ProduktLeczniczy> nullValuesInProduktLeczniczy(List<ProduktLeczniczy> produkty, List<String> values){
+        for(ProduktLeczniczy p: produkty){
+            for(String param: values)
+                switch(param.toLowerCase()){
+                    case "id":
+                        p.setId(null);
+                        break;
+                    case "nazwaproduktu":
+                        p.setNazwaProduktu(null);
+                        break;
+                    case "rodzajpreparatu":
+                        p.setRodzajPreparatu(null);
+                        break;
+                    case "nazwapowszechniestosowana":
+                        p.setNazwaPowszechnieStosowana(null);
+                        break;
+                    case "moc":
+                        p.setMoc(null);
+                        break;
+                    case "postac":
+                        p.setPostac(null);
+                        break;
+                    case "podmiotodpowiedzialny":
+                        p.setPodmiotOdpowiedzialny(null);
+                        break;
+                    case "typprocedury":
+                        p.setTypProcedury(null);
+                        break;
+                    case "numerpozwolenia":
+                        p.setNumerPozwolenia(null);
+                        break;
+                    case "waznoscpozwolenia":
+                        p.setWaznoscPozwolenia(null);
+                        break;
+                    case "kodatc":
+                        p.setKodATC(null);
+                        break;
+                    case "opakowania":
+                        p.setOpakowania(null);
+                        break;
+                    case "substancjeczynne":
+                        p.setSubstancjeCzynne(null);
+                        break;
+                }
+        }
+        return produkty;
     }
 }

@@ -46,11 +46,11 @@ public class DataLoader implements CommandLineRunner {
         produktLeczniczyService.getSubstancjaCzynnaCountTop10();
 
         if (userRepository.count() == 0) {
-            roleRepository.saveAll(List.of(new Role(1, "ADMIN"), new Role(0, "USER")));
+            roleRepository.saveAll(List.of(new Role(1, "ROLE_ADMIN"), new Role(0, "ROLE_USER")));
             authenticationService.register(new UserRegisterDTO("Admin!01","Admin!01",
-                    "admin@admin.pl", roleRepository.findRoleByName("ADMIN").get().getName()));
+                    "admin@admin.pl", roleRepository.findRoleByName("ROLE_ADMIN").get().getName()));
             authenticationService.register(new UserRegisterDTO("User1!01", "User1!01",
-                    "user1@user.pl", roleRepository.findRoleByName("USER").get().getName()));
+                    "user1@user.pl", roleRepository.findRoleByName("ROLE_USER").get().getName()));
         }
 
         if (produktLeczniczyRepository.count() > 0) return;

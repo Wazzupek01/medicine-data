@@ -14,14 +14,15 @@ public interface ProduktLeczniczyRepository extends JpaRepository<ProduktLecznic
     Page<ProduktLeczniczy> findAllBy(Pageable pageable);
     Page<ProduktLeczniczy> findAllByNazwaProduktuContainingIgnoreCase(String nazwaProduktu, Pageable pageable);
 
-//    @Query("SELECT new com.pedryczpietrak.medicinedata.model.DTO.CountResult(s.substancjaCzynna, COUNT(*)) FROM ProduktLeczniczy" +
-//            " LEFT JOIN SubstancjeCzynne sc ON ProduktLeczniczy.substancjeCzynne.id = sc.id" +
-//            " LEFT JOIN SubstancjaCzynna s ON sc.id = s.substancjeCzynne.id" +
-//            " GROUP BY  s.substancjaCzynna ORDER BY COUNT(*) DESC LIMIT 12")
-
     @Query(nativeQuery = true, value = "select s.substancja_czynna, count(*) from produkt_leczniczy" +
-            "    left join substancje_czynne sc on produkt_leczniczy.substancje_czynne_id = sc.id" +
-            "    left join substancja_czynna s on sc.id = s.substancje_czynne_id" +
-            "                                     group by  s.substancja_czynna order by count(*) DESC LIMIT 12;")
+            " left join substancje_czynne sc on produkt_leczniczy.substancje_czynne_id = sc.id" +
+            " left join substancja_czynna s on sc.id = s.substancje_czynne_id" +
+            " group by  s.substancja_czynna order by count(*) desc limit 10")
     List<Map<String, Long>> countSubstancjaCzynnaTop10();
+
+    @Query("select new com.pedryczpietrak.medicinedata.model.DTO.CountResult(postac, count(*))" +
+            " from ProduktLeczniczy group by postac order by count(*) desc limit 10")
+    List<CountResult> countPostacTop10();
+
+    void deleteProduktLeczniczyById(Integer id);
 }
