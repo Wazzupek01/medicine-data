@@ -6,7 +6,6 @@ import com.pedryczpietrak.medicinedata.model.entities.produkt_leczniczy.Opakowan
 import com.pedryczpietrak.medicinedata.model.entities.produkt_leczniczy.ProduktLeczniczy;
 import com.pedryczpietrak.medicinedata.model.entities.produkt_leczniczy.ProduktyLecznicze;
 import com.pedryczpietrak.medicinedata.model.entities.produkt_leczniczy.SubstancjeCzynne;
-import com.pedryczpietrak.medicinedata.repositories.OpakowanieRepository;
 import com.pedryczpietrak.medicinedata.repositories.ProduktLeczniczyRepository;
 import com.pedryczpietrak.medicinedata.repositories.RoleRepository;
 import com.pedryczpietrak.medicinedata.repositories.UserRepository;
