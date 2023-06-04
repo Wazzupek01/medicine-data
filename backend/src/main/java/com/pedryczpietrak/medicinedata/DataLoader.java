@@ -42,9 +42,6 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
-        produktLeczniczyService.getSubstancjaCzynnaCountTop10();
-
         if (userRepository.count() == 0) {
             roleRepository.saveAll(List.of(new Role(1, "ROLE_ADMIN"), new Role(0, "ROLE_USER")));
             authenticationService.register(new UserRegisterDTO("Admin!01","Admin!01",
