@@ -6,6 +6,7 @@ import com.pedryczpietrak.medicinedata.exceptions.ErrorResponse;
 import com.pedryczpietrak.medicinedata.exceptions.InvalidJwtException;
 import com.pedryczpietrak.medicinedata.exceptions.NotMatchingPasswordException;
 import com.pedryczpietrak.medicinedata.exceptions.RoleNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.NonNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -42,7 +43,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
     }
 
     @ExceptionHandler({EmptyPageException.class})
-    private ResponseEntity<ErrorResponse> handleEmptyPageException(EmptyPageException e) {
+    private ResponseEntity<ErrorResponse> handleEmptyPageException(RuntimeException e) {
         ErrorResponse error = new ErrorResponse(List.of(e.getMessage()));
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
@@ -55,7 +56,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 
     @ExceptionHandler({NullPointerException.class})
     private ResponseEntity<ErrorResponse> handleNullPointerException(NullPointerException e) {
-        ErrorResponse error = new ErrorResponse(List.of(e.getMessage(), "Body of request is invalid"));
+        ErrorResponse error = new ErrorResponse(List.of(e.getMessage()));
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 

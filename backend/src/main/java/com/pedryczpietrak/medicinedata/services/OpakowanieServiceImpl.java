@@ -1,10 +1,12 @@
 package com.pedryczpietrak.medicinedata.services;
 
 import com.pedryczpietrak.medicinedata.exceptions.EmptyPageException;
+import com.pedryczpietrak.medicinedata.model.DTO.CountResult;
 import com.pedryczpietrak.medicinedata.model.DTO.OpakowanieDTO;
 import com.pedryczpietrak.medicinedata.model.mappers.OpakowanieDTOMapper;
 import com.pedryczpietrak.medicinedata.repositories.OpakowanieRepository;
 import com.pedryczpietrak.medicinedata.services.interfaces.OpakowanieService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -40,6 +42,13 @@ public class OpakowanieServiceImpl implements OpakowanieService {
         } else {
             throw new EmptyPageException();
         }
+    }
+
+    @Override
+    public List<CountResult> countKategoriaDostepnosci() {
+        List<CountResult> results = opakowanieRepository.countKategoriaDostepnosci();
+        if(results.isEmpty()) throw new NullPointerException();
+        return results;
     }
 
     @Override
