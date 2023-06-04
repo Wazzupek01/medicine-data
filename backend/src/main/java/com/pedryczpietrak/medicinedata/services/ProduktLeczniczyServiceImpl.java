@@ -108,8 +108,7 @@ public class ProduktLeczniczyServiceImpl implements ProduktLeczniczyService {
             Marshaller mar = context.createMarshaller();
             mar.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             mar.marshal(produktyLecznicze, new File("./result.xml"));
-            byte[] data = Files.readAllBytes(Paths.get("./result.xml"));
-            return data;
+            return Files.readAllBytes(Paths.get("./result.xml"));
         } catch (JAXBException e){
             throw new EmptyPageException();
         } catch (IOException e) {
@@ -155,7 +154,7 @@ public class ProduktLeczniczyServiceImpl implements ProduktLeczniczyService {
     private List<ProduktLeczniczy> getProduktyLeczniczeForFile(GeneratedFileParams params){
 
         List<ProduktLeczniczy> produkty;
-        if(params.getSortBy() == null || params.getSortBy() == ""){
+        if(params.getSortBy() == null || params.getSortBy().equals("")){
             produkty = repository.findAllBy(PageRequest.of(0, params.getElementsNum())).getContent();
         } else {
             Sort sort = Sort.by(params.getSortBy());
@@ -171,46 +170,20 @@ public class ProduktLeczniczyServiceImpl implements ProduktLeczniczyService {
     private List<ProduktLeczniczy> nullValuesInProduktLeczniczy(List<ProduktLeczniczy> produkty, List<String> values){
         for(ProduktLeczniczy p: produkty){
             for(String param: values)
-                switch(param.toLowerCase()){
-                    case "id":
-                        p.setId(null);
-                        break;
-                    case "nazwaproduktu":
-                        p.setNazwaProduktu(null);
-                        break;
-                    case "rodzajpreparatu":
-                        p.setRodzajPreparatu(null);
-                        break;
-                    case "nazwapowszechniestosowana":
-                        p.setNazwaPowszechnieStosowana(null);
-                        break;
-                    case "moc":
-                        p.setMoc(null);
-                        break;
-                    case "postac":
-                        p.setPostac(null);
-                        break;
-                    case "podmiotodpowiedzialny":
-                        p.setPodmiotOdpowiedzialny(null);
-                        break;
-                    case "typprocedury":
-                        p.setTypProcedury(null);
-                        break;
-                    case "numerpozwolenia":
-                        p.setNumerPozwolenia(null);
-                        break;
-                    case "waznoscpozwolenia":
-                        p.setWaznoscPozwolenia(null);
-                        break;
-                    case "kodatc":
-                        p.setKodATC(null);
-                        break;
-                    case "opakowania":
-                        p.setOpakowania(null);
-                        break;
-                    case "substancjeczynne":
-                        p.setSubstancjeCzynne(null);
-                        break;
+                switch (param.toLowerCase()) {
+                    case "id" -> p.setId(null);
+                    case "nazwaproduktu" -> p.setNazwaProduktu(null);
+                    case "rodzajpreparatu" -> p.setRodzajPreparatu(null);
+                    case "nazwapowszechniestosowana" -> p.setNazwaPowszechnieStosowana(null);
+                    case "moc" -> p.setMoc(null);
+                    case "postac" -> p.setPostac(null);
+                    case "podmiotodpowiedzialny" -> p.setPodmiotOdpowiedzialny(null);
+                    case "typprocedury" -> p.setTypProcedury(null);
+                    case "numerpozwolenia" -> p.setNumerPozwolenia(null);
+                    case "waznoscpozwolenia" -> p.setWaznoscPozwolenia(null);
+                    case "kodatc" -> p.setKodATC(null);
+                    case "opakowania" -> p.setOpakowania(null);
+                    case "substancjeczynne" -> p.setSubstancjeCzynne(null);
                 }
         }
         return produkty;
