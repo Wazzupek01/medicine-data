@@ -16,6 +16,9 @@ import {MdLogoutPageComponent} from './pages/md-logout-page/md-logout-page.compo
 import {HttpClientModule} from "@angular/common/http";
 import {MdSearchPageComponent} from './pages/md-search-page/md-search-page.component';
 import {MdPaginationComponent} from './components/md-pagination/md-pagination.component';
+import { MdBarChartComponent } from './components/md-bar-chart/md-bar-chart.component';
+import { MdPieChartComponent } from './components/md-pie-chart/md-pie-chart.component';
+import { MdDownloadPageComponent } from './pages/md-download-page/md-download-page.component';
 
 @NgModule({
     declarations: [
@@ -30,6 +33,9 @@ import {MdPaginationComponent} from './components/md-pagination/md-pagination.co
         MdLogoutPageComponent,
         MdSearchPageComponent,
         MdPaginationComponent,
+        MdBarChartComponent,
+        MdPieChartComponent,
+        MdDownloadPageComponent,
     ],
     imports: [
         BrowserModule,

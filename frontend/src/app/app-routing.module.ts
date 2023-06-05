@@ -9,6 +9,8 @@ import {MdChartPageComponent} from "./pages/md-chart-page/md-chart-page.componen
 import {MdTablePageComponent} from "./pages/md-table-page/md-table-page.component";
 import {MdLogoutPageComponent} from "./pages/md-logout-page/md-logout-page.component";
 import {MdSearchPageComponent} from "./pages/md-search-page/md-search-page.component";
+import {MdDownloadPageComponent} from "./pages/md-download-page/md-download-page.component";
+import {isAdminGuard} from "./guards/is-admin.guard";
 
 const routes: Routes = [
     {path: "", component: MdMainPageComponent},
@@ -17,7 +19,8 @@ const routes: Routes = [
     {path: "table", component: MdTablePageComponent, canActivate: [isLoginGuard]},
     {path: "login", component: MdLoginPageComponent, canActivate: [isLoggedOutGuard]},
     {path: "register", component: MdRegisterPageComponent, canActivate: [isLoggedOutGuard]},
-    {path: "logout", component: MdLogoutPageComponent, canActivate: [isLoginGuard]}
+    {path: "logout", component: MdLogoutPageComponent, canActivate: [isLoginGuard]},
+    {path: "download", component: MdDownloadPageComponent, canActivate: [isAdminGuard]}
 ];
 
 @NgModule({

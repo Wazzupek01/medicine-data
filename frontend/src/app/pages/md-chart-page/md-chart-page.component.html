@@ -1,14 +1,25 @@
 <app-md-navbar></app-md-navbar>
 
-<!--suppress TypeScriptValidateTypes -->
+
 <div class="my-container">
-    <canvas baseChart class="chart my-chart"
-            [data]="barChartData"
-            [options]="barChartOptions"
-            [plugins]="barChartPlugins"
-            [type]="barChartType"
-            (chartHover)="chartHovered($event)"
-            (chartClick)="chartClicked($event)">
-    </canvas>
+
+    <div class="buttons">
+        <button (click)="getTopPostaciHandler()" class="button is-success is-light">Top Postaci</button>
+        <button (click)="getKategorieDostepnosciHandler()" class="button is-info is-light">Kategorie Dostępności
+        </button>
+        <button (click)="getTopSubstancjeHandler()" class="button is-warning is-light">Top Substancje</button>
+    </div>
+
+    <div class="my-chart-container">
+
+        <app-md-bar-chart *ngIf="!isPieChart && isOne" [barChartData]="barChartDataTwo" [barChartOptions]="pieChartOptions"/>
+
+        <app-md-bar-chart *ngIf="!isPieChart && !isOne" [barChartData]="barChartDataOne" [barChartOptions]="barChartOptions"/>
+
+        <app-md-pie-chart *ngIf="isPieChart" [pieChartData]="pieChartData" [pieChartOptions]="pieChartOptions"/>
+
+    </div>
+
 </div>
+
 

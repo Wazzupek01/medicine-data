@@ -1,6 +1,6 @@
-export interface MddownloadOptions {
-    sortBy: string;
-    elementNum: number;
+export interface MdDownloadOptions {
+    sortBy: string | null;
+    elementsNum: number;
     nullFields: string[];
     ascending: boolean
 }

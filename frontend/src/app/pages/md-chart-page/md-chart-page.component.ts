@@ -1,8 +1,14 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ChartConfiguration, ChartData, ChartEvent, ChartType} from 'chart.js';
+import {ChartConfiguration, ChartData, ChartType} from 'chart.js';
 import {BaseChartDirective} from 'ng2-charts';
 
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
+import DatalabelsPlugin from 'chartjs-plugin-datalabels';
+import {Subscription} from "rxjs";
+import {HttpOpakowanieService} from "../../services/http-opakowanie.service";
+import {HttpProduktLeczniczyService} from "../../services/http-produkt-leczniczy.service";
+import {HttpErrorResponse} from "@angular/common/http";
+import {MdCountResult} from "../../models/md-count-result";
 
 @Component({
     selector: 'app-md-chart-page',
@@ -12,24 +18,27 @@ import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 export class MdChartPageComponent implements OnInit, OnDestroy {
     @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
-    constructor() {
+    private subscriptions: Subscription[] = [];
+
+    constructor(
+        private httpOpakowanieService: HttpOpakowanieService,
+        private httpProduktLeczniczyService: HttpProduktLeczniczyService
+    ) {
     }
 
     ngOnInit() {
+        this.getTopPostaciHandler();
     }
 
     ngOnDestroy() {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
     protected barChartOptions: ChartConfiguration['options'] = {
         responsive: true,
-        // We use these empty structures as placeholders for dynamic theming.
         scales: {
             x: {},
-            y: {
-                min: 10,
-                max: 100
-            }
+            y: {}
         },
         plugins: {
             legend: {
@@ -41,26 +50,89 @@ export class MdChartPageComponent implements OnInit, OnDestroy {
             }
         }
     };
-
-    protected barChartType: ChartType = 'bar';
-
-    protected barChartPlugins = [
-        DataLabelsPlugin
-    ];
-
-    protected barChartData: ChartData<'bar'> = {
-        labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012', '2007', '2008', '2009', '2010', '2011', '2012'],
-        datasets: [
-            {data: [65, 59, 80, 81, 56, 55, 40, 59, 80, 81, 56, 55, 40], label: 'Series A', backgroundColor: "red"},
-            {data: [28, 48, 40, 19, 86, 27, 90, 59, 80, 81, 56, 55, 40], label: 'Series B', backgroundColor: "pink"},
-            {data: [28, 48, 40, 19, 86, 27, 90, 59, 80, 81, 56, 55, 40], label: 'Series C'}
-        ]
+    protected barChartDataOne: ChartData<'bar'> = {
+        labels: [],
+        datasets: []
     };
+    protected barChartDataTwo: ChartData<'bar'> = {
+        labels: [],
+        datasets: []
+    };
+    protected pieChartOptions: ChartConfiguration['options'] = {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: true,
+                position: 'top',
+            },
+            datalabels: {
+                formatter: (value, ctx) => {
+                    if (ctx.chart.data.labels) {
+                        return ctx.chart.data.labels[ctx.dataIndex];
+                    }
+                },
+            },
+        }
+    };
+    protected pieChartData: ChartData<'pie', number[], string | string[]> = {
+        labels: [],
+        datasets: []
+    };
+    protected isPieChart: boolean = false;
+    protected isOne: boolean = true;
 
-    // events
-    protected chartClicked({event, active}: { event?: ChartEvent, active?: {}[] }): void {
+    protected getTopPostaciHandler() {
+        this.subscriptions.push(
+            this.httpProduktLeczniczyService.getTopPostaci().subscribe({
+                next: (value: MdCountResult[]) => {
+                    this.barChartDataOne.labels = value.map(u => u.name);
+                    this.barChartDataOne.datasets = [{
+                        data: value.map(u => u.value),
+                        label: "Top postaci leków"
+                    }];
+                    this.isPieChart = false;
+                    this.isOne = true;
+                },
+                error: (error: HttpErrorResponse) => {
+                    console.log(error);
+                }
+            })
+        );
     }
 
-    protected chartHovered({event, active}: { event?: ChartEvent, active?: {}[] }): void {
+    protected getTopSubstancjeHandler() {
+        this.subscriptions.push(
+            this.httpProduktLeczniczyService.getTopSubstancji().subscribe({
+                next: (value: MdCountResult[]) => {
+                    this.barChartDataTwo.labels = value.map(u => u.name);
+                    this.barChartDataTwo.datasets = [{
+                        data: value.map(u => u.value),
+                        label: "Top substancje lecznicze"
+                    }];
+                    this.isPieChart = false;
+                    this.isOne = false;
+                },
+                error: (error: HttpErrorResponse) => {
+                    console.log(error);
+                }
+            })
+        );
+    }
+
+    protected getKategorieDostepnosciHandler() {
+        this.subscriptions.push(
+            this.httpOpakowanieService.getKategoriaDostepnosci().subscribe({
+                next: (value: MdCountResult[]) => {
+                    this.pieChartData.labels = value.map(u => u.name);
+                    this.pieChartData.datasets = [{
+                        data: value.map(u => u.value)
+                    }];
+                    this.isPieChart = true;
+                },
+                error: (error: HttpErrorResponse) => {
+                    console.log(error);
+                }
+            })
+        );
     }
 }
