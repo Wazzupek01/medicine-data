@@ -1,0 +1,44 @@
+<app-md-navbar></app-md-navbar>
+
+<div class="my-container">
+    <div class="my-center">
+        <div class="card" style="width: 100%">
+            <div class="card-content">
+                <p class="title">Login</p>
+                <div class="content">
+                    <p *ngIf="loginError" class="has-text-danger">Incorrect login data!!</p>
+                    <form (ngSubmit)="loginHandler()" [formGroup]="loginForm">
+                        <label for="email">Email</label>
+                        <input
+                            class="input is-expanded mb-2"
+                            formControlName="email"
+                            id="email"
+                            placeholder="Provide email"
+                            required
+                            type="email">
+                        <p *ngIf="!loginForm.controls['email'].valid && loginForm.controls['email'].touched"
+                           class="has-text-danger is-fullwidth is-small mb-2">Incorrect email format.</p>
+
+                        <label for="password">Password</label>
+                        <input
+                            class="input is-expanded mb-2"
+                            formControlName="password"
+                            id="password"
+                            placeholder="Provide password"
+                            required
+                            type="password">
+                        <p *ngIf="!loginForm.controls['password'].valid && loginForm.controls['password'].touched"
+                           class="has-text-danger is-small is-fullwidth mb-2">Incorrect password format. Should be min 8
+                            char length.</p>
+
+                        <button class="button is-fullwidth is-success mt-5" type="submit">Login</button>
+                    </form>
+                    <a class="button is-fullwidth mt-3" routerLink="/register"
+                       routerLinkActive="active">Register</a>
+                    <a class="button is-warning is-outlined is-fullwidth mt-3" routerLink="/"
+                       routerLinkActive="active">Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

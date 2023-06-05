@@ -126,7 +126,7 @@ public class ProduktLeczniczyController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    @PostMapping(value = "/xml", produces = "application/xml")
+    @PostMapping(value = "/xml", produces = "text/xml")
     @SecurityRequirement(name = "Bearer authentication")
     @Operation(summary = "Get xml file", description = "Generate xml file with specified sorting and order, and without specified fields")
     @ApiResponse(responseCode = "200", description = "generated file", content = @Content(mediaType = "application/xml"))

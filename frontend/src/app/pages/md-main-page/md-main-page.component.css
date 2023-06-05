@@ -1,0 +1,22 @@
+.my-container {
+    width: 100vw;
+    height: calc(100vh - 210px);
+}
+
+.my-search-box {
+    width: 40%;
+}
+
+.my-title {
+    font-size: 60px;
+}
+
+.my-subtitle {
+    font-size: 30px;
+}
+
+.my-hero {
+    height: 100%;
+    background-image: url("/assets/img/main-page-background.jpg");
+    background-size: cover;
+}
