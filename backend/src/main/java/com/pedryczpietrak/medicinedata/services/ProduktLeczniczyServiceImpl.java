@@ -11,7 +11,6 @@ import com.pedryczpietrak.medicinedata.model.entities.produkt_leczniczy.Produkty
 import com.pedryczpietrak.medicinedata.model.mappers.ProduktLeczniczyDTOMapper;
 import com.pedryczpietrak.medicinedata.repositories.ProduktLeczniczyRepository;
 import com.pedryczpietrak.medicinedata.services.interfaces.ProduktLeczniczyService;
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,13 +34,13 @@ import java.util.Map;
 @Service
 public class ProduktLeczniczyServiceImpl implements ProduktLeczniczyService {
 
-    ProduktLeczniczyRepository repository;
-    ProduktLeczniczyDTOMapper mapper;
+    private final ProduktLeczniczyRepository repository;
+    private final ProduktLeczniczyDTOMapper mapper;
 
     @Autowired
-    public ProduktLeczniczyServiceImpl(ProduktLeczniczyRepository repository) {
+    public ProduktLeczniczyServiceImpl(ProduktLeczniczyRepository repository, ProduktLeczniczyDTOMapper mapper) {
         this.repository = repository;
-        this.mapper = Mappers.getMapper(ProduktLeczniczyDTOMapper.class);
+        this.mapper = mapper;
     }
 
     @Override

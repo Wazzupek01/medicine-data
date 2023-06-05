@@ -22,6 +22,6 @@ public class OpenApiConfiguration {
                 .info(new Info()
                         .title("Medicine Data API")
                         .description("Api providing medicines data and their statistics")
-                        .version("v4.20"));
+                        .version("v1.00"));
     }
 }

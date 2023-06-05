@@ -2,14 +2,12 @@ package com.pedryczpietrak.medicinedata.model.DTO;
 
 import com.pedryczpietrak.medicinedata.validation.Password;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 public class UserRegisterDTO {
@@ -23,6 +21,6 @@ public class UserRegisterDTO {
     @Email
     private String email;
 
-    @NotNull
+    @NonNull
     private String role;
 }

@@ -55,12 +55,7 @@ public class AuthenticationController {
     })
     public ResponseEntity<AuthenticationResponseDTO> register(@Valid @RequestBody UserRegisterDTO request, HttpServletResponse response) {
         AuthenticationResponse authenticationResponse = authenticationService.register(request);
-        Cookie jwt = new Cookie("jwt", authenticationResponse.getToken());
-        jwt.setMaxAge(24 * 60 * 60);
-        jwt.setSecure(true);
-        jwt.setHttpOnly(true);
-        jwt.setPath("/");
-        response.addCookie(jwt);
+        response.addCookie(generateJwtCookie(authenticationResponse.getToken()));
         return new ResponseEntity<>(mapper.authenticationResponseToAuthenticationResponseDTO(authenticationResponse), HttpStatus.OK);
     }
 
@@ -73,12 +68,7 @@ public class AuthenticationController {
     })
     public ResponseEntity<AuthenticationResponseDTO> login(@Valid @RequestBody UserLoginDTO request, HttpServletResponse response) {
         AuthenticationResponse authenticationResponse = authenticationService.login(request);
-        Cookie jwt = new Cookie("jwt", authenticationResponse.getToken());
-        jwt.setMaxAge(24 * 60 * 60);
-        jwt.setSecure(true);
-        jwt.setHttpOnly(true);
-        jwt.setPath("/");
-        response.addCookie(jwt);
+        response.addCookie(generateJwtCookie(authenticationResponse.getToken()));
         return new ResponseEntity<>(mapper.authenticationResponseToAuthenticationResponseDTO(authenticationResponse), HttpStatus.OK);
     }
 
@@ -121,5 +111,14 @@ public class AuthenticationController {
     })
     public ResponseEntity<Boolean> isAdmin(@CookieValue("jwt") String jwt) {
         return new ResponseEntity<>(authenticationService.isAdmin(jwt), HttpStatus.OK);
+    }
+
+    private Cookie generateJwtCookie(String token){
+        Cookie jwt = new Cookie("jwt", token);
+        jwt.setMaxAge(KEY_EXPIRATION_TIME/1000);
+        jwt.setSecure(true);
+        jwt.setHttpOnly(true);
+        jwt.setPath("/");
+        return jwt;
     }
 }
