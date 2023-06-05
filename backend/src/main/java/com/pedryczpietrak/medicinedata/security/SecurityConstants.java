@@ -12,4 +12,9 @@ public class SecurityConstants {
             "/swagger-ui/favicon-32x32.png", "/swagger-ui/favicon-16x16.png",
             "/webjars/swagger-ui/**", "/proxy/**"
     };
+
+    public static final String[] ADMIN_ONLY = {
+            "/produkt/delete/**", "/produkt/update",
+            "/produkt/xml", "/produkt/json"
+    };
 }

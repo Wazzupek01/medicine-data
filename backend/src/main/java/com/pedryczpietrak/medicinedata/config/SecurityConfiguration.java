@@ -34,7 +34,7 @@ public class SecurityConfiguration {
                 .csrf((csrf) -> csrf.ignoringRequestMatchers("/**"))
                 .authorizeHttpRequests((authorize) ->
                         authorize.requestMatchers(SecurityConstants.WHITELIST).permitAll()
-                                .requestMatchers("/produkt/delete/**", "/produkt/update").hasRole("ADMIN")
+                                .requestMatchers(SecurityConstants.ADMIN_ONLY).hasRole("ADMIN")
                                 .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

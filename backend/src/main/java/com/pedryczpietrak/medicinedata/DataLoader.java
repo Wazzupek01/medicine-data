@@ -10,11 +10,13 @@ import com.pedryczpietrak.medicinedata.repositories.ProduktLeczniczyRepository;
 import com.pedryczpietrak.medicinedata.repositories.RoleRepository;
 import com.pedryczpietrak.medicinedata.repositories.UserRepository;
 import com.pedryczpietrak.medicinedata.services.AuthenticationService;
-import com.pedryczpietrak.medicinedata.services.interfaces.ProduktLeczniczyService;
+import jakarta.persistence.EntityNotFoundException;
 import me.tongfei.progressbar.ProgressBar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.xml.bind.JAXBContext;
 import java.io.FileReader;
@@ -29,9 +31,6 @@ public class DataLoader implements CommandLineRunner {
     private final AuthenticationService authenticationService;
 
     @Autowired
-    private ProduktLeczniczyService produktLeczniczyService;
-
-    @Autowired
     public DataLoader(ProduktLeczniczyRepository produktLeczniczyRepository, UserRepository userRepository,
                       RoleRepository roleRepository, AuthenticationService authenticationService) {
         this.produktLeczniczyRepository = produktLeczniczyRepository;
@@ -41,13 +40,17 @@ public class DataLoader implements CommandLineRunner {
     }
 
     @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void run(String... args) throws Exception {
         if (userRepository.count() == 0) {
             roleRepository.saveAll(List.of(new Role(1, "ROLE_ADMIN"), new Role(0, "ROLE_USER")));
+
             authenticationService.register(new UserRegisterDTO("Admin!01","Admin!01",
-                    "admin@admin.pl", roleRepository.findRoleByName("ROLE_ADMIN").get().getName()));
+                    "admin@admin.pl", roleRepository.findRoleByName("ROLE_ADMIN")
+                    .orElseThrow(EntityNotFoundException::new).getName()));
             authenticationService.register(new UserRegisterDTO("User1!01", "User1!01",
-                    "user1@user.pl", roleRepository.findRoleByName("ROLE_USER").get().getName()));
+                    "user1@user.pl", roleRepository.findRoleByName("ROLE_USER").
+                    orElseThrow(EntityNotFoundException::new).getName()));
         }
 
         if (produktLeczniczyRepository.count() > 0) return;

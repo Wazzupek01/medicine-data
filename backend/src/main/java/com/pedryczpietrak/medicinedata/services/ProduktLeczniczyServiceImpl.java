@@ -35,13 +35,13 @@ import java.util.Map;
 @Service
 public class ProduktLeczniczyServiceImpl implements ProduktLeczniczyService {
 
-    ProduktLeczniczyRepository repository;
-    ProduktLeczniczyDTOMapper mapper;
+    private final ProduktLeczniczyRepository repository;
+    private final ProduktLeczniczyDTOMapper mapper;
 
     @Autowired
-    public ProduktLeczniczyServiceImpl(ProduktLeczniczyRepository repository) {
+    public ProduktLeczniczyServiceImpl(ProduktLeczniczyRepository repository, ProduktLeczniczyDTOMapper mapper) {
         this.repository = repository;
-        this.mapper = Mappers.getMapper(ProduktLeczniczyDTOMapper.class);
+        this.mapper = mapper;
     }
 
     @Override
