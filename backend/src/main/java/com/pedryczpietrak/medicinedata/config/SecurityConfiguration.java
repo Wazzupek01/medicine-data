@@ -33,7 +33,9 @@ public class SecurityConfiguration {
         http.cors(withDefaults())
                 .csrf((csrf) -> csrf.ignoringRequestMatchers("/**"))
                 .authorizeHttpRequests((authorize) ->
-                        authorize.requestMatchers(SecurityConstants.WHITELIST).permitAll().anyRequest().authenticated())
+                        authorize.requestMatchers(SecurityConstants.WHITELIST).permitAll()
+                                .requestMatchers("/produkt/delete/**", "/produkt/update").hasRole("ADMIN")
+                                .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(exceptionFilter, JwtAuthenticationFilter.class);

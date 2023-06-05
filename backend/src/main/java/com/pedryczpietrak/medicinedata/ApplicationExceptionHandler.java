@@ -42,7 +42,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
     }
 
     @ExceptionHandler({EmptyPageException.class})
-    private ResponseEntity<ErrorResponse> handleEmptyPageException(EmptyPageException e) {
+    private ResponseEntity<ErrorResponse> handleEmptyPageException(RuntimeException e) {
         ErrorResponse error = new ErrorResponse(List.of(e.getMessage()));
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
@@ -55,7 +55,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 
     @ExceptionHandler({NullPointerException.class})
     private ResponseEntity<ErrorResponse> handleNullPointerException(NullPointerException e) {
-        ErrorResponse error = new ErrorResponse(List.of(e.getMessage(), "Body of request is invalid"));
+        ErrorResponse error = new ErrorResponse(List.of(e.getMessage()));
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 

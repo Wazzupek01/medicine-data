@@ -31,7 +31,8 @@ public abstract class ProduktLeczniczyDTOMapper {
         }
 
 
-        return ProduktLeczniczyDTO.builder().nazwaProduktu(p.getNazwaProduktu())
+        return ProduktLeczniczyDTO.builder().id(p.getId())
+                .nazwaProduktu(p.getNazwaProduktu())
                 .rodzajPreparatu(p.getRodzajPreparatu())
                 .nazwaPowszechnieStosowana(p.getNazwaPowszechnieStosowana())
                 .moc(p.getMoc())

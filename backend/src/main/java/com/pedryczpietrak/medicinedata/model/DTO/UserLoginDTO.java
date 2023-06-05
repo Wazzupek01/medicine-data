@@ -18,4 +18,7 @@ public class UserLoginDTO {
         this.email = email;
         this.password = password;
     }
+
+    public UserLoginDTO() {
+    }
 }

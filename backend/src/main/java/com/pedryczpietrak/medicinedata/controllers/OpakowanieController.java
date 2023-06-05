@@ -1,9 +1,11 @@
 package com.pedryczpietrak.medicinedata.controllers;
 
 import com.pedryczpietrak.medicinedata.exceptions.ErrorResponse;
+import com.pedryczpietrak.medicinedata.model.DTO.CountResult;
 import com.pedryczpietrak.medicinedata.model.DTO.OpakowanieDTO;
 import com.pedryczpietrak.medicinedata.services.interfaces.OpakowanieService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -57,5 +59,18 @@ public class OpakowanieController {
     })
     public ResponseEntity<List<String>> listAllSortParameters(){
         return new ResponseEntity<>(opakowanieService.listAllSortParameters(), HttpStatus.OK);
+    }
+
+    @GetMapping("/kategoriedostepnosci")
+    @SecurityRequirement(name = "Bearer authentication")
+    @Operation(summary = "Get kategoriaDostepnosci count", description = "Returns counted appearance of each kategoriaDostepnosci")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "kategorieDostepnosci found and counted",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = CountResult.class)))),
+            @ApiResponse(responseCode = "404", description = "No opakowanie in database"),
+            @ApiResponse(responseCode = "403", description = "User not logged in")
+    })
+    public ResponseEntity<List<CountResult>> countKategoriaDostepnosci(){
+        return new ResponseEntity<>(opakowanieService.countKategoriaDostepnosci(), HttpStatus.OK);
     }
 }
