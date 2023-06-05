@@ -16,8 +16,10 @@ export class MdNavbarComponent implements OnInit, OnDestroy {
     @ViewChild('navMenu', {static: true}) protected navMenu: ElementRef | undefined;
 
     private subscriptions: Subscription[] = [];
-    protected logged: boolean = true;
+    protected logged: boolean = false;
     protected email: string | undefined | null;
+
+    protected admin: boolean = false;
 
     constructor(
         private authHttpService: HttpAuthService,
@@ -47,12 +49,14 @@ export class MdNavbarComponent implements OnInit, OnDestroy {
                 next: (value: MdUserInfoDto) => {
                     this.email = value.email;
                     this.logged = true;
+                    this.admin = value.role.name == "ADMIN";
                     this.localStorageService.setValue(MdConst.USEREMAIL, value.email);
                     this.localStorageService.setValue(MdConst.USERROLE, value.role.name);
                 },
                 error: (error: any) => {
                     this.email = undefined;
                     this.logged = false;
+                    this.admin = false;
                     this.localStorageService.removeValue(MdConst.USEREMAIL);
                     this.localStorageService.removeValue(MdConst.USERROLE);
                     console.log(error);
