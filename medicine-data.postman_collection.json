@@ -1,0 +1,261 @@
+{
+	"info": {
+		"_postman_id": "935c27bb-b4a6-4da2-bc73-64db1f67ad23",
+		"name": "medicine-data",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26906529"
+	},
+	"item": [
+		{
+			"name": "Opakowanie",
+			"item": [
+				{
+					"name": "get all sort params opakowanie",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "jwt=eyJhbGciOiJIUzI1NiJ9.eyJST0xFIjp7Im5hbWUiOiJVU0VSIn0sInN1YiI6InVzZXIxQHVzZXIucGwiLCJpYXQiOjE2ODU3OTQ5NzUsImV4cCI6MTY4NTg4MTM3NX0.qu3FzM4TV4MHh9MyLYsQgcdqHqMen5Of3mRugTtua6c; Max-Age=86400; Expires=Sun, 04 Jun 2023 12:22:55 GMT; Path=/; Secure; HttpOnly",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/opakowanie/params",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"opakowanie",
+								"params"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all opakowania sorted",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "jwt=eyJhbGciOiJIUzI1NiJ9.eyJST0xFIjp7Im5hbWUiOiJVU0VSIn0sInN1YiI6InVzZXIxQHVzZXIucGwiLCJpYXQiOjE2ODU3OTQ5NzUsImV4cCI6MTY4NTg4MTM3NX0.qu3FzM4TV4MHh9MyLYsQgcdqHqMen5Of3mRugTtua6c; Max-Age=86400; Expires=Sun, 04 Jun 2023 12:22:55 GMT; Path=/; Secure; HttpOnly",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/opakowanie/all/wielkosc/false/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"opakowanie",
+								"all",
+								"wielkosc",
+								"false",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Produkt Leczniczy",
+			"item": [
+				{
+					"name": "Get all produkty sorted",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "jwt=eyJhbGciOiJIUzI1NiJ9.eyJST0xFIjp7Im5hbWUiOiJBRE1JTiJ9LCJzdWIiOiJhZG1pbkBhZG1pbi5wbCIsImlhdCI6MTY4NTcxNjI0MCwiZXhwIjoxNjg1ODAyNjQwfQ.KphufSafpZFZuyuUh_xp-jCRZ4B34abXAOVAbQytwpg; Max-Age=86400; Expires=Sat, 03 Jun 2023 14:30:40 GMT; Path=/; Secure; HttpOnly",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/produkt/all/id/true/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"produkt",
+								"all",
+								"id",
+								"true",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all sort params produktyLecznicze",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "jwt=eyJhbGciOiJIUzI1NiJ9.eyJST0xFIjp7Im5hbWUiOiJVU0VSIn0sInN1YiI6InVzZXIxQHVzZXIucGwiLCJpYXQiOjE2ODU3OTQ5NzUsImV4cCI6MTY4NTg4MTM3NX0.qu3FzM4TV4MHh9MyLYsQgcdqHqMen5Of3mRugTtua6c; Max-Age=86400; Expires=Sun, 04 Jun 2023 12:22:55 GMT; Path=/; Secure; HttpOnly",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/produkt/params",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"produkt",
+								"params"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by name sorted",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "jwt=eyJhbGciOiJIUzI1NiJ9.eyJST0xFIjp7Im5hbWUiOiJVU0VSIn0sInN1YiI6InVzZXIxQHVzZXIucGwiLCJpYXQiOjE2ODU3OTQ5NzUsImV4cCI6MTY4NTg4MTM3NX0.qu3FzM4TV4MHh9MyLYsQgcdqHqMen5Of3mRugTtua6c; Max-Age=86400; Expires=Sun, 04 Jun 2023 12:22:55 GMT; Path=/; Secure; HttpOnly",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/produkt/name/xanax/nazwaProduktu/true/0",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"produkt",
+								"name",
+								"xanax",
+								"nazwaProduktu",
+								"true",
+								"0"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"admin04@admin.pl\",\n    \"password\": \"Admin!04\",\n    \"repeatPassword\": \"Admin!04\",\n    \"role\": \"ADMIN\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/auth/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"user1@user.pl\",\n    \"password\": \"User1!01\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Is Admin",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "jwt=eyJhbGciOiJIUzI1NiJ9.eyJST0xFIjp7Im5hbWUiOiJBRE1JTiJ9LCJzdWIiOiJhZG1pbkBhZG1pbi5wbCIsImlhdCI6MTY4NTcyMDYzMiwiZXhwIjoxNjg1ODA3MDMyfQ.zYMo7xoWyU-l2LjCLzSnIP-RXCEmG9xUtrLK5NF1Lzk; Max-Age=86400; Expires=Sat, 03 Jun 2023 15:43:52 GMT; Path=/; Secure; HttpOnly",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/auth/admin",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"admin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user details",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "jwt=eyJhbGciOiJIUzI1NiJ9.eyJST0xFIjp7Im5hbWUiOiJBRE1JTiJ9LCJzdWIiOiJhZG1pbkBhZG1pbi5wbCIsImlhdCI6MTY4NTcyMDYzMiwiZXhwIjoxNjg1ODA3MDMyfQ.zYMo7xoWyU-l2LjCLzSnIP-RXCEmG9xUtrLK5NF1Lzk; Max-Age=86400; Expires=Sat, 03 Jun 2023 15:43:52 GMT; Path=/; Secure; HttpOnly",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/auth/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"user"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
