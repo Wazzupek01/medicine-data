@@ -11,7 +11,6 @@ import com.pedryczpietrak.medicinedata.model.entities.produkt_leczniczy.Produkty
 import com.pedryczpietrak.medicinedata.model.mappers.ProduktLeczniczyDTOMapper;
 import com.pedryczpietrak.medicinedata.repositories.ProduktLeczniczyRepository;
 import com.pedryczpietrak.medicinedata.services.interfaces.ProduktLeczniczyService;
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
