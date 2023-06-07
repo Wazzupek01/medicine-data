@@ -3,7 +3,7 @@
 
 <div class="my-container">
 
-    <section class="hero is-danger my-hero">
+    <section class="hero my-hero">
         <div class="hero-body">
             <div class="">
                 <p class="title my-title has-text-black has-text-weight-bold">
@@ -14,7 +14,7 @@
                 </p>
                 <div class="my-search-box">
                     <form (ngSubmit)="searchHandler()" [formGroup]="searchForm">
-                        <div class="field has-addons">
+                        <div class="field has-addons" style="width: 300px;">
                             <p class="control is-expanded">
                                 <input class="input" formControlName="search" placeholder="Nazwa leku ..." required
                                        type="text">

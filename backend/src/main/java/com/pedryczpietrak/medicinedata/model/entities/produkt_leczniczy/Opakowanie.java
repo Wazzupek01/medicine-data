@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.domain.Persistable;
 
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -25,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlType(propOrder = {"wielkosc", "jednostkaWielkosci", "kodEAN", "kategoriaDostepnosci", "skasowane", "numerEU",
         "dystrybutorRownolegly", "id"})
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Opakowanie {
+public class Opakowanie implements Persistable<Integer> {
     @XmlAttribute(name = "id")
     @Id
     private Integer id;
@@ -55,4 +56,9 @@ public class Opakowanie {
     @ManyToOne(optional = false)
     @JoinColumn(name = "opakowania_id", referencedColumnName = "id")
     private Opakowania opakowania;
+
+    @Override
+    public boolean isNew() {
+        return true;
+    }
 }

@@ -7,11 +7,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.domain.Persistable;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -26,10 +28,11 @@ import java.util.List;
 @Entity
 @Table(name = "substancje_czynne")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class SubstancjeCzynne {
+public class SubstancjeCzynne implements Persistable<Integer> {
     @Id
     @XmlTransient
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "seqGen", sequenceName = "seq", initialValue = 1)
     private Integer id;
 
     @XmlElement(name = "substancjaCzynna")
@@ -39,4 +42,9 @@ public class SubstancjeCzynne {
     @XmlTransient
     @OneToOne(mappedBy = "substancjeCzynne")
     private ProduktLeczniczy produktLeczniczy;
+
+    @Override
+    public boolean isNew() {
+        return true;
+    }
 }

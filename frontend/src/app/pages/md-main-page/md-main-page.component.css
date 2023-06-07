@@ -1,6 +1,12 @@
 .my-container {
     width: 100vw;
     height: calc(100vh - 210px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url("/assets/img/main-page-background.jpg");
+    background-size: cover;
 }
 
 .my-search-box {
@@ -17,6 +23,5 @@
 
 .my-hero {
     height: 100%;
-    background-image: url("/assets/img/main-page-background.jpg");
-    background-size: cover;
+   
 }
