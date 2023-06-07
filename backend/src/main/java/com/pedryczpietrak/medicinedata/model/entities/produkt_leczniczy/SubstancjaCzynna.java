@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlValue;
 public class SubstancjaCzynna implements Persistable<Integer> {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "seqGen", sequenceName = "seq", initialValue = 1)
+    @SequenceGenerator(name = "seqGen", sequenceName = "seq")
     @XmlTransient
     private Integer id;
 

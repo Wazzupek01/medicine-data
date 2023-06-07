@@ -32,7 +32,7 @@ public class Opakowania implements Persistable<Integer> {
     @Id
     @XmlTransient
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqGen")
-    @SequenceGenerator(name = "seqGen", sequenceName = "seq", initialValue = 1)
+    @SequenceGenerator(name = "seqGen", sequenceName = "seq")
     private Integer id;
 
     @XmlElement(name = "opakowanie")

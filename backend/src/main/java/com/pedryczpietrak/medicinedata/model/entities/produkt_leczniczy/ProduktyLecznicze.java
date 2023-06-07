@@ -26,7 +26,7 @@ import java.util.List;
 public class ProduktyLecznicze {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqGen")
-    @SequenceGenerator(name = "seqGen", sequenceName = "seq", initialValue = 1)
+    @SequenceGenerator(name = "seqGen", sequenceName = "seq")
     @XmlTransient
     private Integer id;
 
