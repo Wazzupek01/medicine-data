@@ -2,7 +2,6 @@ package com.pedryczpietrak.medicinedata.repositories;
 
 import com.pedryczpietrak.medicinedata.model.DTO.CountResult;
 import com.pedryczpietrak.medicinedata.model.entities.produkt_leczniczy.ProduktLeczniczy;
-import jakarta.persistence.Tuple;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
