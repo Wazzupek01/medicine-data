@@ -1,9 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ChartConfiguration, ChartData, ChartType} from 'chart.js';
+import {ChartConfiguration, ChartData} from 'chart.js';
 import {BaseChartDirective} from 'ng2-charts';
-
-import DataLabelsPlugin from 'chartjs-plugin-datalabels';
-import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import {Subscription} from "rxjs";
 import {HttpOpakowanieService} from "../../services/http-opakowanie.service";
 import {HttpProduktLeczniczyService} from "../../services/http-produkt-leczniczy.service";

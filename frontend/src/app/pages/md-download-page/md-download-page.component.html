@@ -8,8 +8,10 @@
                 <div class="content">
                     <button class="button is-fullwidth mt-3" (click)="downloadJson()">JSON</button>
                     <button class="button is-warning is-outlined is-fullwidth mt-3" (click)="downloadXml()">XML</button>
-                    <a *ngIf="saveJSON" class="button is-warning is-outlined is-fullwidth mt-3" [href]="fileUrl" download="result.json" (click)="hideButtons()">Save JSON</a>
-                    <a *ngIf="saveXML" class="button is-warning is-outlined is-fullwidth mt-3" [href]="fileUrl" download="result.xml" (click)="hideButtons()" >Save XML</a>
+                    <a *ngIf="saveJSON" class="button is-warning is-outlined is-fullwidth mt-3" [href]="fileUrl"
+                       download="result.json" (click)="hideButtons()">Save JSON</a>
+                    <a *ngIf="saveXML" class="button is-warning is-outlined is-fullwidth mt-3" [href]="fileUrl"
+                       download="result.xml" (click)="hideButtons()">Save XML</a>
                 </div>
             </div>
         </div>

@@ -16,6 +16,8 @@ export class MdDownloadPageComponent implements OnInit, OnDestroy {
 
     private params: string[] = [];
 
+    protected avalibleSortOptions: string[] = [];
+
     protected saveJSON: boolean = false;
     protected saveXML: boolean = false;
 
@@ -28,6 +30,16 @@ export class MdDownloadPageComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.subscriptions.push(
+            this.httpProduktLeczniczyService.getParams().subscribe({
+                next: (value: string[]) => {
+                    this.avalibleSortOptions = value;
+                },
+                error: (error: HttpErrorResponse) => {
+                    console.log(error);
+                }
+            })
+        );
     }
 
     ngOnDestroy() {
@@ -45,7 +57,7 @@ export class MdDownloadPageComponent implements OnInit, OnDestroy {
         this.subscriptions.push(
             this.httpProduktLeczniczyService.downloadJson(downloadParams).subscribe({
                 next: (value: Blob) => {
-                    const blob = new Blob([JSON.stringify(value, null, 4)], { type: 'application/json' });
+                    const blob = new Blob([JSON.stringify(value, null, 4)], {type: 'application/json'});
                     this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
                     this.saveJSON = true;
                 },
@@ -67,7 +79,7 @@ export class MdDownloadPageComponent implements OnInit, OnDestroy {
         this.subscriptions.push(
             this.httpProduktLeczniczyService.downloadXml(downloadParams).subscribe({
                 next: (value: string) => {
-                    const blob = new Blob([value], { type: 'application/xml' });
+                    const blob = new Blob([value], {type: 'application/xml'});
                     this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
                     this.saveXML = true;
                 },

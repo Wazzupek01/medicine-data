@@ -38,10 +38,14 @@ export class HttpProduktLeczniczyService {
     }
 
     public downloadJson(body: MdDownloadOptions) {
-        return this.http.post<Blob>(`${this.baseApiUrl}/json`, body,{withCredentials: true, responseType: "json"});
+        return this.http.post<Blob>(`${this.baseApiUrl}/json`, body, {withCredentials: true, responseType: "json"});
     }
 
     public downloadXml(body: MdDownloadOptions) {
-        return this.http.post(`${this.baseApiUrl}/xml`, body,{withCredentials: true, observe: 'body', responseType: "text"});
+        return this.http.post(`${this.baseApiUrl}/xml`, body, {
+            withCredentials: true,
+            observe: 'body',
+            responseType: "text"
+        });
     }
 }
