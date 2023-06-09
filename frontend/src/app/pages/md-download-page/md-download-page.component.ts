@@ -130,7 +130,6 @@ export class MdDownloadPageComponent implements OnInit, OnDestroy {
                 invisibleFields.push(s);
             }
         });
-        console.log(invisibleFields);
         return invisibleFields;
     }
 
