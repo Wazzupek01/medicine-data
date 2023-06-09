@@ -49,7 +49,7 @@ export class MdNavbarComponent implements OnInit, OnDestroy {
                 next: (value: MdUserInfoDto) => {
                     this.email = value.email;
                     this.logged = true;
-                    this.admin = value.role.name == "ADMIN";
+                    this.admin = value.role.name === "ROLE_ADMIN";
                     this.localStorageService.setValue(MdConst.USEREMAIL, value.email);
                     this.localStorageService.setValue(MdConst.USERROLE, value.role.name);
                 },

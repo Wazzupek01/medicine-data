@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.domain.Persistable;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -28,7 +29,7 @@ import javax.xml.bind.annotation.XmlType;
         "podmiotOdpowiedzialny", "typProcedury", "numerPozwolenia", "waznoscPozwolenia", "kodATC", "id", "opakowania",
         "substancjeCzynne"})
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ProduktLeczniczy {
+public class ProduktLeczniczy implements Persistable<Integer> {
     @Id
     @XmlAttribute(name = "id")
     @Column(name = "id", length = 2048)
@@ -77,4 +78,12 @@ public class ProduktLeczniczy {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "substancje_czynne_id", referencedColumnName = "id")
     private SubstancjeCzynne substancjeCzynne;
+
+    @XmlAttribute(name = "refundowany")
+    private boolean refundowany;
+
+    @Override
+    public boolean isNew() {
+        return true;
+    }
 }

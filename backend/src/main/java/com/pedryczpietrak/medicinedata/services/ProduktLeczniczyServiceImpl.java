@@ -29,7 +29,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class ProduktLeczniczyServiceImpl implements ProduktLeczniczyService {
@@ -75,11 +74,12 @@ public class ProduktLeczniczyServiceImpl implements ProduktLeczniczyService {
 
     @Override
     public List<CountResult> getSubstancjaCzynnaCountTop10() {
-        List<Map<String, Long>> response = repository.countSubstancjaCzynnaTop10();
+        List<Object[]> response = new ArrayList<>(repository.countSubstancjaCzynnaTop10());
         if(response.isEmpty()) throw new NullPointerException();
+
         List<CountResult> results = new ArrayList<>();
-        for(Map<String, Long> res: response){
-            results.add(new CountResult(res.get("substancja_czynna") + "", res.get("count")));
+        for(Object[] o: response){
+            results.add(new CountResult((String)o[0], (Long)o[1], (Long)o[2]));
         }
         return results;
     }

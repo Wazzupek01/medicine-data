@@ -84,6 +84,6 @@ public class AuthenticationService {
     public boolean isAdmin(String jwt) {
         String email = jwtService.extractUsername(jwt);
         User user = userRepository.findUserByEmail(email).orElseThrow(InvalidJwtException::new);
-        return user.getRole().getName().equals("ADMIN");
+        return user.getRole().getName().equals("ROLE_ADMIN");
     }
 }
