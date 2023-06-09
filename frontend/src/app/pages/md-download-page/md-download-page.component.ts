@@ -87,9 +87,9 @@ export class MdDownloadPageComponent implements OnInit, OnDestroy {
     protected downloadXml() {
         const downloadParams: MdDownloadOptions = {
             nullFields: this.prepareInvisibleFields(),
-            ascending: true,
-            sortBy: null,
-            elementsNum: 20
+            ascending: this.optionsForm.get("sortDir")?.value,
+            sortBy: this.optionsForm.get("sortBy")?.value,
+            elementsNum: this.optionsForm.get("length")?.value
         };
 
         this.subscriptions.push(
