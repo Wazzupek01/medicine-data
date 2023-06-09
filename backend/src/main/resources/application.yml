@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://medicine-data-db:5432/medicine?reWriteBatchedInserts=true
+    url: jdbc:postgresql://localhost:5432/medicine?reWriteBatchedInserts=true
     username: admin
     password: admin
   jpa:
