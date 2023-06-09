@@ -50,7 +50,7 @@ export class MdRegisterPageComponent implements OnInit, OnDestroy {
                     ]
                 ),
                 role: new FormControl(
-                    "USER",
+                    "ROLE_USER",
                     []
                 ),
             },
