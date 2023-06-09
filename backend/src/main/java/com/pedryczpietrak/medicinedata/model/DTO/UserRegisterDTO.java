@@ -23,4 +23,7 @@ public class UserRegisterDTO {
 
     @NonNull
     private String role;
+
+    public UserRegisterDTO() {
+    }
 }

@@ -20,6 +20,7 @@ public record ProduktLeczniczyDTO(
         String waznoscPozwolenia,
         String kodATC,
         List<OpakowanieDTO> opakowania,
-        List<SubstancjaCzynnaDTO> substancjeCzynne
+        List<SubstancjaCzynnaDTO> substancjeCzynne,
+        boolean refundowany
 ) {
 }

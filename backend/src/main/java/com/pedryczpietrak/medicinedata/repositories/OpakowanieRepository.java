@@ -12,7 +12,7 @@ import java.util.List;
 public interface OpakowanieRepository extends JpaRepository<Opakowanie, Integer> {
     Page<Opakowanie> findAllBy(Pageable pageable);
 
-    @Query("SELECT new com.pedryczpietrak.medicinedata.model.DTO.CountResult(kategoriaDostepnosci, count(*)) " +
+    @Query("SELECT new com.pedryczpietrak.medicinedata.model.DTO.CountResult(kategoriaDostepnosci, count(*), count(*)) " +
             "FROM Opakowanie GROUP BY kategoriaDostepnosci")
     List<CountResult> countKategoriaDostepnosci();
 }
