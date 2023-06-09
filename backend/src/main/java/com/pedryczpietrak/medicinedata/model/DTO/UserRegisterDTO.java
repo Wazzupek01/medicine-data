@@ -4,7 +4,6 @@ import com.pedryczpietrak.medicinedata.validation.Password;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 
