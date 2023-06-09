@@ -14,19 +14,13 @@ import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 export class MdDownloadPageComponent implements OnInit, OnDestroy {
 
     private subscriptions: Subscription[] = [];
-
-    private params: string[] = [];
+    private selectedOptions: string[] = [];
 
     protected avalibleSortOptions: string[] = [];
     protected optionsForm: FormGroup;
-
-    private selectedOptions: string[] = [];
-
     protected saveJSON: boolean = false;
     protected saveXML: boolean = false;
-
     protected sortOptions: string[] = [];
-
     protected fileUrl!: SafeResourceUrl;
 
     constructor(
@@ -112,29 +106,29 @@ export class MdDownloadPageComponent implements OnInit, OnDestroy {
     }
 
     protected updateVisibleFields(field: string) {
-        if(this.selectedOptions.includes(field)) {
+        if (this.selectedOptions.includes(field)) {
             this.selectedOptions = this.selectedOptions.filter(s => s !== field);
         } else {
             this.selectedOptions.push(field);
         }
     }
 
+    protected prepareNameForColumns(name: string): string {
+        const result = name.replace(/([A-Z])/g, " $1");
+        return result.charAt(0).toUpperCase() + result.slice(1);
+    }
+
     private prepareInvisibleFields(): string[] {
-        const invisibleFields : string[] = [];
-        if(this.selectedOptions.length === 0){
+        const invisibleFields: string[] = [];
+        if (this.selectedOptions.length === 0) {
             return [];
         }
 
         this.avalibleSortOptions.map(s => {
-            if(!this.selectedOptions.includes(s)){
+            if (!this.selectedOptions.includes(s)) {
                 invisibleFields.push(s);
             }
         });
         return invisibleFields;
-    }
-
-    protected prepareNameForColumns(name: string): string {
-        const result = name.replace(/([A-Z])/g, " $1");
-        return result.charAt(0).toUpperCase() + result.slice(1);
     }
 }
