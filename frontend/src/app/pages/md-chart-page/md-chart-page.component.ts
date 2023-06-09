@@ -24,7 +24,7 @@ export class MdChartPageComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.getTopPostaciHandler();
+        this.getTopSubstancjeHandler();
     }
 
     ngOnDestroy() {
@@ -82,10 +82,18 @@ export class MdChartPageComponent implements OnInit, OnDestroy {
         this.subscriptions.push(
             this.httpProduktLeczniczyService.getTopPostaci().subscribe({
                 next: (value: MdCountResult[]) => {
-                    this.barChartDataOne.labels = value.map(u => u.name);
+                    this.barChartDataOne.labels = value.map(u => {
+                        if(u.name === null) {
+                            return "null"
+                        }
+                        return u.name;
+                    });
                     this.barChartDataOne.datasets = [{
                         data: value.map(u => u.value),
-                        label: "Top postaci leków"
+                        label: "Top 10 postaci leków"
+                    }, {
+                        data: value.map(u => u.value2),
+                        label: "W tym refundowane"
                     }];
                     this.isPieChart = false;
                     this.isOne = true;
@@ -101,10 +109,18 @@ export class MdChartPageComponent implements OnInit, OnDestroy {
         this.subscriptions.push(
             this.httpProduktLeczniczyService.getTopSubstancji().subscribe({
                 next: (value: MdCountResult[]) => {
-                    this.barChartDataTwo.labels = value.map(u => u.name);
+                    this.barChartDataTwo.labels = value.map(u => {
+                        if(u.name === null) {
+                            return "null"
+                        }
+                        return u.name;
+                    });
                     this.barChartDataTwo.datasets = [{
                         data: value.map(u => u.value),
-                        label: "Top substancje lecznicze"
+                        label: "Top 10 substancje lecznicze"
+                    }, {
+                        data: value.map(u => u.value2),
+                        label: "W tym refundowane"
                     }];
                     this.isPieChart = false;
                     this.isOne = false;
@@ -120,7 +136,12 @@ export class MdChartPageComponent implements OnInit, OnDestroy {
         this.subscriptions.push(
             this.httpOpakowanieService.getKategoriaDostepnosci().subscribe({
                 next: (value: MdCountResult[]) => {
-                    this.pieChartData.labels = value.map(u => u.name);
+                    this.pieChartData.labels = value.map(u => {
+                        if(u.name === null) {
+                            return "null"
+                        }
+                        return u.name;
+                    });
                     this.pieChartData.datasets = [{
                         data: value.map(u => u.value)
                     }];
