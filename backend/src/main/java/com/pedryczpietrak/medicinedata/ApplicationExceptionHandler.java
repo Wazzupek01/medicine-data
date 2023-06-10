@@ -6,11 +6,16 @@ import com.pedryczpietrak.medicinedata.exceptions.ErrorResponse;
 import com.pedryczpietrak.medicinedata.exceptions.InvalidJwtException;
 import com.pedryczpietrak.medicinedata.exceptions.NotMatchingPasswordException;
 import com.pedryczpietrak.medicinedata.exceptions.RoleNotFoundException;
+import io.jsonwebtoken.MalformedJwtException;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,6 +27,12 @@ import java.util.List;
 
 @ControllerAdvice
 public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler {
+
+    @ExceptionHandler({PropertyReferenceException.class})
+    private ResponseEntity<ErrorResponse> handlePropertyReferenceException(PropertyReferenceException e){
+        ErrorResponse error = new ErrorResponse(List.of(e.getMessage()));
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler({NotMatchingPasswordException.class})
     private ResponseEntity<ErrorResponse> handleNotMatchingPasswordException(NotMatchingPasswordException e){

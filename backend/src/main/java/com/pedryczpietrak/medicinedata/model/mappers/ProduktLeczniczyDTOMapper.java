@@ -20,16 +20,20 @@ public abstract class ProduktLeczniczyDTOMapper {
         OpakowanieDTOMapper opakowanieMapper = Mappers.getMapper(OpakowanieDTOMapper.class);
         SubstancjaCzynnaDTOMapper substancjaCzynnaMapper = Mappers.getMapper(SubstancjaCzynnaDTOMapper.class);
 
-        List<OpakowanieDTO> opakowanieDTO = new ArrayList<>();
-        List<SubstancjaCzynnaDTO> substancjaCzynnaDTO = new ArrayList<>();
-        for (Opakowanie o : p.getOpakowania().getOpakowania()) {
-            opakowanieDTO.add(opakowanieMapper.opakowanieToOpakowanieDTO(o));
+        List<OpakowanieDTO> opakowanieDTO = null;
+        List<SubstancjaCzynnaDTO> substancjaCzynnaDTO = null;
+        if(p.getOpakowania() != null) {
+            opakowanieDTO = new ArrayList<>();
+            for (Opakowanie o : p.getOpakowania().getOpakowania()) {
+                opakowanieDTO.add(opakowanieMapper.opakowanieToOpakowanieDTO(o));
+            }
         }
-
-        for (SubstancjaCzynna s : p.getSubstancjeCzynne().getSubstancjeCzynne()) {
-            substancjaCzynnaDTO.add(substancjaCzynnaMapper.substancjaCzynnaToSubstancjaCzynnaDTO(s));
+        if(p.getSubstancjeCzynne() != null) {
+            substancjaCzynnaDTO = new ArrayList<>();
+            for (SubstancjaCzynna s : p.getSubstancjeCzynne().getSubstancjeCzynne()) {
+                substancjaCzynnaDTO.add(substancjaCzynnaMapper.substancjaCzynnaToSubstancjaCzynnaDTO(s));
+            }
         }
-
 
         return ProduktLeczniczyDTO.builder().id(p.getId())
                 .nazwaProduktu(p.getNazwaProduktu())

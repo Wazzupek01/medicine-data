@@ -31,8 +31,12 @@ public class OpakowanieServiceImpl implements OpakowanieService {
     @Override
     public Page<OpakowanieDTO> getAllOpakowaniePage(int page, String sortBy, boolean isAscending) {
         Page<OpakowanieDTO> opakowania;
-        if (isAscending) opakowania = opakowanieRepository.findAllBy(PageRequest.of(page, 20, Sort.by(sortBy).ascending()))
-                .map(mapper::opakowanieToOpakowanieDTO);
+        if (sortBy.equals("null")) {
+            opakowania = opakowanieRepository.findAllBy(PageRequest.of(page, 20))
+                    .map(mapper::opakowanieToOpakowanieDTO);
+        } else if (isAscending)
+            opakowania = opakowanieRepository.findAllBy(PageRequest.of(page, 20, Sort.by(sortBy).ascending()))
+                    .map(mapper::opakowanieToOpakowanieDTO);
         else opakowania = opakowanieRepository.findAllBy(PageRequest.of(page, 20, Sort.by(sortBy).descending()))
                 .map(mapper::opakowanieToOpakowanieDTO);
 
@@ -46,7 +50,7 @@ public class OpakowanieServiceImpl implements OpakowanieService {
     @Override
     public List<CountResult> countKategoriaDostepnosci() {
         List<CountResult> results = opakowanieRepository.countKategoriaDostepnosci();
-        if(results.isEmpty()) throw new NullPointerException();
+        if (results.isEmpty()) throw new NullPointerException();
         return results;
     }
 
@@ -55,7 +59,7 @@ public class OpakowanieServiceImpl implements OpakowanieService {
         Field[] fields = OpakowanieDTO.class.getDeclaredFields();
         List<String> fieldNames = new ArrayList<>();
 
-        for (Field f: fields) {
+        for (Field f : fields) {
             fieldNames.add(f.getName());
         }
 

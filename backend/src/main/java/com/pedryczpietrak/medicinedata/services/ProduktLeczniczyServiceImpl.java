@@ -45,7 +45,11 @@ public class ProduktLeczniczyServiceImpl implements ProduktLeczniczyService {
     @Override
     public Page<ProduktLeczniczyDTO> getAllProduktLeczniczyPage(int page, String sortBy, boolean isAscending) {
         Page<ProduktLeczniczyDTO> produkty;
-        if (isAscending) produkty = repository.findAllBy(PageRequest.of(page, 20, Sort.by(sortBy).ascending()))
+
+        if (sortBy.equals("null")) {
+            produkty = repository.findAllBy(PageRequest.of(page, 20))
+                    .map(mapper::produktLeczniczyToProduktLeczniczyDTO);
+        } else if (isAscending) produkty = repository.findAllBy(PageRequest.of(page, 20, Sort.by(sortBy).ascending()))
                 .map(mapper::produktLeczniczyToProduktLeczniczyDTO);
         else produkty = repository.findAllBy(PageRequest.of(page, 20, Sort.by(sortBy).descending()))
                 .map(mapper::produktLeczniczyToProduktLeczniczyDTO);
@@ -60,7 +64,11 @@ public class ProduktLeczniczyServiceImpl implements ProduktLeczniczyService {
     @Override
     public Page<ProduktLeczniczyDTO> getProduktLeczniczyByNamePage(String name, int page, String sortBy, boolean isAscending) {
         Page<ProduktLeczniczyDTO> produkty;
-        if (isAscending) produkty = repository.findAllByNazwaProduktuContainingIgnoreCase(name, PageRequest.of(page, 20, Sort.by(sortBy).ascending()))
+
+        if (sortBy.equals("null") || sortBy.equals("")) {
+            produkty = repository.findAllByNazwaProduktuContainingIgnoreCase(name, PageRequest.of(page, 20))
+                    .map(mapper::produktLeczniczyToProduktLeczniczyDTO);
+        } else if (isAscending) produkty = repository.findAllByNazwaProduktuContainingIgnoreCase(name, PageRequest.of(page, 20, Sort.by(sortBy).ascending()))
                 .map(mapper::produktLeczniczyToProduktLeczniczyDTO);
         else produkty = repository.findAllByNazwaProduktuContainingIgnoreCase(name, PageRequest.of(page, 20, Sort.by(sortBy).descending()))
                 .map(mapper::produktLeczniczyToProduktLeczniczyDTO);
@@ -98,8 +106,10 @@ public class ProduktLeczniczyServiceImpl implements ProduktLeczniczyService {
     public byte[] getProduktLeczniczyXmlFile(GeneratedFileParams params) {
         ProduktyLecznicze produktyLecznicze = new ProduktyLecznicze();
         List<ProduktLeczniczy> produkty = getProduktyLeczniczeForFile(params);
-
-        produkty = nullValuesInProduktLeczniczy(produkty, params.getNullFields());
+        if(params.getNullFields().size() != listAllSortParameters().size())
+            nullValuesInProduktLeczniczy(produkty, params.getNullFields());
+        else
+            produkty = null;
         produktyLecznicze.setProduktyLecznicze(produkty);
 
         try {
@@ -120,13 +130,18 @@ public class ProduktLeczniczyServiceImpl implements ProduktLeczniczyService {
         ProduktyLecznicze produktyLecznicze = new ProduktyLecznicze();
         List<ProduktLeczniczy> produkty = getProduktyLeczniczeForFile(params);
 
-        produkty = nullValuesInProduktLeczniczy(produkty, params.getNullFields());
+        if(params.getNullFields().size() != listAllSortParameters().size())
+            nullValuesInProduktLeczniczy(produkty, params.getNullFields());
+        else
+            produkty = null;
         produktyLecznicze.setProduktyLecznicze(produkty);
 
         ObjectMapper mapperJson = new ObjectMapper();
         List<ProduktLeczniczyDTO> dto = new ArrayList<>();
-        for(ProduktLeczniczy p: produkty){
-            dto.add(mapper.produktLeczniczyToProduktLeczniczyDTO(p));
+        if (produkty != null) {
+            for (ProduktLeczniczy p : produkty) {
+                dto.add(mapper.produktLeczniczyToProduktLeczniczyDTO(p));
+            }
         }
         try{
             String json = mapperJson.writeValueAsString(dto);
