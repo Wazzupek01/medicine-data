@@ -1,0 +1,50 @@
+<!--TODO: Add logo to this page-->
+
+<nav aria-label="main navigation" class="navbar my-navbar">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+            <h1 class="title" style="text-decoration: none;"><img src="../../favicon.svg" alt="logo"/>MedicineData</h1>
+        </a>
+        <a #navBurger (click)="toggleNavbar()" class="navbar-burger" role="button">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+    <div #navMenu (click)="toggleNavbar()" class="navbar-menu">
+        <div class="navbar-start">
+            <a class="navbar-item" routerLink="/" routerLinkActive="active">
+                HOME
+            </a>
+            <a *ngIf="logged" class="navbar-item" routerLink="/chart" routerLinkActive="active">
+                CHART
+            </a>
+            <a *ngIf="logged" class="navbar-item" routerLink="/table" routerLinkActive="active">
+                TABLE
+            </a>
+            <a *ngIf="admin" class="navbar-item" routerLink="/download" routerLinkActive="active">
+                DOWNLOAD
+            </a>
+        </div>
+
+        <div *ngIf="logged" class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a class="button is-success is-outlined" disabled>{{email}}</a>
+                    <a class="button is-danger" routerLink="/logout" routerLinkActive="active">LOGOUT</a>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="!logged" class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a class="button is-success is-outlined" routerLink="/login" routerLinkActive="active">LOGIN</a>
+                    <a class="button is-primary is-outlined" routerLink="/register"
+                       routerLinkActive="active">REGISTER</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</nav>

@@ -1,0 +1,63 @@
+<app-md-navbar></app-md-navbar>
+
+<div class="my-container">
+    <div class="my-center">
+        <div class="card" style="width: 100%">
+            <div class="card-content">
+                <p class="title">Register</p>
+                <div class="content">
+                    <form (ngSubmit)="registerUser()" [formGroup]="registerForm">
+
+                        <label for="email">Email</label>
+                        <input
+                            class="input is-expanded mb-2"
+                            formControlName="email"
+                            id="email"
+                            placeholder="Provide email"
+                            required
+                            type="email">
+                        <p *ngIf="!registerForm.controls['email'].valid && !registerForm.controls['email'].hasError('emailTaken')  && registerForm.controls['email'].touched"
+                           class="has-text-danger is-fullwidth is-small mb-2">Incorrect email format.</p>
+                        <p *ngIf="registerForm.controls['email'].hasError('emailTaken')"
+                           class="has-text-danger is-fullwidth is-small mb-2">This email is taken</p>
+
+                        <label for="password">Password</label>
+                        <input
+                            class="input is-expanded mb-2"
+                            formControlName="password"
+                            id="password"
+                            placeholder="Provide password"
+                            required
+                            type="password">
+                        <p *ngIf="!registerForm.controls['password'].valid && registerForm.controls['password'].touched"
+                           class="has-text-danger is-fullwidth is-small mb-2">Incorrect password format.</p>
+
+                        <label for="repeat-password">Repeat password</label>
+                        <input
+                            class="input is-expanded mb-2"
+                            formControlName="repeatPassword"
+                            id="repeat-password"
+                            placeholder="Repeat password"
+                            required
+                            type="password">
+                        <p *ngIf="!registerForm.controls['repeatPassword'].valid && registerForm.controls['repeatPassword'].touched"
+                           class="has-text-danger is-fullwidth is-small mb-2">Incorrect password format.</p>
+                        <p *ngIf="registerForm.hasError('incorrect') && registerForm.controls['repeatPassword'].touched"
+                           class="has-text-danger is-fullwidth is-small mb-2">Passwords are not the same</p>
+
+                        <label for="role">Role</label><br>
+                        <select class="input is-expanded mb-2" formControlName="role" id="role" required>
+                            <option selected value="ROLE_USER">User</option>
+                            <option value="ROLE_ADMIN">Admin</option>
+                        </select>
+
+                        <button class="button is-fullwidth is-primary mt-5" type="submit">Register</button>
+                    </form>
+                    <a class="button is-fullwidth mt-3" routerLink="/login" routerLinkActive="active">Login</a>
+                    <a class="button is-warning is-outlined is-fullwidth mt-3" routerLink="/"
+                       routerLinkActive="active">Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<app-md-navbar></app-md-navbar>
+
+
+<div class="my-container">
+
+    <div class="buttons">
+        <button (click)="getTopPostaciHandler()" class="button is-success is-light">Top Postaci</button>
+        <button (click)="getKategorieDostepnosciHandler()" class="button is-info is-light">Kategorie Dostępności
+        </button>
+        <button (click)="getTopSubstancjeHandler()" class="button is-warning is-light">Top Substancje</button>
+    </div>
+
+    <div class="my-chart-container">
+
+        <app-md-bar-chart *ngIf="!isPieChart && isOne" [barChartData]="barChartDataOne" [barChartOptions]="barChartOptions"/>
+
+        <app-md-bar-chart *ngIf="!isPieChart && !isOne" [barChartData]="barChartDataTwo" [barChartOptions]="barChartOptions"/>
+
+        <app-md-pie-chart *ngIf="isPieChart" [pieChartData]="pieChartData" [pieChartOptions]="pieChartOptions"/>
+
+    </div>
+
+</div>
+
+

@@ -1,0 +1,32 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://medicine-data-db:5432/medicine?reWriteBatchedInserts=true
+    username: admin
+    password: admin
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        validation-mode: none
+        order_inserts: true
+        order_updates: true
+        jdbc:
+          batch_size: 1000
+          batch_versioned_data: true
+    show-sql: false
+  main:
+    web-application-type: servlet
+security:
+  secret-key: "566B59703373357638792F423F4528482B4D6251655468576D5A7134743777397A24432646294A404E635266556A586E3272357538782F4125442A472D4B6150"
+  key-expiration-time: 86400000
+  allowed-origin: "http://localhost/"
+
+springdoc:
+  swagger-ui:
+    path: "/documentation"

@@ -1,0 +1,43 @@
+<app-md-navbar></app-md-navbar>
+
+<!--<button (click)="getProduktyLecznicze()" class="button isinfo">Get produkty lecznicze</button>-->
+<form [formGroup]="optionForm">
+    <div class="my-content-selection-row">
+        <div class="select is-small my-select-container">
+            <select formControlName="type">
+                <option value="produkt">Produkt leczniczy</option>
+                <option value="opakowanie">Opakowania</option>
+            </select>
+        </div>
+
+        <div class="select is-small my-select-container">
+            <select formControlName="sortBy">
+                <option *ngFor="let sortBy of sortTypes" value="{{sortBy}}">{{prepareNameForColumns(sortBy)}}</option>
+            </select>
+        </div>
+
+        <div class="select is-small my-select-container">
+            <select formControlName="sortDir">
+                <option value="true">Ascending</option>
+                <option value="false">Descending</option>
+            </select>
+        </div>
+    </div>
+</form>
+
+<ag-grid-angular
+    [animateRows]="true"
+    [columnDefs]="columnDefs"
+    [rowData]="rowData"
+    [rowSelection]="'multiple'"
+    class="ag-theme-alpine"
+    style="width: 100%; height: calc(100vh - 310px)"
+>
+</ag-grid-angular>
+
+<div class="my-pagination">
+    <app-md-pagination (pageChanged)="pageChanged($event)" [allPages]="allPages"
+                       [currentPage]="currentPage"></app-md-pagination>
+</div>
+
+

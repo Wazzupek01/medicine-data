@@ -1,0 +1,37 @@
+version: '3.8'
+name: medicine-data
+services:
+    medicine-data-db:
+      container_name: medicine-data-db
+      image: postgres
+      environment:
+        POSTGRES_USER: admin
+        POSTGRES_PASSWORD: admin
+        POSTGRES_DB: medicine
+      volumes:
+        - db:/data/postgres
+      ports:
+        - "5432:5432"
+
+    medicine-data-frontend:
+      build:
+        context: frontend
+        dockerfile: Dockerfile
+      image: medicine-data-frontend:latest
+      ports:
+        - "80:8080"
+      container_name: medicine-data-frontend 
+
+    medicine-data-backend:
+      container_name: medicine-data-backend
+      build:
+        context: backend
+        dockerfile: Dockerfile
+      image: medicine-data-backend:latest
+      ports:
+        - "8080:8080"
+      deploy:
+        restart_policy:
+          condition: on-failure
+volumes:
+  db:

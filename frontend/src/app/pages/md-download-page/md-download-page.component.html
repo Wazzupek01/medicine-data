@@ -1,0 +1,66 @@
+<app-md-navbar></app-md-navbar>
+
+<div class="my-container">
+    <div class="my-center">
+        <div class="card" style="width: 100%">
+            <div class="card-content">
+                <p class="title">Download</p>
+                <div class="content">
+                    <div class="columns">
+                        <div class="column is-8">
+                            <div class="card">
+                                <div class="card-content">
+                                    <p class="subtitle">Opcje</p>
+                                    <span *ngFor="let field of avalibleSortOptions"><label  class="checkbox"><input type="checkbox" (click)="updateVisibleFields(field)"> {{prepareNameForColumns(field)}}</label><br></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-4">
+                            <form [formGroup] = optionsForm>
+                                <div class="card">
+                                    <div class="card-content">
+                                        <p class="subtitle">Sort Dir</p>
+                                        <div class="select is-small my-select-container">
+                                            <select formControlName="sortDir">
+                                                <option value="true">Ascending</option>
+                                                <option value="false">Descending</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="card" style="margin-top: 10px;">
+                                    <div class="card-content">
+                                        <p class="subtitle">Sort By</p>
+                                        <div class="select is-small my-select-container">
+                                            <select formControlName="sortBy">
+                                                <option *ngFor="let sortBy of sortOptions" value="{{sortBy}}">{{prepareNameForColumns(sortBy)}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card" style="margin-top: 10px;">
+                                    <div class="card-content">
+                                        <p class="subtitle">Result length</p>
+                                        <div class="control is-small my-select-container">
+                                            <input class="input" type="number" formControlName="length">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <button class="button is-fullwidth mt-3 is-primary" (click)="downloadJson()">JSON</button>
+                    <button class="button is-success is-fullwidth mt-3" (click)="downloadXml()">XML</button>
+                    <a *ngIf="saveJSON" class="button is-danger is-outlined is-fullwidth mt-3" [href]="fileUrl"
+                       download="result.json" (click)="hideButtons()">Save JSON</a>
+                    <a *ngIf="saveXML" class="button is-danger is-outlined is-fullwidth mt-3" [href]="fileUrl"
+                       download="result.xml" (click)="hideButtons()">Save XML</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

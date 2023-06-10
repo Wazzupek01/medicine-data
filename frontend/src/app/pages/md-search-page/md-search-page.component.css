@@ -1,0 +1,46 @@
+.my-container {
+    min-height: calc(100vh - 210px);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.my-container-column {
+    min-height: calc(100vh - 210px);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.my-card {
+    margin: 5px;
+    width: calc(25% - 10px);
+}
+
+.my-title {
+    margin: 10px;
+}
+
+.my-pagination {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.my-content-selection-row {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.my-select-container {
+    padding: 0 5px;
+}
