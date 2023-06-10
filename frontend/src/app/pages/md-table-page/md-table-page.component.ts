@@ -50,7 +50,8 @@ export class MdTablePageComponent implements OnInit, OnDestroy {
                 next: (value) => {
                     this.type = value;
                     this.getSortByList();
-                }
+                },
+                error: (error: HttpErrorResponse) => {},
             })
         );
 

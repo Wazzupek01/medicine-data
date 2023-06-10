@@ -50,7 +50,7 @@ export class MdRegisterPageComponent implements OnInit, OnDestroy {
                     ]
                 ),
                 role: new FormControl(
-                    "USER",
+                    "ROLE_USER",
                     []
                 ),
             },
@@ -83,6 +83,7 @@ export class MdRegisterPageComponent implements OnInit, OnDestroy {
             role: this.registerForm.get("role")?.value
         };
 
+        console.log(registerDto);
         this.subscriptions.push(
             this.httpAuthService.registerUser(registerDto).subscribe({
                 next: async (value: MdUserInfoDto) => {
@@ -99,6 +100,7 @@ export class MdRegisterPageComponent implements OnInit, OnDestroy {
                             this.registerForm.get("email")?.setErrors({emailTaken: true});
                         }
                     }
+                    console.log(error);
                 }
             })
         );
