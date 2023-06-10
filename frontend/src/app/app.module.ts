@@ -19,6 +19,7 @@ import {MdPaginationComponent} from './components/md-pagination/md-pagination.co
 import {MdBarChartComponent} from './components/md-bar-chart/md-bar-chart.component';
 import {MdPieChartComponent} from './components/md-pie-chart/md-pie-chart.component';
 import {MdDownloadPageComponent} from './pages/md-download-page/md-download-page.component';
+import {NgOptimizedImage} from "@angular/common";
 
 @NgModule({
     declarations: [
@@ -43,7 +44,8 @@ import {MdDownloadPageComponent} from './pages/md-download-page/md-download-page
         ReactiveFormsModule,
         AgGridModule,
         NgChartsModule,
-        HttpClientModule
+        HttpClientModule,
+        NgOptimizedImage
     ],
     providers: [],
     bootstrap: [AppComponent]
