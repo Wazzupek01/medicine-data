@@ -49,13 +49,10 @@ public class OpakowanieController {
     }
 
     @GetMapping("/params")
-    @SecurityRequirement(name = "Bearer authentication")
     @Operation(summary = "Get sort params", description = "Returns all possible parameters for sorting")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Parameters returned",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = List.class))),
-            @ApiResponse(responseCode = "403", description = "User is not logged in",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
     })
     public ResponseEntity<List<String>> listAllSortParameters(){
         return new ResponseEntity<>(opakowanieService.listAllSortParameters(), HttpStatus.OK);
