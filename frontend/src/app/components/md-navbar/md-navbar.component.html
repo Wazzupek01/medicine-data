@@ -1,5 +1,3 @@
-<!--TODO: Add logo to this page-->
-
 <nav aria-label="main navigation" class="navbar my-navbar">
     <div class="navbar-brand">
         <a class="navbar-item" href="/">
@@ -14,37 +12,50 @@
     <div #navMenu (click)="toggleNavbar()" class="navbar-menu">
         <div class="navbar-start">
             <a class="navbar-item" routerLink="/" routerLinkActive="active">
-                HOME
+                Strona główna
             </a>
             <a *ngIf="logged" class="navbar-item" routerLink="/chart" routerLinkActive="active">
-                CHART
+                Statystyki
             </a>
             <a *ngIf="logged" class="navbar-item" routerLink="/table" routerLinkActive="active">
-                TABLE
+                Katalog
             </a>
             <a *ngIf="admin" class="navbar-item" routerLink="/download" routerLinkActive="active">
-                DOWNLOAD
+                Archiwizuj
             </a>
         </div>
 
-        <div *ngIf="logged" class="navbar-end">
+
+        <div class="navbar-end">
             <div class="navbar-item">
+                <div class="buttons">
+                    <button class="button is-info is-outlined" (click)="openAccessibility()">Dostepność</button>
+                </div>
+
+            </div>
+
+            <div class="navbar-item" *ngIf="logged">
                 <div class="buttons">
                     <a class="button is-success is-outlined" disabled>{{email}}</a>
-                    <a class="button is-danger" routerLink="/logout" routerLinkActive="active">LOGOUT</a>
+                    <a class="button is-danger" routerLink="/logout" routerLinkActive="active">Wylogowanie</a>
                 </div>
             </div>
-        </div>
 
-        <div *ngIf="!logged" class="navbar-end">
-            <div class="navbar-item">
+            <div class="navbar-item" *ngIf="!logged">
                 <div class="buttons">
-                    <a class="button is-success is-outlined" routerLink="/login" routerLinkActive="active">LOGIN</a>
+                    <a class="button is-success is-outlined" routerLink="/login" routerLinkActive="active">Logowanie</a>
                     <a class="button is-primary is-outlined" routerLink="/register"
-                       routerLinkActive="active">REGISTER</a>
+                       routerLinkActive="active">Rejestracja</a>
                 </div>
             </div>
         </div>
-
     </div>
 </nav>
+
+<div class="modal" [ngClass]="accessibilityVisibility ? 'is-active' : undefined">
+    <div class="modal-background" (click)="closeAccessibility()" ></div>
+    <div class="modal-content">
+        <app-md-accessibility-select />
+    </div>
+    <button class="modal-close is-large" (click)="closeAccessibility()"></button>
+</div>

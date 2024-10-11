@@ -1,0 +1,75 @@
+.contrast-button-box{
+    min-width: 50px;
+    min-height: 50px;
+    border-width: 2px;
+    border-style: solid;
+    margin: 10px
+}
+
+.white-and-black {
+    background-color: #fff;
+    border-color: #000;
+}
+
+.white-and-black p {
+    color: #000;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.black-and-white {
+    background-color: #000;
+    border-color: #fff;
+}
+
+.black-and-white p {
+    color: #fff;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.black-and-yellow {
+    background-color: #ff0;
+    border-color: #000;
+}
+
+.black-and-yellow p {
+    color: #000;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.yellow-and-black {
+    background-color: #000;
+    border-color: #ff0;
+}
+
+.yellow-and-black p {
+    color: #ff0;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.font-button {
+    background-color: transparent;
+    min-width: 50px;
+    min-height: 50px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
+    margin: 10px;
+    font-weight: bold;
+}
+
+.font-button-default span{
+
+    font-size: 1rem;
+}
+
+.font-button-larger span{
+    font-size: 1.5rem;
+}
+
+.font-button-largest span{
+    font-size: 2rem;
+}
