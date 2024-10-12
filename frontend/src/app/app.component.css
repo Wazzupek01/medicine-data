@@ -1,6 +1,17 @@
-
-:root{
-    --main-color: #3f51b5;
-    --bulma-background: #3f51b5;
-    /*--bulma-body-font-size: 50px;*/
+:host {
+    --global-font-size: ;
+    --global-font-color: ;
+    --global-background-color: ;
 }
+
+:root {
+    --bulma-body-font-size: var(--global-font-size, --bulam-body-font-size);
+    --bulma-body-color: var(--global-font-color, --bulma-body-color);
+    --bulma-footer-background-color: green;
+    --bulma-body-background-color: yellow;
+    --bulma-background-l: pink;
+}
+
+/** {*/
+/*    background-color: var(--global-background-color) ;*/
+/*}*/

@@ -1,4 +1,4 @@
-import {Component, HostBinding, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {AccessibilityService} from "./services/accessibility.service";
 import {Subscription} from "rxjs";
 import {MdAccessibilityFontOptions} from "./models/md-accessibility-font-options";
@@ -10,21 +10,14 @@ import BlackAndWhiteContrast from "./const/black-and-white-contrast";
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
-    styles: [
-        ` :root{
-            --bulma-body-font-size: 50px;
-        }`
-    ],
     encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit, OnDestroy {
     private subscriptions: Subscription[] = [];
 
     constructor(private accessibilityService: AccessibilityService) {
+        console.log(document.documentElement.style.getPropertyValue('--bulma-body-font-size'));
     }
-
-    @HostBinding("style.:root.--bulma-body-font-size")
-    private value: string = "50px";
 
     ngOnInit(): void {
         this.subscriptions.push(this.subscribeContrast());
@@ -63,9 +56,16 @@ export class AppComponent implements OnInit, OnDestroy {
 
     private changeFontStyle(fontSettings: MdAccessibilityFontOptions): void {
         // TODO: Implement changing fonts
+        this.setStyle("--global-font-size", fontSettings.titleFontSize + 'px');
     }
 
     private changeContrast(contrastSettings: MdAccessibilityContrastOptions): void {
         // TODO: Implement changing fonts
+        this.setStyle("--global-font-color", contrastSettings.fontColor);
+        this.setStyle("--global-background-color", contrastSettings.backgroundColor);
+    }
+
+    private setStyle(variableName: string, value: any) {
+        document.documentElement.style.setProperty(variableName, value);
     }
 }
