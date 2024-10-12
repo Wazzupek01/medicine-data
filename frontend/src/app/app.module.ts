@@ -20,7 +20,7 @@ import {MdBarChartComponent} from './components/md-bar-chart/md-bar-chart.compon
 import {MdPieChartComponent} from './components/md-pie-chart/md-pie-chart.component';
 import {MdDownloadPageComponent} from './pages/md-download-page/md-download-page.component';
 import {NgOptimizedImage} from "@angular/common";
-import { MdAccessibilitySelectComponent } from './components/md-accessibility-select/md-accessibility-select.component';
+import {MdAccessibilitySelectComponent} from './components/md-accessibility-select/md-accessibility-select.component';
 
 @NgModule({
     declarations: [
