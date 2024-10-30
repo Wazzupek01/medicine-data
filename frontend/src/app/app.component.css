@@ -1,17 +1,8 @@
-:host {
-    --global-font-size: ;
-    --global-font-color: ;
-    --global-background-color: ;
-}
-
 :root {
-    --bulma-body-font-size: var(--global-font-size, --bulam-body-font-size);
-    --bulma-body-color: var(--global-font-color, --bulma-body-color);
-    --bulma-footer-background-color: green;
-    --bulma-body-background-color: yellow;
-    --bulma-background-l: pink;
+    --bulma-body-font-size: var(--md-font-size, --bulam-body-font-size);
+    --bulma-body-color: var(--md-font-color, --bulma-body-color);
+    --bulma-strong-color: var(--md-font-color, --bulma-strong-color);
+    --bulma-navbar-item-color: var(--md-font-color, --bulma-navbar-item-color);
+    --md-backgroud-color: var(--md-background-color);
 }
 
-/** {*/
-/*    background-color: var(--global-background-color) ;*/
-/*}*/

@@ -2,15 +2,15 @@
 
 <div class="my-container">
     <div class="my-center">
-        <div class="card" style="width: 100%">
-            <div class="card-content">
-                <p class="title">Login</p>
+        <div class="card md-border-color" style="width: 100%">
+            <div class="card-content ">
+                <p class="title md-font-color">Login</p>
                 <div class="content">
                     <p *ngIf="loginError" class="has-text-danger">Incorrect login data!!</p>
                     <form (ngSubmit)="loginHandler()" [formGroup]="loginForm">
-                        <label for="email">Email</label>
+                        <label for="email" class="md-font-color">Email</label>
                         <input
-                            class="input is-expanded mb-2"
+                            class="input is-expanded mb-2 md-input-style"
                             formControlName="email"
                             id="email"
                             placeholder="Provide email"
@@ -19,9 +19,9 @@
                         <p *ngIf="!loginForm.controls['email'].valid && loginForm.controls['email'].touched"
                            class="has-text-danger is-fullwidth is-small mb-2">Incorrect email format.</p>
 
-                        <label for="password">Password</label>
+                        <label for="password" class="md-font-color">Password</label>
                         <input
-                            class="input is-expanded mb-2"
+                            class="input is-expanded mb-2 md-input-style"
                             formControlName="password"
                             id="password"
                             placeholder="Provide password"

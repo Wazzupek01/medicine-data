@@ -56,13 +56,13 @@ export class AppComponent implements OnInit, OnDestroy {
 
     private changeFontStyle(fontSettings: MdAccessibilityFontOptions): void {
         // TODO: Implement changing fonts
-        this.setStyle("--global-font-size", fontSettings.titleFontSize + 'px');
+        this.setStyle("--md-font-size", fontSettings.fontBaseSize + 'rem');
     }
 
     private changeContrast(contrastSettings: MdAccessibilityContrastOptions): void {
         // TODO: Implement changing fonts
-        this.setStyle("--global-font-color", contrastSettings.fontColor);
-        this.setStyle("--global-background-color", contrastSettings.backgroundColor);
+        this.setStyle("--md-font-color", contrastSettings.fontColor);
+        this.setStyle("--md-background-color", contrastSettings.backgroundColor);
     }
 
     private setStyle(variableName: string, value: any) {

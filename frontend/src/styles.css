@@ -1,0 +1,38 @@
+:root{
+    --md-backgroud-color: ;
+    --md-font-size: ;
+    --md-font-color: ;
+    --md-background-color: ;
+}
+
+.footer, .navbar, .navbar-item, .my-container {
+    background-color: var(--md-backgroud-color);
+}
+
+.card {
+    background-color: var(--md-backgroud-color);
+}
+
+.md-font-color {
+    color: var(--md-font-color);
+}
+
+.md-input-style {
+    background-color: var(--md-backgroud-color);
+    color: var(--md-font-color);
+    border-color: var(--md-font-color);
+}
+
+.md-border-color {
+    border-color: var(--md-font-color);
+    border-width: 2px;
+    border-style: solid;
+}
+
+.md-section-color {
+    background-color: var(--md-backgroud-color);
+}
+
+.md-background-color {
+    background-color: var(--md-backgroud-color);
+}

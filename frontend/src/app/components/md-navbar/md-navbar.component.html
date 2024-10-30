@@ -1,7 +1,7 @@
 <nav aria-label="main navigation" class="navbar my-navbar">
     <div class="navbar-brand">
         <a class="navbar-item" href="/">
-            <h1 class="title" style="text-decoration: none;"><img src="../../favicon.svg" alt="logo"/>MedicineData</h1>
+            <h1 class="title md-font-color" style="text-decoration: none;"><img src="../../favicon.svg" alt="logo"/>MedicineData</h1>
         </a>
         <a #navBurger (click)="toggleNavbar()" class="navbar-burger" role="button">
             <span aria-hidden="true"></span>
@@ -11,16 +11,16 @@
     </div>
     <div #navMenu (click)="toggleNavbar()" class="navbar-menu">
         <div class="navbar-start">
-            <a class="navbar-item" routerLink="/" routerLinkActive="active">
+            <a class="navbar-item md-font-color" routerLink="/" routerLinkActive="active">
                 Strona główna
             </a>
-            <a *ngIf="logged" class="navbar-item" routerLink="/chart" routerLinkActive="active">
+            <a *ngIf="logged" class="navbar-item md-font-color" routerLink="/chart" routerLinkActive="active">
                 Statystyki
             </a>
-            <a *ngIf="logged" class="navbar-item" routerLink="/table" routerLinkActive="active">
+            <a *ngIf="logged" class="navbar-item md-font-color" routerLink="/table" routerLinkActive="active">
                 Katalog
             </a>
-            <a *ngIf="admin" class="navbar-item" routerLink="/download" routerLinkActive="active">
+            <a *ngIf="admin" class="navbar-item md-font-color" routerLink="/download" routerLinkActive="active">
                 Archiwizuj
             </a>
         </div>
@@ -36,7 +36,7 @@
 
             <div class="navbar-item" *ngIf="logged">
                 <div class="buttons">
-                    <a class="button is-success is-outlined" disabled>{{email}}</a>
+                    <a class="button is-success is-outlined" disabled><span class="md-font-color">{{email}}</span></a>
                     <a class="button is-danger" routerLink="/logout" routerLinkActive="active">Wylogowanie</a>
                 </div>
             </div>
