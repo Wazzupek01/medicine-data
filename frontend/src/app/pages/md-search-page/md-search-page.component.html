@@ -1,40 +1,43 @@
 <app-md-navbar></app-md-navbar>
 <div *ngIf="!searchEmpty">
-    <h1 class="title my-title">Wyniki wyszukiwania dla: {{this.name}}</h1>
+    <div class="section md-section-color">
+        <h1 class="title my-title md-font-color">Wyniki wyszukiwania dla: {{this.name}}</h1>
 
-    <form [formGroup]="optionForm">
-        <div class="my-content-selection-row">
-            <div class="select is-small my-select-container">
-                <select formControlName="sortBy">
-                    <option *ngFor="let sortBy of sortTypes"
-                            value="{{sortBy}}">{{prepareNameForColumns(sortBy)}}</option>
-                </select>
-            </div>
+        <form [formGroup]="optionForm">
+            <div class="my-content-selection-row">
+                <div class="select my-select-container">
+                    <select formControlName="sortBy">
+                        <option *ngFor="let sortBy of sortTypes"
+                                value="{{sortBy}}">{{prepareNameForColumns(sortBy)}}</option>
+                    </select>
+                </div>
 
-            <div class="select is-small my-select-container">
-                <select formControlName="sortDir">
-                    <option value="true">Ascending</option>
-                    <option value="false">Descending</option>
-                </select>
+                <div class="select my-select-container">
+                    <select formControlName="sortDir">
+                        <option value="true">Ascending</option>
+                        <option value="false">Descending</option>
+                    </select>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
+
 
     <div class="my-container">
-        <div class="card my-card" *ngFor="let product of products">
+        <div class="card my-card md-border-color" *ngFor="let product of products">
             <div class="card-content">
                 <div class="content">
-                    <p class="title is-4">{{product.nazwaProduktu}}</p>
-                    <p class="subtitle is-6">{{product.nazwaPowszechnieStosowana}}</p>
-                    <p>Numer pozwolenia: {{product.numerPozwolenia}}</p>
-                    <p>Rodzaj proparatu: {{product.rodzajPreparatu}}</p>
-                    <p>Moc: {{product.moc}}</p>
+                    <p class="title md-font-color">{{product.nazwaProduktu}}</p>
+                    <p class="subtitle md-font-color">{{product.nazwaPowszechnieStosowana}}</p>
+                    <p class="md-font-color">Numer pozwolenia: {{product.numerPozwolenia}}</p>
+                    <p class="md-font-color">Rodzaj proparatu: {{product.rodzajPreparatu}}</p>
+                    <p class="md-font-color">Moc: {{product.moc}}</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="my-pagination" *ngIf="currentPage !== allPages">
+    <div class="my-pagination md-background-color" *ngIf="currentPage !== allPages">
         <app-md-pagination (pageChanged)="pageChanged($event)" [allPages]="allPages"
                            [currentPage]="currentPage"></app-md-pagination>
     </div>

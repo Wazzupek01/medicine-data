@@ -2,37 +2,37 @@
 
 <div class="my-container">
     <div class="my-center">
-        <div class="card" style="width: 100%">
+        <div class="card md-border-color" style="width: 100%">
             <div class="card-content">
-                <p class="title">Download</p>
+                <p class="title md-font-color">Pobierania</p>
                 <div class="content">
                     <div class="columns">
                         <div class="column is-8">
-                            <div class="card">
+                            <div class="card md-border-color">
                                 <div class="card-content">
-                                    <p class="subtitle">Opcje</p>
-                                    <span *ngFor="let field of avalibleSortOptions"><label  class="checkbox"><input type="checkbox" (click)="updateVisibleFields(field)"> {{prepareNameForColumns(field)}}</label><br></span>
+                                    <p class="subtitle md-font-color">Opcje</p>
+                                    <span *ngFor="let field of avalibleSortOptions"><label  class="checkbox md-font-color"><input type="checkbox" (click)="updateVisibleFields(field)"> {{prepareNameForColumns(field)}}</label><br></span>
                                 </div>
                             </div>
                         </div>
                         <div class="column is-4">
                             <form [formGroup] = optionsForm>
-                                <div class="card">
+                                <div class="card md-border-color">
                                     <div class="card-content">
-                                        <p class="subtitle">Sort Dir</p>
+                                        <p class="subtitle md-font-color">Kierunke sortowania</p>
                                         <div class="select is-small my-select-container">
                                             <select formControlName="sortDir">
-                                                <option value="true">Ascending</option>
-                                                <option value="false">Descending</option>
+                                                <option value="true">Rosnąco</option>
+                                                <option value="false">Malejąco</option>
                                             </select>
                                         </div>
 
                                     </div>
                                 </div>
 
-                                <div class="card" style="margin-top: 10px;">
+                                <div class="card md-border-color" style="margin-top: 10px;">
                                     <div class="card-content">
-                                        <p class="subtitle">Sort By</p>
+                                        <p class="subtitle md-font-color">Sortuj po</p>
                                         <div class="select is-small my-select-container">
                                             <select formControlName="sortBy">
                                                 <option *ngFor="let sortBy of sortOptions" value="{{sortBy}}">{{prepareNameForColumns(sortBy)}}</option>
@@ -41,9 +41,9 @@
                                     </div>
                                 </div>
 
-                                <div class="card" style="margin-top: 10px;">
+                                <div class="card md-border-color" style="margin-top: 10px;">
                                     <div class="card-content">
-                                        <p class="subtitle">Result length</p>
+                                        <p class="subtitle md-font-color">Długość wyników</p>
                                         <div class="control is-small my-select-container">
                                             <input class="input" type="number" formControlName="length">
                                         </div>

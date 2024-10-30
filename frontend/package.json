@@ -20,7 +20,7 @@
         "@angular/router": "^16.0.0",
         "ag-grid-angular": "^29.3.5",
         "ag-grid-community": "^29.3.5",
-        "bulma": "^0.9.4",
+        "bulma": "^1.0.2",
         "chart.js": "^4.3.0",
         "chartjs-plugin-datalabels": "^2.2.0",
         "ng2-charts": "^4.1.1",

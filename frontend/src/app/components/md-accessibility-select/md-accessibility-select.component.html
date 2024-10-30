@@ -1,0 +1,38 @@
+<div class="box">
+    <div >
+        <h2 class="title">Zmień rozmiar czcionki</h2>
+        <div class="is-flex is-flex-direction-row is-justify-content-center">
+            <button class="font-button font-button-default" (click)="changeFontToDefault()">
+                <span>A</span>
+            </button>
+
+            <button class="font-button font-button-larger" (click)="changeFontToLargerFont()">
+                <span>A</span>
+            </button>
+
+            <button class="font-button font-button-largest" (click)="changeFontToLargestFont()">
+                <span>A</span>
+            </button>
+        </div>
+    </div>
+    <div>
+        <h2 class="title">Wersje kontrastowe</h2>
+        <div class="is-flex is-flex-direction-row is-justify-content-center">
+            <button class="contrast-button-box white-and-black" (click)="changeContrastToWhiteAndBlack()">
+                <p class="subtitle">A</p>
+            </button>
+
+            <button class="contrast-button-box black-and-white" (click)="changeContrastToBlackAndWhite()">
+                <p class="subtitle">A</p>
+            </button>
+
+            <button class="contrast-button-box yellow-and-black" (click)="changeContrastToYellowAndBlack()">
+                <p class="subtitle">A</p>
+            </button>
+
+            <button class="contrast-button-box black-and-yellow" (click)="changeContrastToBlackAndYellow()">
+                <p class="subtitle">A</p>
+            </button>
+        </div>
+    </div>
+</div>

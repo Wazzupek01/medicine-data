@@ -1,0 +1,8 @@
+:root {
+    --bulma-body-font-size: var(--md-font-size, --bulam-body-font-size);
+    --bulma-body-color: var(--md-font-color, --bulma-body-color);
+    --bulma-strong-color: var(--md-font-color, --bulma-strong-color);
+    --bulma-navbar-item-color: var(--md-font-color, --bulma-navbar-item-color);
+    --md-backgroud-color: var(--md-background-color);
+}
+

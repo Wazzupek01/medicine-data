@@ -20,6 +20,7 @@ export class MdNavbarComponent implements OnInit, OnDestroy {
     protected email: string | undefined | null;
 
     protected admin: boolean = false;
+    protected accessibilityVisibility: boolean = false;
 
     constructor(
         private authHttpService: HttpAuthService,
@@ -41,6 +42,14 @@ export class MdNavbarComponent implements OnInit, OnDestroy {
             this.navBurger.nativeElement.classList.toggle('is-active');
             this.navMenu.nativeElement.classList.toggle('is-active');
         }
+    }
+
+    protected openAccessibility = () => {
+        this.accessibilityVisibility = true;
+    }
+
+    protected closeAccessibility = () => {
+        this.accessibilityVisibility = false;
     }
 
     private getUserEmail() {

@@ -1,3 +1,4 @@
+
 package com.pedryczpietrak.medicinedata;
 
 import com.pedryczpietrak.medicinedata.model.DTO.UserRegisterDTO;
@@ -21,8 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -56,10 +56,10 @@ public class DataLoader implements CommandLineRunner {
         if (userRepository.count() == 0) loadRolesAndUsers();
         if (produktLeczniczyRepository.count() > 0) return;
 
-        ProduktyLecznicze produktyLecznicze = loadFromXml(ProduktyLecznicze.class, "./src/main/resources/data.xml");
+        ProduktyLecznicze produktyLecznicze = loadFromXml(ProduktyLecznicze.class, "data.xml");
         List<ProduktLeczniczy> produkty = Collections.synchronizedList(produktyLecznicze.getProduktyLecznicze());
 
-        ListaRefundacyjna listaRefundacyjna = loadFromXml(ListaRefundacyjna.class, "./src/main/resources/refundowane.xml");
+        ListaRefundacyjna listaRefundacyjna = loadFromXml(ListaRefundacyjna.class, "refundowane.xml");
         List<OpakowanieLeku> refundowane = Collections.synchronizedList(listaRefundacyjna.getOpakowania());
 
         executeDataModifiers(produkty, refundowane);
@@ -70,15 +70,14 @@ public class DataLoader implements CommandLineRunner {
         System.out.println("Loaded in: " + ((System.currentTimeMillis() - start) / 1000.0) + "s");
     }
 
-    private <T> T loadFromXml(Class<T> cls, String path) {
+    private <T> T loadFromXml(Class<T> cls, String classPatchToResources) {
         T response = null;
         try {
             JAXBContext context = JAXBContext.newInstance(cls);
-            response = (T) context.createUnmarshaller().unmarshal(new FileReader(path));
-        } catch(JAXBException e){
+            InputStream stream = getClass().getClassLoader().getResourceAsStream(classPatchToResources);
+            response = (T) context.createUnmarshaller().unmarshal(stream);
+        } catch(JAXBException e) {
             System.out.println("Couldn't create JAXBContext instance");
-        } catch (FileNotFoundException e) {
-            System.out.println("Path for file is invalid or it doesn't exist");
         }
         return response;
     }
