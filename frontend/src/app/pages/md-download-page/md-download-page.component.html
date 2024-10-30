@@ -53,8 +53,8 @@
                         </div>
                     </div>
 
-                    <button class="button is-fullwidth mt-3 is-primary" (click)="downloadJson()">JSON</button>
-                    <button class="button is-success is-fullwidth mt-3" (click)="downloadXml()">XML</button>
+                    <button class="button is-fullwidth mt-3 is-primary" (click)="downloadJson()"><span style="font-size: 5px">JSON</span></button>
+                    <button class="button is-success is-fullwidth mt-3" (click)="downloadXml()"><span style="font-size: 5px">XML</span></button>
                     <a *ngIf="saveJSON" class="button is-danger is-outlined is-fullwidth mt-3" [href]="fileUrl"
                        download="result.json" (click)="hideButtons()">Save JSON</a>
                     <a *ngIf="saveXML" class="button is-danger is-outlined is-fullwidth mt-3" [href]="fileUrl"

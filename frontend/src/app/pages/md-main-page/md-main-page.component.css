@@ -3,8 +3,8 @@
     height: calc(100vh - 210px);
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-end;
+    align-items: flex-start;
     background-image: url("/assets/img/main-page-background.jpg");
     background-size: cover;
 }
@@ -23,7 +23,6 @@
 
 .my-hero {
     height: 100%;
-   
 }
 
 .title-container {
